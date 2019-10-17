@@ -16,7 +16,7 @@ const App = () => {
     <>
       <ThemeProvider theme={Theme}>
         <GlobalStyles />
-        <Scene rocks={rocks} />
+        <Scene />
       </ThemeProvider>
     </>
   );

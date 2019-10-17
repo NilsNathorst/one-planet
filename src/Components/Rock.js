@@ -14,7 +14,6 @@ const Rock = ({ color, x, y, z }) => {
     <mesh
       ref={rockRef}
       visible
-      userData={{ test: "hello" }}
       position={new THREE.Vector3(x, y, z)}
       rotation={new THREE.Euler(0, 0, 0)}
       geometry={new THREE.BoxGeometry(1, 1, 1)}
