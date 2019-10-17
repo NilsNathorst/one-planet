@@ -1,29 +1,33 @@
 import React, { useRef } from "react";
 import { useRender } from "react-three-fiber";
 import * as THREE from "three";
+import * as CANNON from "cannon";
+import { useCannon, Provider } from "../custom-hooks/useCannon";
 
-const Rock = ({ color, x, y, z }) => {
-  const rockRef = useRef();
-  console.log(x, y, z);
+const Rock = ({ position }) => {
+  // Register Rock as a physics body with zero mass
+  const rockRef = useCannon({ mass: 30 }, body => {
+    body.addShape(new CANNON.Box(new CANNON.Vec3(1, 1, 1)));
+    body.position.set(...position);
+    console.log(body.force);
+    body.preStep = () => {
+      var distanceBetween = new CANNON.Vec3();
+      body.position.negate(distanceBetween);
+      var distance = distanceBetween.norm();
+      distanceBetween.normalize();
+      distanceBetween.mult(3000 / Math.pow(distance, 2), body.force);
+    };
+  });
+
   useRender(() => {
-    rockRef.current.rotation.x += 0.01;
-    rockRef.current.rotation.y += 0.01;
+    // rockRef.current.lookAt(0, 0, 0);
   });
 
   return (
-    <mesh
-      ref={rockRef}
-      visible
-      position={new THREE.Vector3(x, y, z)}
-      rotation={new THREE.Euler(0, 0, 0)}
-      geometry={new THREE.BoxGeometry(1, 1, 1)}
-      material={
-        new THREE.MeshBasicMaterial({
-          color: new THREE.Color(color),
-          transparent: true
-        })
-      }
-    />
+    <mesh ref={rockRef} visible castShadow>
+      <boxGeometry attach="geometry" args={[1, 1, 1]} />
+      <meshBasicMaterial wireframe attach="material" color="hotpink" />
+    </mesh>
   );
 };
 
