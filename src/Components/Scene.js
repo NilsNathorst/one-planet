@@ -7,6 +7,7 @@ import { Canvas, extend, useThree, useRender } from "react-three-fiber";
 import * as THREE from "three";
 
 import { Provider } from "../helpers/useCannon";
+import Tree from "./Tree";
 
 extend({ OrbitControls });
 extend({ TrackballControls });
@@ -41,8 +42,9 @@ const Scene = () => {
         <ambientLight />
         <spotLight castShadow position={[0, 5, 10]} penumbra={1} />
         <Planet position={[0, 0, 0]} />
-        <Rock position={[0, 10, 0]} />
-        <Rock position={[0, -10, 0]} />
+        <Tree position={[-1, -1, -1]} />
+        <Tree position={[1, 1, 1]} />
+        <Tree position={[1, -1, -1]} />
         <Controls />
       </Provider>
     </Canvas>
