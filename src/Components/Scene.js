@@ -5,7 +5,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { TrackballControls } from "three/examples/jsm/controls/TrackballControls";
 import { Canvas, extend, useThree, useRender } from "react-three-fiber";
 import * as THREE from "three";
-import Birds from "../Components/Birds";
+
 import { Provider } from "../helpers/useCannon";
 
 extend({ OrbitControls });
@@ -43,11 +43,7 @@ const Scene = () => {
         <Planet position={[0, 0, 0]} />
         <Rock position={[0, 10, 0]} />
         <Rock position={[0, -10, 0]} />
-        {/* <Plane /> */}
         <Controls />
-        <Suspense fallback={null}>
-          <Birds />
-        </Suspense>
       </Provider>
     </Canvas>
   );
