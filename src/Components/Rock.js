@@ -14,7 +14,8 @@ const Rock = ({ position }) => {
       var distance = distanceBetween.norm();
       distanceBetween.normalize();
       distanceBetween.mult(1500 / Math.pow(distance, 1), body.force);
-      if (distance <= 4.1) {
+
+      if (distance <= 5.3) {
         body.mass = 0;
       }
     };

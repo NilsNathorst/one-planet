@@ -31,7 +31,7 @@ const Controls = () => {
 const Scene = () => {
   return (
     <Canvas
-      camera={{ position: [0, 0, -10] }}
+      camera={{ position: [0, 10, -10] }}
       onCreated={({ gl }) => {
         gl.shadowMap.enabled = true;
         gl.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -42,9 +42,8 @@ const Scene = () => {
         <ambientLight />
         <spotLight castShadow position={[0, 5, 10]} penumbra={1} />
         <Planet position={[0, 0, 0]} />
-        <Tree position={[-1.2, -1, -1]} />
-        <Tree position={[1.2, 1, 1]} />
-        <Tree position={[1.2, -1, -1]} />
+        <Tree position={[0, -6, 0]} />
+        <Rock position={[0, 10, 0]} />
         <Controls />
       </Provider>
     </Canvas>

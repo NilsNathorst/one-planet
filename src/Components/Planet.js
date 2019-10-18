@@ -9,13 +9,17 @@ import { useLoader } from "react-three-fiber";
 const Planet = ({ position }) => {
   const [model, setModel] = useState(null);
   const planetRef = useCannon({ mass: 0 }, body => {
-    body.addShape(new CANNON.Sphere(1.05));
+    body.addShape(new CANNON.Sphere(4.9));
     body.position.set(...position);
   });
   useEffect(() => {
     new GLTFLoader().load("/models/planet.gltf", setModel);
   }, []);
-  // model && console.log(model.scene.children[2]);
+
+  useEffect(() => {
+    model && planetRef.current.scale.set(4, 4, 4);
+  }, [model]);
+
   return (
     model && (
       <mesh ref={planetRef} position={[0, 0, 0]}>
@@ -23,7 +27,7 @@ const Planet = ({ position }) => {
           attach="geometry"
           {...model.scene.children[2].geometry}
         />
-        <meshStandardMaterial attach="material" color="brown" />
+        <meshStandardMaterial wireframe attach="material" color="brown" />
       </mesh>
     )
   );
