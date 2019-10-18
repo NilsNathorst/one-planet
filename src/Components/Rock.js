@@ -1,13 +1,12 @@
-import React, { useRef } from "react";
+import React from "react";
 import { useRender } from "react-three-fiber";
-import * as THREE from "three";
 import * as CANNON from "cannon";
-import { useCannon, Provider } from "../helpers/useCannon";
+import { useCannon } from "../helpers/useCannon";
 
 const Rock = ({ position }) => {
   // Register Rock as a physics body with zero mass
   const rockRef = useCannon({ mass: 100 }, body => {
-    body.addShape(new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5)));
+    body.addShape(new CANNON.Box(new CANNON.Vec3(0.3, 0.3, 0.3)));
     body.position.set(...position);
     body.preStep = () => {
       var distanceBetween = new CANNON.Vec3();
@@ -27,8 +26,8 @@ const Rock = ({ position }) => {
 
   return (
     <mesh ref={rockRef} visible castShadow>
-      <boxGeometry attach="geometry" args={[0.5, 0.5, 0.5]} />
-      <meshBasicMaterial wireframe attach="material" color="hotpink" />
+      <dodecahedronBufferGeometry attach="geometry" args={[0.1, 0]} />
+      <meshStandardMaterial attach="material" color="brown" />
     </mesh>
   );
 };

@@ -1,12 +1,12 @@
 import Planet from "./Planet";
-import React, { useEffect, useRef } from "react";
+import React, { useRef, Suspense } from "react";
 import Rock from "./Rock";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { TrackballControls } from "three/examples/jsm/controls/TrackballControls";
 import { Canvas, extend, useThree, useRender } from "react-three-fiber";
 import * as THREE from "three";
-import * as CANNON from "cannon";
-import { useCannon, Provider } from "../helpers/useCannon";
+import Birds from "../Components/Birds";
+import { Provider } from "../helpers/useCannon";
 
 extend({ OrbitControls });
 extend({ TrackballControls });
@@ -43,9 +43,11 @@ const Scene = () => {
         <Planet position={[0, 0, 0]} />
         <Rock position={[0, 10, 0]} />
         <Rock position={[0, -10, 0]} />
-
         {/* <Plane /> */}
         <Controls />
+        <Suspense fallback={null}>
+          <Birds />
+        </Suspense>
       </Provider>
     </Canvas>
   );
