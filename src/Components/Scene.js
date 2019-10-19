@@ -42,7 +42,8 @@ const Scene = () => {
         <ambientLight />
         <spotLight castShadow position={[0, 5, 10]} penumbra={1} />
         <Planet position={[0, 0, 0]} />
-        <Tree position={[0, -6, 0]} />
+        <Tree position={[0, 5.2, 0]} variant="roseTree" />
+        <Tree position={[0, -5.2, 0]} variant="roseTree" />
         <Rock position={[0, 10, 0]} />
         <Controls />
       </Provider>

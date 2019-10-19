@@ -1,40 +1,52 @@
-import React, { useRef, useEffect } from "react";
-import { useRender } from "react-three-fiber";
+import React, { useRef, useEffect, useState } from "react";
+
 import * as CANNON from "cannon";
-import { useCannon } from "../helpers/useCannon";
+import { useCannon, Provider } from "../helpers/useCannon";
 
-const Tree = ({ position }) => {
-  // Register tree as a physics body with zero mass
-  const groupRef = useRef();
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { useLoader, useRender } from "react-three-fiber";
+
+const Tree = ({ position, variant }) => {
+  const [model, setModel] = useState(null);
   const trunkRef = useRef();
-  const treeRef = useCannon({ mass: 0 }, body => {
-    var shape = new CANNON.Cylinder(0.5, 0.5, 2, 20);
-    body.addShape(shape, 0, 0);
-    body.position.set(...position);
-  });
-
+  const leavesRef = useRef();
   useEffect(() => {
-    treeRef.current.geometry.rotateX(-Math.PI / 2);
-    trunkRef.current.geometry.rotateX(-Math.PI / 2);
+    new GLTFLoader().load("/models/trees/trees.gltf", gltf => {
+      setModel(
+        gltf.scene.children.filter(selected => selected.name === variant)[0]
+      );
+    });
   }, []);
   useRender(() => {
-    treeRef.current.lookAt(0, 0, 0);
-    trunkRef.current.lookAt(0, 0, 0);
+    if (model) {
+      trunkRef.current.lookAt(0, 0, 0);
+      leavesRef.current.lookAt(0, 0, 0);
+    }
   });
+  useEffect(() => {
+    if (model) {
+      trunkRef.current.scale.set(0.1, 0.1, 0.1);
+      trunkRef.current.geometry.rotateX(-Math.PI / 2);
+      leavesRef.current.scale.set(0.1, 0.1, 0.1);
+      leavesRef.current.geometry.rotateX(-Math.PI / 2);
+    }
+
+    //   treeRef.current.geometry.rotateX(-Math.PI / 2);
+  }, [model]);
+
   return (
-    <group ref={groupRef}>
-      <mesh ref={treeRef} visible castShadow>
-        <coneBufferGeometry attach="geometry" args={[0.3, 1, 8]} />
-        <meshLambertMaterial attach="material" color="green" />
-      </mesh>
-      <mesh
-        ref={trunkRef}
-        position={[position[0] / 1.2, position[1] / 1.2, position[2] / 1.2]}
-      >
-        <cylinderBufferGeometry attach="geometry" args={[0.1, 0.1, 0.8, 20]} />
-        <meshLambertMaterial attach="material" color="brown" />
-      </mesh>
-    </group>
+    model && (
+      <group position={[...position]}>
+        <mesh ref={trunkRef}>
+          <bufferGeometry attach="geometry" {...model.children[1].geometry} />
+          <meshStandardMaterial attach="material" color="brown" />
+        </mesh>
+        <mesh ref={leavesRef}>
+          <bufferGeometry attach="geometry" {...model.children[0].geometry} />
+          <meshStandardMaterial attach="material" color="green" />
+        </mesh>
+      </group>
+    )
   );
 };
 
