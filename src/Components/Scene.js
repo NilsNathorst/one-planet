@@ -8,6 +8,7 @@ import * as THREE from "three";
 
 import { Provider } from "../helpers/useCannon";
 import Tree from "./Tree";
+import BirdScene from "./BirdScene";
 
 extend({ OrbitControls });
 extend({ TrackballControls });
@@ -46,6 +47,7 @@ const Scene = () => {
         <Tree position={[0, -5.2, 0]} variant="roseTree" />
         <Rock position={[0, 10, 0]} />
         <Controls />
+        <BirdScene />
       </Provider>
     </Canvas>
   );

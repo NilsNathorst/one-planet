@@ -27,7 +27,7 @@ const Planet = ({ position }) => {
           attach="geometry"
           {...model.scene.children[2].geometry}
         />
-        <meshStandardMaterial wireframe attach="material" color="brown" />
+        <meshStandardMaterial attach="material" color="brown" />
       </mesh>
     )
   );
