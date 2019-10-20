@@ -1,10 +1,7 @@
-import React, { useRef, useEffect, useState } from "react";
-import { useRender } from "react-three-fiber";
+import React, { useEffect, useState } from "react";
 import * as CANNON from "cannon";
-import { useCannon, Provider } from "../helpers/useCannon";
-
+import { useCannon } from "../helpers/useCannon";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { useLoader } from "react-three-fiber";
 
 const Planet = ({ position }) => {
   const [model, setModel] = useState(null);
@@ -22,12 +19,12 @@ const Planet = ({ position }) => {
 
   return (
     model && (
-      <mesh ref={planetRef} position={[0, 0, 0]}>
+      <mesh ref={planetRef} position={[0, 0, 0]} receiveShadow={true}>
         <bufferGeometry
           attach="geometry"
           {...model.scene.children[2].geometry}
         />
-        <meshStandardMaterial attach="material" color="brown" />
+        <meshLambertMaterial attach="material" color="#1F5C00" />
       </mesh>
     )
   );
