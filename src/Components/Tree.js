@@ -1,14 +1,11 @@
 import React, { useRef, useEffect, useState } from "react";
-
-import * as CANNON from "cannon";
-import { useCannon, Provider } from "../helpers/useCannon";
-
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { useLoader, useRender } from "react-three-fiber";
+import { useRender } from "react-three-fiber";
 
 const Tree = ({ position, variant }) => {
   const [model, setModel] = useState(null);
   const trunkRef = useRef();
+  const groupRef = useRef();
   const leavesRef = useRef();
   useEffect(() => {
     new GLTFLoader().load("/models/trees/trees.gltf", gltf => {
@@ -19,6 +16,7 @@ const Tree = ({ position, variant }) => {
   }, []);
   useRender(() => {
     if (model) {
+      groupRef.current.position.setLength(5.25);
       trunkRef.current.lookAt(0, 0, 0);
       leavesRef.current.lookAt(0, 0, 0);
     }
@@ -36,12 +34,12 @@ const Tree = ({ position, variant }) => {
 
   return (
     model && (
-      <group position={[...position]}>
-        <mesh ref={trunkRef}>
+      <group position={[...position]} ref={groupRef}>
+        <mesh ref={trunkRef} castShadow>
           <bufferGeometry attach="geometry" {...model.children[1].geometry} />
           <meshStandardMaterial attach="material" color="brown" />
         </mesh>
-        <mesh ref={leavesRef}>
+        <mesh ref={leavesRef} castShadow>
           <bufferGeometry attach="geometry" {...model.children[0].geometry} />
           <meshStandardMaterial attach="material" color="green" />
         </mesh>
