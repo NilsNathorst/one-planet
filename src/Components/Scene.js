@@ -45,7 +45,7 @@ const Scene = () => {
         <hemisphereLight intensity={0} />
 
         <Planet position={[0, 0, 0]} />
-        <Sun position={[1, 0, 0]} />
+        <Sun />
         <Tree position={[0, 5.2, 0]} variant="roseTree" />
         <Tree position={[1, 3, 0]} variant="roseTree" />
         <Rock position={[0, 10, 0]} />
