@@ -11,13 +11,11 @@ const Sun = () => {
     setTimeOfDay(date.getHours());
   }, []);
 
-  useEffect(() => {
-    console.log(sunRef);
-  }, [grpRef]);
+  useEffect(() => {}, [grpRef]);
   useRender(() => {
-    sunRef.current.rotation.z += 0.03;
+    sunRef.current.rotation.z += 0.0008;
   });
-  console.log(timeOfDay);
+
   return (
     <group ref={sunRef} position={[0, 0, 0]}>
       <mesh position={[10, 0, 0]} visible>
