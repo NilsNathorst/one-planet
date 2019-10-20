@@ -48,6 +48,7 @@ function Bird() {
           factor={factor}
         >
           <mesh
+            castShadow
             name="Object_0"
             morphTargetDictionary={
               model.scene.children[0].morphTargetDictionary
