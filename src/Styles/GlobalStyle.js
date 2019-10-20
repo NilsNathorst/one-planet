@@ -1,5 +1,4 @@
 import { createGlobalStyle } from "styled-components";
-import bg from "../assets/bg.png";
 const GlobalStyles = createGlobalStyle`
 
 @font-face {
@@ -22,7 +21,7 @@ const GlobalStyles = createGlobalStyle`
 		font-weight: normal;
 }
 canvas{
-    background: url(${bg});
+  background-color: white;
 }
 #root{
     width: 100vw;
