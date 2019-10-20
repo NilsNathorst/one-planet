@@ -31,10 +31,9 @@ function Bird() {
 
   useFrame((state, delta) => {
     if (model) {
-      const fart =
+      groupRef.current.rotation.z +=
         Math.sin((delta * factor) / 2) * Math.cos((delta * factor) / 2) * 1.5;
       mixer.update(delta * speed);
-      groupRef.current.rotation.z += fart;
     }
   });
   if (model) {
