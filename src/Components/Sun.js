@@ -13,19 +13,12 @@ const Sun = () => {
 
   useEffect(() => {}, [grpRef]);
   useRender(() => {
-    sunRef.current.rotation.z += 0.0008;
+    sunRef.current.rotation.z += 0.001;
   });
 
   return (
     <group ref={sunRef} position={[0, 0, 0]}>
-      <mesh position={[10, 0, 0]} visible>
-        <meshLambertMaterial
-          attach="material"
-          color={timeOfDay > 17 ? "blue" : "yellow"}
-        />
-        <boxBufferGeometry attach="geometry" args={[2, 2, 2]} />
-      </mesh>
-      <pointLight position={[10, 0, 0]} intensity={2} castShadow={true} />
+      <pointLight position={[25, 0, 0]} intensity={1} castShadow={true} />
     </group>
   );
 };
