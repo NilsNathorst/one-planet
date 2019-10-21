@@ -16,7 +16,7 @@ const Tree = ({ position, variant }) => {
   }, []);
   useRender(() => {
     if (model) {
-      groupRef.current.position.setLength(5.1);
+      groupRef.current.position.setLength(1.61);
       trunkRef.current.lookAt(0, 0, 0);
       leavesRef.current.lookAt(0, 0, 0);
     }
@@ -24,7 +24,7 @@ const Tree = ({ position, variant }) => {
   useEffect(() => {
     if (model) {
       const rotationOffset = Math.random() * 3;
-      const size = Math.random() * 0.03 + 0.01;
+      const size = Math.random() * 0.005 + 0.006;
       trunkRef.current.scale.set(size, size, size);
       leavesRef.current.scale.set(size, size, size);
       trunkRef.current.geometry.rotateX(-Math.PI / 2);

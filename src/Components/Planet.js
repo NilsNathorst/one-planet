@@ -2,11 +2,11 @@ import React, { useEffect, useState, useRef, useContext } from "react";
 import * as CANNON from "cannon";
 import { useCannon } from "../helpers/useCannon";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { useThree } from "react-three-fiber";
+import { useThree, useRender } from "react-three-fiber";
 import { database } from "../database/firebase.js";
 import { CanvasContext } from "./Context";
 import pushToDatabase from "../helpers/pushToDatabase";
-const Planet = ({ position }) => {
+const Planet = ({ children, position }) => {
   const surfaceRef = useRef();
   const [model, setModel] = useState(null);
 
@@ -31,11 +31,15 @@ const Planet = ({ position }) => {
 
   useEffect(() => {
     model && planetRef.current.scale.set(3.2, 3.2, 3.2);
-
+    model && waterRef.current.scale.set(1.02, 1.02, 1.02);
     model && workableSurfaceRef.current.rotateX(-Math.PI / 2);
     model && workableSurfaceRef.current.scale.set(1.01, 1.01, 1.01);
   }, [model]);
-
+  let anim = 0;
+  useRender(() => {
+    model && planetRef.current.rotateX(anim);
+    anim += 0.0003;
+  });
   return (
     model && (
       <group ref={planetRef} position={[0, 0, 0]}>
@@ -75,6 +79,7 @@ const Planet = ({ position }) => {
           />
           <meshLambertMaterial attach="material" color="#158BC6" />
         </mesh>
+        {children}
       </group>
     )
   );
