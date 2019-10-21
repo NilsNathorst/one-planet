@@ -10,6 +10,7 @@ import Rock from "./Rock";
 import Sun from "./Sun";
 import Tree from "./Tree";
 import BirdScene from "./BirdScene";
+import TreeTool from "./TreeTool";
 
 extend({ OrbitControls });
 extend({ TrackballControls });
@@ -31,9 +32,16 @@ const Controls = () => {
 };
 
 const Scene = () => {
+  const [treeTool, toggleTreeTool] = useState(false);
   const [treeVectors, setTreeVectors] = useState([]);
   return (
     <>
+      <TreeTool
+        isActive={treeTool}
+        onClick={() => {
+          toggleTreeTool(!treeTool);
+        }}
+      />
       <Canvas
         camera={{ position: [0, 10, -25] }}
         onCreated={({ gl }) => {
@@ -41,7 +49,9 @@ const Scene = () => {
           gl.shadowMap.type = THREE.PCFSoftShadowMap;
         }}
       >
-        <CanvasContext.Provider value={{ treeVectors, setTreeVectors }}>
+        <CanvasContext.Provider
+          value={{ treeTool, treeVectors, setTreeVectors }}
+        >
           <Provider>
             {/* <fog attach={"fog"} args={["white", 5, 11]} /> */}
             <ambientLight />
@@ -57,10 +67,8 @@ const Scene = () => {
             })}
 
             <Planet position={[0, 0, 0]} />
+
             <Sun />
-            <Tree position={[0, 5.2, 0]} variant="roseTree" />
-            <Tree position={[1, 3, 0]} variant="roseTree" />
-            <Rock position={[0, 10, 0]} />
             <Controls />
             <BirdScene />
           </Provider>

@@ -8,8 +8,8 @@ import { CanvasContext } from "./Context";
 const Planet = ({ position }) => {
   const surfaceRef = useRef();
   const [model, setModel] = useState(null);
-  const [active, setActive] = useState(false);
-  const { setTreeVectors } = useContext(CanvasContext);
+
+  const { setTreeVectors, treeTool } = useContext(CanvasContext);
   const workableSurfaceRef = useRef();
   const waterRef = useRef();
   const planetRef = useCannon({ mass: 0 }, body => {
@@ -32,7 +32,7 @@ const Planet = ({ position }) => {
     model && workableSurfaceRef.current.rotateX(-Math.PI / 2);
     model && workableSurfaceRef.current.scale.set(1.01, 1.01, 1.01);
   }, [model]);
-
+  console.log(treeTool);
   return (
     model && (
       <group ref={planetRef} position={[0, 0, 0]}>
@@ -46,17 +46,12 @@ const Planet = ({ position }) => {
         <mesh
           ref={workableSurfaceRef}
           receiveShadow
-          onPointerOver={() => {
-            setActive(true);
-          }}
-          onPointerOut={() => {
-            setActive(false);
-          }}
           onClick={() => {
-            setTreeVectors(treeVectors => [
-              ...treeVectors,
-              intersect()[0].point
-            ]);
+            treeTool &&
+              setTreeVectors(treeVectors => [
+                ...treeVectors,
+                intersect()[0].point
+              ]);
           }}
         >
           <bufferGeometry
@@ -64,9 +59,9 @@ const Planet = ({ position }) => {
             {...model.scene.children[0].geometry}
           />
           <meshLambertMaterial
-            visible={active ? true : false}
+            visible={treeTool ? true : false}
             attach="material"
-            wireframe={active ? true : false}
+            wireframe={treeTool ? true : false}
           />
         </mesh>
         <mesh ref={waterRef} receiveShadow>
