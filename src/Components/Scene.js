@@ -11,7 +11,7 @@ import Sun from "./Sun";
 import Tree from "./Tree";
 import BirdScene from "./BirdScene";
 import TreeTool from "./TreeTool";
-
+import { database } from "../database/firebase.js";
 extend({ OrbitControls });
 extend({ TrackballControls });
 const Controls = () => {

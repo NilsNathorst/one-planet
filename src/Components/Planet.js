@@ -3,13 +3,14 @@ import * as CANNON from "cannon";
 import { useCannon } from "../helpers/useCannon";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useThree } from "react-three-fiber";
+import { database } from "../database/firebase.js";
 import { CanvasContext } from "./Context";
-
+import pushToDatabase from "../helpers/pushToDatabase";
 const Planet = ({ position }) => {
   const surfaceRef = useRef();
   const [model, setModel] = useState(null);
 
-  const { setTreeVectors, treeTool } = useContext(CanvasContext);
+  const { treeVectors, setTreeVectors, treeTool } = useContext(CanvasContext);
   const workableSurfaceRef = useRef();
   const waterRef = useRef();
   const planetRef = useCannon({ mass: 0 }, body => {
@@ -23,6 +24,9 @@ const Planet = ({ position }) => {
 
   useEffect(() => {
     new GLTFLoader().load("/models/planet/newplanet.gltf", setModel);
+    database.ref("/").on("value", snapshot => {
+      setTreeVectors(snapshot.val().trees);
+    });
   }, []);
 
   useEffect(() => {
@@ -32,7 +36,7 @@ const Planet = ({ position }) => {
     model && workableSurfaceRef.current.rotateX(-Math.PI / 2);
     model && workableSurfaceRef.current.scale.set(1.01, 1.01, 1.01);
   }, [model]);
-  console.log(treeTool);
+
   return (
     model && (
       <group ref={planetRef} position={[0, 0, 0]}>
@@ -52,6 +56,7 @@ const Planet = ({ position }) => {
                 ...treeVectors,
                 intersect()[0].point
               ]);
+            treeTool && pushToDatabase(treeVectors, "/trees");
           }}
         >
           <bufferGeometry
