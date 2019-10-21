@@ -23,10 +23,16 @@ const Tree = ({ position, variant }) => {
   });
   useEffect(() => {
     if (model) {
-      trunkRef.current.scale.set(0.1, 0.1, 0.1);
+      const rotationOffset = Math.random() * 3;
+      const size = Math.random() * 0.03 + 0.01;
+      trunkRef.current.scale.set(size, size, size);
+      leavesRef.current.scale.set(size, size, size);
       trunkRef.current.geometry.rotateX(-Math.PI / 2);
-      leavesRef.current.scale.set(0.1, 0.1, 0.1);
       leavesRef.current.geometry.rotateX(-Math.PI / 2);
+      trunkRef.current.geometry.rotateZ(rotationOffset);
+      trunkRef.current.geometry.rotateZ(rotationOffset);
+      leavesRef.current.geometry.rotateZ(rotationOffset);
+      leavesRef.current.geometry.rotateZ(rotationOffset);
     }
 
     //   treeRef.current.geometry.rotateX(-Math.PI / 2);

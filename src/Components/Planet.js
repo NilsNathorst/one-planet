@@ -31,7 +31,6 @@ const Planet = ({ position }) => {
 
   useEffect(() => {
     model && planetRef.current.scale.set(3.2, 3.2, 3.2);
-    model && console.log(model.scene);
 
     model && workableSurfaceRef.current.rotateX(-Math.PI / 2);
     model && workableSurfaceRef.current.scale.set(1.01, 1.01, 1.01);

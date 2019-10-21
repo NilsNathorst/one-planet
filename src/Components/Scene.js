@@ -30,6 +30,9 @@ const Controls = () => {
     />
   );
 };
+const SpawnTree = (variant, index, position) => (
+  <Tree position={[...position]} variant={variant} key={index} />
+);
 
 const Scene = () => {
   const [treeTool, toggleTreeTool] = useState(false);
@@ -56,15 +59,9 @@ const Scene = () => {
             {/* <fog attach={"fog"} args={["white", 5, 11]} /> */}
             <ambientLight />
             <hemisphereLight intensity={0} />
-            {treeVectors.map((tree, i) => {
-              return (
-                <Tree
-                  position={[tree.x, tree.y, tree.z]}
-                  variant="roseTree"
-                  key={i}
-                />
-              );
-            })}
+            {treeVectors.map((tree, i) =>
+              SpawnTree("roseTree", i, [tree.x, tree.y, tree.z])
+            )}
 
             <Planet position={[0, 0, 0]} />
 
