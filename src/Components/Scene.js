@@ -1,10 +1,10 @@
 import Planet from "./Planet";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { TrackballControls } from "three/examples/jsm/controls/TrackballControls";
 import { Canvas, extend, useThree, useRender } from "react-three-fiber";
 import * as THREE from "three";
-
+import { CanvasContext } from "./Context";
 import { Provider } from "../helpers/useCannon";
 import Rock from "./Rock";
 import Sun from "./Sun";
@@ -31,28 +31,42 @@ const Controls = () => {
 };
 
 const Scene = () => {
+  const [treeVectors, setTreeVectors] = useState([]);
   return (
-    <Canvas
-      camera={{ position: [0, 10, -25] }}
-      onCreated={({ gl }) => {
-        gl.shadowMap.enabled = true;
-        gl.shadowMap.type = THREE.PCFSoftShadowMap;
-      }}
-    >
-      <Provider>
-        {/* <fog attach={"fog"} args={["white", 5, 11]} /> */}
-        <ambientLight />
-        <hemisphereLight intensity={0} />
+    <>
+      <Canvas
+        camera={{ position: [0, 10, -25] }}
+        onCreated={({ gl }) => {
+          gl.shadowMap.enabled = true;
+          gl.shadowMap.type = THREE.PCFSoftShadowMap;
+        }}
+      >
+        <CanvasContext.Provider value={{ treeVectors, setTreeVectors }}>
+          <Provider>
+            {/* <fog attach={"fog"} args={["white", 5, 11]} /> */}
+            <ambientLight />
+            <hemisphereLight intensity={0} />
+            {treeVectors.map((tree, i) => {
+              return (
+                <Tree
+                  position={[tree.x, tree.y, tree.z]}
+                  variant="roseTree"
+                  key={i}
+                />
+              );
+            })}
 
-        <Planet position={[0, 0, 0]} />
-        <Sun />
-        <Tree position={[0, 5.2, 0]} variant="roseTree" />
-        <Tree position={[1, 3, 0]} variant="roseTree" />
-        <Rock position={[0, 10, 0]} />
-        <Controls />
-        <BirdScene />
-      </Provider>
-    </Canvas>
+            <Planet position={[0, 0, 0]} />
+            <Sun />
+            <Tree position={[0, 5.2, 0]} variant="roseTree" />
+            <Tree position={[1, 3, 0]} variant="roseTree" />
+            <Rock position={[0, 10, 0]} />
+            <Controls />
+            <BirdScene />
+          </Provider>
+        </CanvasContext.Provider>
+      </Canvas>
+    </>
   );
 };
 
