@@ -16,7 +16,7 @@ const Tree = ({ position, variant }) => {
   }, []);
   useRender(() => {
     if (model) {
-      groupRef.current.position.setLength(5.25);
+      groupRef.current.position.setLength(5.1);
       trunkRef.current.lookAt(0, 0, 0);
       leavesRef.current.lookAt(0, 0, 0);
     }
