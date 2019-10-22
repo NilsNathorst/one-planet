@@ -1,0 +1,226 @@
+{
+    "asset" : {
+        "generator" : "Khronos glTF Blender I/O v0.9.36",
+        "version" : "2.0"
+    },
+    "scene" : 0,
+    "scenes" : [
+        {
+            "name" : "Scene",
+            "nodes" : [
+                0,
+                1,
+                2
+            ]
+        }
+    ],
+    "nodes" : [
+        {
+            "mesh" : 0,
+            "name" : "workableSurface",
+            "rotation" : [
+                0.7071068286895752,
+                0,
+                0,
+                0.7071067094802856
+            ]
+        },
+        {
+            "mesh" : 1,
+            "name" : "surface",
+            "rotation" : [
+                1,
+                0,
+                0,
+                -1.3435885648505064e-07
+            ]
+        },
+        {
+            "mesh" : 2,
+            "name" : "water",
+            "rotation" : [
+                1,
+                0,
+                0,
+                -1.3435885648505064e-07
+            ]
+        }
+    ],
+    "meshes" : [
+        {
+            "name" : "surface.003",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 0,
+                        "NORMAL" : 1
+                    },
+                    "indices" : 2
+                }
+            ]
+        },
+        {
+            "name" : "surface.004",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 3,
+                        "NORMAL" : 4
+                    },
+                    "indices" : 5
+                }
+            ]
+        },
+        {
+            "name" : "water.002",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 6,
+                        "NORMAL" : 7
+                    },
+                    "indices" : 8
+                }
+            ]
+        }
+    ],
+    "accessors" : [
+        {
+            "bufferView" : 0,
+            "componentType" : 5126,
+            "count" : 8625,
+            "max" : [
+                1.3724275827407837,
+                1.5859358310699463,
+                1.6027361154556274
+            ],
+            "min" : [
+                -1.5712677240371704,
+                -1.5692201852798462,
+                -1.5906727313995361
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 1,
+            "componentType" : 5126,
+            "count" : 8625,
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 2,
+            "componentType" : 5123,
+            "count" : 48084,
+            "type" : "SCALAR"
+        },
+        {
+            "bufferView" : 3,
+            "componentType" : 5126,
+            "count" : 24599,
+            "max" : [
+                1.3724275827407837,
+                1.6027361154556274,
+                1.5692201852798462
+            ],
+            "min" : [
+                -1.5712677240371704,
+                -1.5906727313995361,
+                -1.5859358310699463
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 4,
+            "componentType" : 5126,
+            "count" : 24599,
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 5,
+            "componentType" : 5123,
+            "count" : 147456,
+            "type" : "SCALAR"
+        },
+        {
+            "bufferView" : 6,
+            "componentType" : 5126,
+            "count" : 37735,
+            "max" : [
+                1.4851101636886597,
+                1.4633365869522095,
+                1.4851067066192627
+            ],
+            "min" : [
+                -1.4851099252700806,
+                -1.485106348991394,
+                -1.4851065874099731
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 7,
+            "componentType" : 5126,
+            "count" : 37735,
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 8,
+            "componentType" : 5123,
+            "count" : 226410,
+            "type" : "SCALAR"
+        }
+    ],
+    "bufferViews" : [
+        {
+            "buffer" : 0,
+            "byteLength" : 103500,
+            "byteOffset" : 0
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 103500,
+            "byteOffset" : 103500
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 96168,
+            "byteOffset" : 207000
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 295188,
+            "byteOffset" : 303168
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 295188,
+            "byteOffset" : 598356
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 294912,
+            "byteOffset" : 893544
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 452820,
+            "byteOffset" : 1188456
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 452820,
+            "byteOffset" : 1641276
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 452820,
+            "byteOffset" : 2094096
+        }
+    ],
+    "buffers" : [
+        {
+            "byteLength" : 2546916,
+            "uri" : "planet-v3.bin"
+        }
+    ]
+}
