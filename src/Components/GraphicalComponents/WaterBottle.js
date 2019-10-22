@@ -30,7 +30,7 @@ const WaterBottle = ({ meshRef, inheritPosition }) => {
       {model && isLoaded && (
         <group
           ref={meshRef}
-          scale={[0.05, 0.05, 0.05]}
+          scale={[0.03, 0.03, 0.03]}
           position={inheritPosition}
           rotation={randomV3Radians()}
         >
