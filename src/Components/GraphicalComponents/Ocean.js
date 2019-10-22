@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState, useRef } from "react";
+import { useRender } from "react-three-fiber";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import * as THREE from "three";
 
@@ -10,6 +11,11 @@ const Ocean = ({ meshRef, geometry }) => {
     new THREE.TextureLoader().load(
       "/models/waterbottle/textures/back_label_baseColor.png"
     )
+  );
+  const setFromSpherical = new THREE.Vector3().setFromSphericalCoords(
+    1.6,
+    Math.random() * Math.PI,
+    Math.random() * Math.PI
   );
   const textureFront = useMemo(() =>
     new THREE.TextureLoader().load(
@@ -29,11 +35,10 @@ const Ocean = ({ meshRef, geometry }) => {
     model && setLoaded(true);
   }, [model]);
 
-  // useEffect(() => {
-  //   if (model && isLoaded) {
-  //   }
-  // }, [isLoaded]);
-
+  useRender(() => {
+    if (model && isLoaded) {
+    }
+  });
   return (
     <>
       <mesh ref={meshRef} receiveShadow>
@@ -41,7 +46,11 @@ const Ocean = ({ meshRef, geometry }) => {
         <meshLambertMaterial attach="material" color="#158BC6" />
       </mesh>
       {model && isLoaded && (
-        <group ref={bottleRef} position={[4, 0, 0]}>
+        <group
+          ref={bottleRef}
+          scale={[0.1, 0.1, 0.1]}
+          position={setFromSpherical}
+        >
           <mesh>
             <bufferGeometry
               attach="geometry"
