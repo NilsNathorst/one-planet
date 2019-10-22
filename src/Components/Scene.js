@@ -6,14 +6,13 @@ import { Canvas, extend, useThree, useRender } from "react-three-fiber";
 import * as THREE from "three";
 import { CanvasContext } from "./Context";
 import { Provider } from "../helpers/useCannon";
-import Rock from "./Rock";
 import Sun from "./Sun";
 import Tree from "./Tree";
 import BirdScene from "./BirdScene";
 import TreeTool from "./TreeTool";
-import { database } from "../database/firebase.js";
 extend({ OrbitControls });
 extend({ TrackballControls });
+
 const Controls = () => {
   const orbitRef = useRef();
   const { camera, gl } = useThree();

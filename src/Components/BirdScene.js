@@ -27,7 +27,7 @@ function Bird() {
       groupRef.current.rotation.x = -Math.PI / 2;
       void mixer.clipAction(model.animations[0], groupRef.current).play();
     }
-  }, [model]);
+  }, [model, mixer]);
 
   useFrame((state, delta) => {
     if (model) {

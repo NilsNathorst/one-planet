@@ -1,12 +1,7 @@
-import React, { useRef, useEffect, useState } from "react";
-import { useRender } from "react-three-fiber";
-import * as THREE from "three";
+import React, { useRef } from "react";
+
 const Sun = () => {
   const sunRef = useRef();
-
-  // useRender(() => {
-  //   sunRef.current.rotation.z += 0.001;
-  // });
 
   return (
     <group ref={sunRef} position={[0, 0, 0]}>

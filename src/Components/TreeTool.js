@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 
 const StyledDiv = styled.div`
@@ -7,11 +7,6 @@ const StyledDiv = styled.div`
 `;
 
 const TreeTool = props => {
-  const [myState, setmyState] = useState(null);
-
-  useEffect(() => {
-    console.log("mounted");
-  }, []);
   return (
     <StyledDiv {...props} onClick={props.onClick}>
       <h1>TreeTool</h1>

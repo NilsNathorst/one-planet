@@ -34,7 +34,7 @@ export function useCannon({ ...props }, fn, deps = []) {
     world.addBody(body);
     // Remove body on unmount
     return () => world.removeBody(body);
-  }, deps);
+  }, [world, body, fn, deps]);
 
   useRender(() => {
     if (ref.current) {

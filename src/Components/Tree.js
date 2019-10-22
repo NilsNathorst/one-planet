@@ -13,7 +13,7 @@ const Tree = ({ position, variant }) => {
         gltf.scene.children.filter(selected => selected.name === variant)[0]
       );
     });
-  }, []);
+  }, [variant]);
   useRender(() => {
     if (model) {
       groupRef.current.position.setLength(1.61);

@@ -2,10 +2,9 @@ import React, { useEffect, useState, useRef, useContext } from "react";
 import * as CANNON from "cannon";
 import { useCannon } from "../helpers/useCannon";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { useThree, useRender } from "react-three-fiber";
+import { useRender } from "react-three-fiber";
 import { database } from "../database/firebase.js";
 import { CanvasContext } from "./Context";
-import pushToDatabase from "../helpers/pushToDatabase";
 import Ocean from "./GraphicalComponents/Ocean";
 import Grass from "./GraphicalComponents/Grass";
 import Dirt from "./GraphicalComponents/Dirt";
@@ -13,7 +12,7 @@ const Planet = ({ children, position }) => {
   const surfaceRef = useRef();
   const [model, setModel] = useState(null);
 
-  const { treeVectors, setTreeVectors, treeTool } = useContext(CanvasContext);
+  const { setTreeVectors } = useContext(CanvasContext);
   const workableSurfaceRef = useRef();
   const waterRef = useRef();
   const planetRef = useCannon({ mass: 0 }, body => {
@@ -21,23 +20,19 @@ const Planet = ({ children, position }) => {
     body.position.set(...position);
   });
 
-  const {
-    intersect // Calls onMouseMove handlers for objects underneath the cursor
-  } = useThree();
-
   useEffect(() => {
     new GLTFLoader().load("/models/planet/newplanet.gltf", setModel);
     database.ref("/").on("value", snapshot => {
       setTreeVectors(snapshot.val().trees);
     });
-  }, []);
+  }, [setTreeVectors]);
 
   useEffect(() => {
     model && planetRef.current.scale.set(3.2, 3.2, 3.2);
     model && waterRef.current.scale.set(1.02, 1.02, 1.02);
     model && workableSurfaceRef.current.rotateX(-Math.PI / 2);
     model && workableSurfaceRef.current.scale.set(1.01, 1.01, 1.01);
-  }, [model]);
+  }, [model, planetRef]);
   let anim = 0;
   useRender(() => {
     model && planetRef.current.rotateX(anim);

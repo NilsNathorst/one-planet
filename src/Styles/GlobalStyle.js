@@ -1,14 +1,16 @@
 import { createGlobalStyle } from "styled-components";
+import regularFont from "../assets/fonts/googlesans-regular-webfont.woff2";
+import boldFont from "../assets/fonts/googlesans-bold-webfont.woff2";
 const GlobalStyles = createGlobalStyle`
 
 @font-face {
     font-family: "Google Sans";
-    src: url("../assets/fonts/googlesans-bold-webfont.woff2");
+    src: url(${boldFont});
     font-weight: bold;
 }
 @font-face {
     font-family: "Google Sans";
-    src: url("../assets/fonts/googlesans-regular-webfont.woff2");
+    src: url(${regularFont});
     font-weight: normal;
 }
 
