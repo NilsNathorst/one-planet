@@ -5,6 +5,7 @@ import * as THREE from "three";
 
 const Ocean = ({ meshRef, geometry }) => {
   const [model, setModel] = useState(null);
+  const { intersect } = useThree();
   const [isLoaded, setLoaded] = useState(false);
   const [vectorsArray, setVectorsArray] = useState([]);
   const bottleRef = useRef();
@@ -57,11 +58,10 @@ const Ocean = ({ meshRef, geometry }) => {
     };
     setVectorsArray(filterfunc(vectorArr, JSON.stringify));
   }, []);
-
   let random = Math.floor(Math.random() * 10000);
-
   useRender(() => {
     if (model && isLoaded) {
+      bottleRef.current.position.setLength(1.61);
     }
   });
 
@@ -75,7 +75,11 @@ const Ocean = ({ meshRef, geometry }) => {
         <group
           ref={bottleRef}
           scale={[0.1, 0.1, 0.1]}
-          position={setFromSpherical}
+          position={[
+            vectorsArray[random].x,
+            vectorsArray[random].y,
+            vectorsArray[random].z
+          ]}
         >
           <mesh>
             <bufferGeometry
@@ -105,14 +109,7 @@ const Ocean = ({ meshRef, geometry }) => {
               <primitive attach="map" object={textureBack} />
             </meshStandardMaterial>
           </mesh>
-          <mesh
-            position={[
-              vectorsArray[random].x,
-              vectorsArray[random].y,
-              vectorsArray[random].z
-            ]}
-            scale={[0.2, 0.2, 0.2]}
-          >
+          <mesh position={[0, 0, 2]} scale={[0.2, 0.2, 0.2]}>
             <bufferGeometry
               attach="geometry"
               {...model.scene.children[0].children[0].children[0].children[0]
