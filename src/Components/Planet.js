@@ -21,7 +21,7 @@ const Planet = ({ children, position }) => {
   });
 
   useEffect(() => {
-    new GLTFLoader().load("/models/planet/newplanet.gltf", setModel);
+    new GLTFLoader().load("/models/planet/planet-v4.gltf", setModel);
     database.ref("/").on("value", snapshot => {
       setTreeVectors(snapshot.val().trees);
     });
