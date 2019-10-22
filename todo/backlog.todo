@@ -1,0 +1,48 @@
+Functional Requirements: 
+Planet dies:
+	Trash accumulates in the ocean:
+		☐ Planet adds trash over time
+		☐ User can clean up using a Garbage Magnet
+	Glaciers melt raising the water level:
+		☐ If the temperature reaches X trigger melt
+	Pollution cause global warming:
+		☐ Users have not cleaned up
+	There isn't enough vegetation:
+		☐ Users have not planted
+		☐ Planet too dry
+	Animals die:
+		☐ There isn't enough vegetation
+Planet Features:
+	☐ Day cycle
+	☐ Atmosphere
+	Seasons:
+		☐ Spring
+		☐ Summer
+		☐ Atumm
+		☐ Winter
+	Types of Weather:
+		☐ Rain
+		☐ Snow
+		☐ Sunshine
+Interface:
+Main Menu:
+	☐ Users are greeted with a menu screen explaining our idea
+	☐ 'animation' after clicking 'go to planet' button zooming in from space into the atmosphere of the planet
+	☐ Tutorial
+	
+Toolbar:
+	☐ User can select tool
+		☐ Seed Planter
+		☐ Garbage Magnet
+		☐ Anti Pollution Fan
+Planet:
+	☐ User can click Ocean
+	☐ User can click Tree
+		☐ Camera centers on selected object
+		☐ Speech bubble containing info on health
+	☐ User can hover each tool to get explanation
+	☐ Current date of planet
+General: 
+☐ Planet death animation
+☐ Planet death message
+☐ Planet death stats
