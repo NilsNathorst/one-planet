@@ -1,29 +1,43 @@
 import React, { useEffect, useMemo, useState, useRef } from "react";
-import { useRender } from "react-three-fiber";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { useRender, useThree } from "react-three-fiber";
+
 import * as THREE from "three";
 import WaterBottle from "./WaterBottle";
 
 const Ocean = ({ meshRef, geometry }) => {
   const bottleRef = useRef();
-  let [data, setData] = useState([]);
-  const [loaded, setLoaded] = useState(false);
-  const bottles = [0, 1, 2, 3, 4, 5, 6];
-  const setFromSpherical = () => {
-    return new THREE.Vector3().setFromSphericalCoords(
-      1.5,
-      Math.random() * Math.PI,
-      Math.random() * Math.PI
-    );
-  };
+  const [vectorsArray, setVectorsArray] = useState([]);
+  const bottles = new Array(20).fill();
+
   useEffect(() => {
-    console.log(meshRef.current.geometry);
+    const position = meshRef.current.geometry.attributes.position;
+    const vector = new THREE.Vector3();
+    const vectorArr = [];
+
+    for (let i = 0, length = position.length; i < length; i += 20) {
+      vector.fromBufferAttribute(position, i);
+      vector.applyMatrix4(meshRef.current.matrixWorld);
+      let x = Math.trunc(vector.x * 100) / 100;
+      let y = Math.trunc(vector.y * 100) / 100;
+      let z = Math.trunc(vector.z * 100) / 100;
+      const newVector = new THREE.Vector3(x, y, z);
+      vectorArr.push(newVector);
+    }
+
+    const filterfunc = (a, key) => {
+      var seen = {};
+      return a.filter(function(item) {
+        var k = key(item);
+        return seen.hasOwnProperty(k) ? false : (seen[k] = true);
+      });
+    };
+    setVectorsArray([...new Set(filterfunc(vectorArr, JSON.stringify))]);
   }, []);
 
   return (
     <>
       <mesh ref={meshRef} receiveShadow>
-        <bufferGeometry attach="geometry" {...geometry}></bufferGeometry>
+        <bufferGeometry attach="geometry" {...geometry} />
         <meshLambertMaterial attach="material" color="#158BC6" />
       </mesh>
       {bottles.map((bottle, i) => {
@@ -31,7 +45,9 @@ const Ocean = ({ meshRef, geometry }) => {
           <WaterBottle
             key={i}
             meshRef={bottleRef}
-            inheritPosition={setFromSpherical()}
+            inheritPosition={
+              vectorsArray[Math.floor(Math.random() * vectorsArray.length)]
+            }
           />
         );
       })}
