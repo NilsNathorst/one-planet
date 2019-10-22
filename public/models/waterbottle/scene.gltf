@@ -1,0 +1,921 @@
+{
+  "accessors": [
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 394,
+      "max": [
+        1.1052260398864746,
+        1.1052260398864746,
+        1.8299144506454468
+      ],
+      "min": [
+        -1.1052260398864746,
+        -1.1052260398864746,
+        -1.5582292079925537
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 4728,
+      "componentType": 5126,
+      "count": 394,
+      "max": [
+        1,
+        1,
+        1
+      ],
+      "min": [
+        -1,
+        -1,
+        -1
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 394,
+      "max": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "min": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 394,
+      "max": [
+        1.7657222747802734,
+        1.0010534524917603
+      ],
+      "min": [
+        0,
+        -0.0039960024878382683
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 762,
+      "max": [
+        393
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 9456,
+      "componentType": 5126,
+      "count": 6,
+      "max": [
+        0.84517043828964233,
+        -1,
+        1
+      ],
+      "min": [
+        -0.84517043828964233,
+        -1,
+        -1
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 9528,
+      "componentType": 5126,
+      "count": 6,
+      "max": [
+        0,
+        -1,
+        0
+      ],
+      "min": [
+        0,
+        -1,
+        0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "byteOffset": 6304,
+      "componentType": 5126,
+      "count": 6,
+      "max": [
+        0.99999982118606567,
+        0,
+        0.003085749689489603,
+        1
+      ],
+      "min": [
+        0.99999529123306274,
+        0,
+        -0.0024120165035128593,
+        1
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 3152,
+      "componentType": 5126,
+      "count": 6,
+      "max": [
+        0.99932998418807983,
+        1.0013358592987061
+      ],
+      "min": [
+        -0.00039148330688476562,
+        -0.00078809808474034071
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 3048,
+      "componentType": 5125,
+      "count": 12,
+      "max": [
+        5
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 9600,
+      "componentType": 5126,
+      "count": 6,
+      "max": [
+        0.84517043828964233,
+        1,
+        1
+      ],
+      "min": [
+        -0.84517043828964233,
+        1,
+        -1
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 9672,
+      "componentType": 5126,
+      "count": 6,
+      "max": [
+        0,
+        1,
+        0
+      ],
+      "min": [
+        0,
+        1,
+        0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "byteOffset": 6400,
+      "componentType": 5126,
+      "count": 6,
+      "max": [
+        -0.99999904632568359,
+        0,
+        0.0005420639063231647,
+        1
+      ],
+      "min": [
+        -0.99999988079071045,
+        0,
+        -0.0014085954753682017,
+        1
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 3200,
+      "componentType": 5126,
+      "count": 6,
+      "max": [
+        1.0010308027267456,
+        1.0013617277145386
+      ],
+      "min": [
+        0.00033886358141899109,
+        -0.00066287833033129573
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 3096,
+      "componentType": 5125,
+      "count": 12,
+      "max": [
+        5
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 9744,
+      "componentType": 5126,
+      "count": 168,
+      "max": [
+        1,
+        1,
+        1
+      ],
+      "min": [
+        -1,
+        -1,
+        -1.0470386743545532
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 11760,
+      "componentType": 5126,
+      "count": 168,
+      "max": [
+        0.92387962341308594,
+        0.92387956380844116,
+        1
+      ],
+      "min": [
+        -0.92387962341308594,
+        -0.92387956380844116,
+        -0.99938112497329712
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "byteOffset": 6496,
+      "componentType": 5126,
+      "count": 168,
+      "max": [
+        1,
+        0.92387956380844116,
+        2.7667527940021846e-22,
+        1
+      ],
+      "min": [
+        -0.92387956380844116,
+        -0.92387962341308594,
+        -2.1073425671147561e-08,
+        1
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 3248,
+      "componentType": 5126,
+      "count": 168,
+      "max": [
+        1,
+        1
+      ],
+      "min": [
+        0,
+        0.01000000536441803
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 3144,
+      "componentType": 5125,
+      "count": 258,
+      "max": [
+        167
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 13776,
+      "componentType": 5126,
+      "count": 632,
+      "max": [
+        0.7069130539894104,
+        0.7069130539894104,
+        -1.0470386743545532
+      ],
+      "min": [
+        -0.7069130539894104,
+        -0.7069130539894104,
+        -1.3482711315155029
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 21360,
+      "componentType": 5126,
+      "count": 632,
+      "max": [
+        0.94160181283950806,
+        0.94160223007202148,
+        0.99507260322570801
+      ],
+      "min": [
+        -0.94160205125808716,
+        -0.94160193204879761,
+        -1
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "byteOffset": 9184,
+      "componentType": 5126,
+      "count": 632,
+      "max": [
+        1,
+        0.017506761476397514,
+        1.6366374921972238e-08,
+        1
+      ],
+      "min": [
+        0,
+        -0.024932481348514557,
+        0,
+        -1
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 4592,
+      "componentType": 5126,
+      "count": 632,
+      "max": [
+        1,
+        0.5
+      ],
+      "min": [
+        0,
+        0.01000000536441803
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 4176,
+      "componentType": 5125,
+      "count": 1026,
+      "max": [
+        631
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 28944,
+      "componentType": 5126,
+      "count": 32,
+      "max": [
+        0.92176783084869385,
+        0.92176789045333862,
+        -0.46595877408981323
+      ],
+      "min": [
+        -0.92176789045333862,
+        -0.92176789045333862,
+        -0.52591115236282349
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 29328,
+      "componentType": 5126,
+      "count": 32,
+      "max": [
+        0.92387956380844116,
+        0.92387956380844116,
+        0
+      ],
+      "min": [
+        -0.92387956380844116,
+        -0.92387956380844116,
+        0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "byteOffset": 19296,
+      "componentType": 5126,
+      "count": 32,
+      "max": [
+        0.92387956380844116,
+        0.92387962341308594,
+        5.210114218232452e-21,
+        1
+      ],
+      "min": [
+        -0.92387956380844116,
+        -0.92387962341308594,
+        0,
+        1
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 9648,
+      "componentType": 5126,
+      "count": 32,
+      "max": [
+        1,
+        0.63414633274078369
+      ],
+      "min": [
+        0,
+        0.61788618564605713
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 8280,
+      "componentType": 5125,
+      "count": 48,
+      "max": [
+        31
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "extras": {
+      "author": "Diego T. Yamaguchi (https://sketchfab.com/freshlybaked)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/3d-models/fiji-water-bottle-219204daeb2f446ebbc3837df97e0a8a",
+      "title": "Fiji Water Bottle"
+    },
+    "generator": "Sketchfab-6.34.0",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 8472,
+      "byteOffset": 0,
+      "name": "floatBufferViews",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 9904,
+      "byteOffset": 8472,
+      "byteStride": 8,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 29712,
+      "byteOffset": 18376,
+      "byteStride": 12,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 19808,
+      "byteOffset": 48088,
+      "byteStride": 16,
+      "name": "floatBufferViews",
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 67896,
+      "uri": "scene.bin"
+    }
+  ],
+  "images": [
+    {
+      "uri": "textures/fiji_label_baseColor.png"
+    },
+    {
+      "uri": "textures/back_label_baseColor.png"
+    }
+  ],
+  "materials": [
+    {
+      "alphaMode": "BLEND",
+      "doubleSided": true,
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "name": "transparent_bottle",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.80000000000000004,
+          0.80000000000000004,
+          0.80000000000000004,
+          0.20000000000000001
+        ],
+        "metallicFactor": 1,
+        "roughnessFactor": 0.2578125
+      }
+    },
+    {
+      "alphaMode": "BLEND",
+      "doubleSided": true,
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "name": "fiji_label",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "baseColorTexture": {
+          "index": 0,
+          "texCoord": 0
+        },
+        "metallicFactor": 0,
+        "roughnessFactor": 0
+      }
+    },
+    {
+      "doubleSided": true,
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "name": "back_label",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "baseColorTexture": {
+          "index": 1,
+          "texCoord": 0
+        },
+        "metallicFactor": 0,
+        "roughnessFactor": 0.78091097700000001
+      }
+    },
+    {
+      "doubleSided": true,
+      "emissiveFactor": [
+        0,
+        0.030974000000000002,
+        1
+      ],
+      "name": "bottle_cap",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0,
+          0.015487000000000001,
+          0.80000000000000004,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 0.5
+      }
+    },
+    {
+      "doubleSided": true,
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "name": "bottel_cap_darker",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.0048599899999999998,
+          0.0063935900000000002,
+          0.060712099999999998,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 0.99776631500000001
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "fiji water bottle_transparent bottle_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0,
+            "TANGENT": 2,
+            "TEXCOORD_0": 3
+          },
+          "indices": 4,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "fiji water bottle_fiji label_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 6,
+            "POSITION": 5,
+            "TANGENT": 7,
+            "TEXCOORD_0": 8
+          },
+          "indices": 9,
+          "material": 1,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "fiji water bottle_back label_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 11,
+            "POSITION": 10,
+            "TANGENT": 12,
+            "TEXCOORD_0": 13
+          },
+          "indices": 14,
+          "material": 2,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "water bottle cap_bottle cap_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 16,
+            "POSITION": 15,
+            "TANGENT": 17,
+            "TEXCOORD_0": 18
+          },
+          "indices": 19,
+          "material": 3,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "water bottle cap_transparent bottle_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 21,
+            "POSITION": 20,
+            "TANGENT": 22,
+            "TEXCOORD_0": 23
+          },
+          "indices": 24,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "water bottle cap_bottel cap darker_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 26,
+            "POSITION": 25,
+            "TANGENT": 27,
+            "TEXCOORD_0": 28
+          },
+          "indices": 29,
+          "material": 4,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "name": "RootNode (gltf orientation matrix)",
+      "rotation": [
+        -0.70710678118654746,
+        -0,
+        -0,
+        0.70710678118654757
+      ]
+    },
+    {
+      "children": [
+        2
+      ],
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -3.0981598683865741e-05,
+        1.7675999970379053e-06,
+        1
+      ],
+      "name": "RootNode (model correction matrix)"
+    },
+    {
+      "children": [
+        3
+      ],
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "name": "b4dd7da75a6249dc8f8269cd96de23ad.fbx"
+    },
+    {
+      "children": [
+        4,
+        8
+      ],
+      "name": "RootNode"
+    },
+    {
+      "children": [
+        5,
+        6,
+        7
+      ],
+      "matrix": [
+        90.492782592773438,
+        0,
+        0,
+        0,
+        0,
+        -9.5005451769374896e-06,
+        -58.313930511473842,
+        0,
+        0,
+        140.62297058105284,
+        -2.2910389905162952e-05,
+        0,
+        0.16979128122329712,
+        220.71083068847656,
+        -2.1424230567390623e-07,
+        1
+      ],
+      "name": "fiji water bottle"
+    },
+    {
+      "mesh": 0,
+      "name": "fiji water bottle_transparent bottle_0"
+    },
+    {
+      "mesh": 1,
+      "name": "fiji water bottle_fiji label_0"
+    },
+    {
+      "mesh": 2,
+      "name": "fiji water bottle_back label_0"
+    },
+    {
+      "children": [
+        9,
+        10,
+        11
+      ],
+      "matrix": [
+        37.287528991699219,
+        0,
+        0,
+        0,
+        0,
+        -6.0749095561702473e-06,
+        -37.287528991698728,
+        0,
+        0,
+        26.580949783324844,
+        -4.3305863975794952e-06,
+        0,
+        0.30456018447875977,
+        512.56610107421875,
+        3.3000313123920932e-05,
+        1
+      ],
+      "name": "water bottle cap"
+    },
+    {
+      "mesh": 3,
+      "name": "water bottle cap_bottle cap_0"
+    },
+    {
+      "mesh": 4,
+      "name": "water bottle cap_transparent bottle_0"
+    },
+    {
+      "mesh": 5,
+      "name": "water bottle cap_bottel cap darker_0"
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987,
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "OSG_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
+    }
+  ]
+}
+
