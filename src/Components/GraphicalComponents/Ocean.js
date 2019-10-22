@@ -1,11 +1,12 @@
 import React, { useEffect, useMemo, useState, useRef } from "react";
-import { useRender } from "react-three-fiber";
+import { useRender, useThree } from "react-three-fiber";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import * as THREE from "three";
 
 const Ocean = ({ meshRef, geometry }) => {
   const [model, setModel] = useState(null);
   const [isLoaded, setLoaded] = useState(false);
+  const [vectorsArray, setVectorsArray] = useState([]);
   const bottleRef = useRef();
   const textureBack = useMemo(() =>
     new THREE.TextureLoader().load(
@@ -17,15 +18,12 @@ const Ocean = ({ meshRef, geometry }) => {
     Math.random() * Math.PI,
     Math.random() * Math.PI
   );
+
   const textureFront = useMemo(() =>
     new THREE.TextureLoader().load(
       "/models/waterbottle/textures/fiji_label_baseColor.png"
     )
   );
-  useEffect(() => {
-    new GLTFLoader().load("/models/waterbottle/scene.gltf", setModel);
-  }, []);
-
   useEffect(() => {
     model &&
       console.log(
@@ -34,11 +32,39 @@ const Ocean = ({ meshRef, geometry }) => {
       );
     model && setLoaded(true);
   }, [model]);
+  useEffect(() => {
+    new GLTFLoader().load("/models/waterbottle/scene.gltf", setModel);
+    const position = meshRef.current.geometry.attributes.position;
+    const vector = new THREE.Vector3();
+    const vectorArr = [];
+
+    for (let i = 0, length = position.length; i < length; i++) {
+      vector.fromBufferAttribute(position, i);
+      vector.applyMatrix4(meshRef.current.matrixWorld);
+      let x = Math.trunc(vector.x * 100) / 100;
+      let y = Math.trunc(vector.y * 100) / 100;
+      let z = Math.trunc(vector.z * 100) / 100;
+      const newVector = new THREE.Vector3(x, y, z);
+      vectorArr.push(newVector);
+    }
+
+    const filterfunc = (a, key) => {
+      var seen = {};
+      return a.filter(function(item) {
+        var k = key(item);
+        return seen.hasOwnProperty(k) ? false : (seen[k] = true);
+      });
+    };
+    setVectorsArray(filterfunc(vectorArr, JSON.stringify));
+  }, []);
+
+  let random = Math.floor(Math.random() * 10000);
 
   useRender(() => {
     if (model && isLoaded) {
     }
   });
+
   return (
     <>
       <mesh ref={meshRef} receiveShadow>
@@ -79,7 +105,14 @@ const Ocean = ({ meshRef, geometry }) => {
               <primitive attach="map" object={textureBack} />
             </meshStandardMaterial>
           </mesh>
-          <mesh position={[0, 0, 2]} scale={[0.2, 0.2, 0.2]}>
+          <mesh
+            position={[
+              vectorsArray[random].x,
+              vectorsArray[random].y,
+              vectorsArray[random].z
+            ]}
+            scale={[0.2, 0.2, 0.2]}
+          >
             <bufferGeometry
               attach="geometry"
               {...model.scene.children[0].children[0].children[0].children[0]
