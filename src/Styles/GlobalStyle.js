@@ -23,7 +23,7 @@ const GlobalStyles = createGlobalStyle`
 		font-weight: normal;
 }
 canvas{
-  background-color: white;
+    background: linear-gradient(#e66465, #9198e5);
 }
 #root{
     width: 100vw;

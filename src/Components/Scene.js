@@ -55,15 +55,15 @@ const Scene = () => {
           value={{ treeTool, treeVectors, setTreeVectors }}
         >
           <Provider>
+            <ambientLight args={[0x404040]} />
             {/* <fog attach={"fog"} args={["white", 5, 11]} /> */}
-            <ambientLight />
-            <hemisphereLight intensity={0} />
 
             <Planet position={[0, 0, 0]}>
               {treeVectors.map((tree, i) =>
                 SpawnTree("roseTree", i, [tree.x, tree.y, tree.z])
               )}
             </Planet>
+
             <Sun />
 
             <Controls />
