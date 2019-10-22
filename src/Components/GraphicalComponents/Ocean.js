@@ -3,12 +3,10 @@ import { useRender, useThree } from "react-three-fiber";
 
 import * as THREE from "three";
 import WaterBottle from "./WaterBottle";
-
 const Ocean = ({ meshRef, geometry }) => {
   const bottleRef = useRef();
   const [vectorsArray, setVectorsArray] = useState([]);
   const bottles = new Array(20).fill();
-
   useEffect(() => {
     const position = meshRef.current.geometry.attributes.position;
     const vector = new THREE.Vector3();
