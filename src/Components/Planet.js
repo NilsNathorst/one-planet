@@ -6,6 +6,9 @@ import { useThree, useRender } from "react-three-fiber";
 import { database } from "../database/firebase.js";
 import { CanvasContext } from "./Context";
 import pushToDatabase from "../helpers/pushToDatabase";
+import Ocean from "./GraphicalComponents/Ocean";
+import Grass from "./GraphicalComponents/Grass";
+import Dirt from "./GraphicalComponents/Dirt";
 const Planet = ({ children, position }) => {
   const surfaceRef = useRef();
   const [model, setModel] = useState(null);
@@ -43,42 +46,15 @@ const Planet = ({ children, position }) => {
   return (
     model && (
       <group ref={planetRef} position={[0, 0, 0]}>
-        <mesh ref={surfaceRef} receiveShadow>
-          <bufferGeometry
-            attach="geometry"
-            {...model.scene.children[1].geometry}
-          />
-          <meshLambertMaterial attach="material" color="brown" />
-        </mesh>
-        <mesh
-          ref={workableSurfaceRef}
-          receiveShadow
-          onClick={() => {
-            treeTool &&
-              setTreeVectors(treeVectors => [
-                ...treeVectors,
-                intersect()[0].point
-              ]);
-            treeTool && pushToDatabase(treeVectors, "/trees");
-          }}
-        >
-          <bufferGeometry
-            attach="geometry"
-            {...model.scene.children[0].geometry}
-          />
-          <meshLambertMaterial
-            visible={treeTool ? true : false}
-            attach="material"
-            wireframe={treeTool ? true : false}
-          />
-        </mesh>
-        <mesh ref={waterRef} receiveShadow>
-          <bufferGeometry
-            attach="geometry"
-            {...model.scene.children[2].geometry}
-          />
-          <meshLambertMaterial attach="material" color="#158BC6" />
-        </mesh>
+        <Dirt
+          meshRef={surfaceRef}
+          geometry={model.scene.children[1].geometry}
+        />
+        <Grass
+          meshRef={workableSurfaceRef}
+          geometry={model.scene.children[0].geometry}
+        />
+        <Ocean meshRef={waterRef} geometry={model.scene.children[2].geometry} />
         {children}
       </group>
     )
