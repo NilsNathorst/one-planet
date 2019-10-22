@@ -21,7 +21,7 @@ const Planet = ({ children, position }) => {
   });
 
   useEffect(() => {
-    new GLTFLoader().load("/models/planet/newplanet.gltf", setModel);
+    new GLTFLoader().load("/models/planet/planet-v4.gltf", setModel);
     database.ref("/").on("value", snapshot => {
       setTreeVectors(snapshot.val().trees);
     });
@@ -29,7 +29,7 @@ const Planet = ({ children, position }) => {
 
   useEffect(() => {
     model && planetRef.current.scale.set(3.2, 3.2, 3.2);
-    model && waterRef.current.scale.set(1.02, 1.02, 1.02);
+    model && waterRef.current.scale.set(1, 1, 1);
     model && workableSurfaceRef.current.rotateX(-Math.PI / 2);
     model && workableSurfaceRef.current.scale.set(1.01, 1.01, 1.01);
   }, [model, planetRef]);

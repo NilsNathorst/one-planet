@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useRender } from "react-three-fiber";
-import generateVector3Between from "../helpers/generateVector3Between";
+import { generateVector3Between } from "../helpers/numberGenerators";
 
 const Tree = ({ position, variant }) => {
   const [model, setModel] = useState(null);
