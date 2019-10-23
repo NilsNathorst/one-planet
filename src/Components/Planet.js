@@ -8,6 +8,7 @@ import { CanvasContext } from "./Context";
 import Ocean from "./GraphicalComponents/Ocean";
 import Grass from "./GraphicalComponents/Grass";
 import Dirt from "./GraphicalComponents/Dirt";
+
 const Planet = ({ children, position }) => {
   const surfaceRef = useRef();
   const [model, setModel] = useState(null);

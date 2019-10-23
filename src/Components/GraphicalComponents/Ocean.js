@@ -3,12 +3,14 @@ import { useRender, useThree } from "react-three-fiber";
 
 import * as THREE from "three";
 import SodaCan from "./SodaCan";
+import Magnet from "../Tools/Magnet";
 const Ocean = ({ meshRef, geometry }) => {
   const attrRef = useRef();
   const sodacanRef = useRef();
+  const magnetRef = useRef();
   const [vectorsArray, setVectorsArray] = useState([]);
   const [disabled, setDisabled] = useState(false);
-
+  const [magnetPos, setMagnetPos] = useState();
   const filterfunc = (a, key) => {
     let seen = new Set();
     return a.filter(item => {
@@ -16,7 +18,7 @@ const Ocean = ({ meshRef, geometry }) => {
       return seen.has(k) ? false : seen.add(k);
     });
   };
-
+  const { intersect } = useThree();
   useEffect(() => {
     const position = meshRef.current.geometry.attributes.position;
     const vector = new THREE.Vector3();
@@ -35,11 +37,20 @@ const Ocean = ({ meshRef, geometry }) => {
 
   return (
     <>
-      <mesh ref={meshRef} receiveShadow>
+      <mesh
+        ref={meshRef}
+        receiveShadow
+        onPointerDown={e => {
+          setMagnetPos(intersect()[0].point);
+        }}
+      >
         <bufferGeometry attach="geometry" {...geometry} />
         <meshLambertMaterial attach="material" color="#158BC6" />
       </mesh>
-
+      <Magnet
+        meshRef={magnetRef}
+        inheritPosition={magnetPos ? magnetPos : [0, 0, 0]}
+      />
       {vectorsArray.map((vector, i) => {
         return (
           <SodaCan

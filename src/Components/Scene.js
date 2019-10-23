@@ -10,11 +10,10 @@ import Sun from "./Sun";
 import Tree from "./Tree";
 import BirdScene from "./BirdScene";
 import TreeTool from "./TreeTool";
-import Magnet from "./Tools/Magnet";
 extend({ OrbitControls });
 extend({ TrackballControls });
 
-const Controls = () => {
+const Controls = ({ disabled }) => {
   const orbitRef = useRef();
   const { camera, gl } = useThree();
 
@@ -25,6 +24,9 @@ const Controls = () => {
   return (
     <trackballControls
       enableDamping
+      noPan={disabled}
+      noRotate={disabled}
+      noZoom={disabled}
       args={[camera, gl.domElement]}
       ref={orbitRef}
     />
@@ -37,6 +39,7 @@ const SpawnTree = (variant, index, position) => (
 const Scene = () => {
   const [treeTool, toggleTreeTool] = useState(false);
   const [treeVectors, setTreeVectors] = useState([]);
+  const [isDisabled, setDisabled] = useState(false);
   return (
     <>
       <TreeTool
@@ -45,6 +48,7 @@ const Scene = () => {
           toggleTreeTool(!treeTool);
         }}
       />
+      <button onClick={() => setDisabled(!isDisabled)}>Disable Controls</button>
       <Canvas
         camera={{ position: [0, 10, -25] }}
         onCreated={({ gl }) => {
@@ -67,8 +71,7 @@ const Scene = () => {
 
             <Sun />
 
-            <Controls />
-            <Magnet />
+            <Controls disabled={isDisabled} />
             <BirdScene />
           </Provider>
         </CanvasContext.Provider>
