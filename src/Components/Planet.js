@@ -1,26 +1,18 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
-import * as CANNON from "cannon";
-import { useCannon } from "../helpers/useCannon";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { useRender } from "react-three-fiber";
 import { database } from "../database/firebase.js";
 import { CanvasContext } from "./Context";
 import Ocean from "./GraphicalComponents/Ocean";
 import Grass from "./GraphicalComponents/Grass";
 import Dirt from "./GraphicalComponents/Dirt";
 
-const Planet = ({ children, position }) => {
+const Planet = ({ children }) => {
   const surfaceRef = useRef();
   const [model, setModel] = useState(null);
-
   const { setTreeVectors } = useContext(CanvasContext);
   const workableSurfaceRef = useRef();
   const waterRef = useRef();
-  const planetRef = useCannon({ mass: 0 }, body => {
-    body.addShape(new CANNON.Sphere(4.9));
-    body.position.set(...position);
-  });
-
+  const planetRef = useRef();
   useEffect(() => {
     new GLTFLoader().load("/models/planet/planet-v4.gltf", setModel);
     database.ref("/").on("value", snapshot => {
@@ -33,7 +25,7 @@ const Planet = ({ children, position }) => {
     model && waterRef.current.scale.set(1, 1, 1);
     model && workableSurfaceRef.current.rotateX(-Math.PI / 2);
     model && workableSurfaceRef.current.scale.set(1.01, 1.01, 1.01);
-  }, [model, planetRef]);
+  }, [model]);
 
   return (
     model && (

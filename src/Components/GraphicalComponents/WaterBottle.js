@@ -3,6 +3,7 @@ import { useRender } from "react-three-fiber";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import * as THREE from "three";
 import { randomV3Radians } from "../../helpers/numberGenerators";
+
 const WaterBottle = ({ meshRef, inheritPosition }) => {
   const [model, setModel] = useState(null);
   const [isLoaded, setLoaded] = useState(false);
@@ -17,6 +18,7 @@ const WaterBottle = ({ meshRef, inheritPosition }) => {
       "/models/waterbottle/textures/fiji_label_baseColor.png"
     )
   );
+
   useEffect(() => {
     new GLTFLoader().load("/models/waterbottle/scene.gltf", setModel);
   }, []);

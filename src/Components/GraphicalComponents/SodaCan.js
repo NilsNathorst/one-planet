@@ -1,11 +1,12 @@
-import React, { useEffect, useMemo, useState, useRef } from "react";
-import { useRender } from "react-three-fiber";
+import React, { useEffect, useState, useContext } from "react";
+import { CanvasContext } from "../Context";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 import { randomV3Radians } from "../../helpers/numberGenerators";
 const WaterBottle = ({ meshRef, inheritPosition }) => {
   const [model, setModel] = useState(null);
   const [isLoaded, setLoaded] = useState(false);
+  const { randomRadians } = useContext(CanvasContext);
 
   useEffect(() => {
     new GLTFLoader().load("/models/sodacan/sodacan.gltf", setModel);
@@ -14,7 +15,7 @@ const WaterBottle = ({ meshRef, inheritPosition }) => {
   useEffect(() => {
     model && setLoaded(true);
   }, [model]);
-
+  
   return (
     <>
       {model && isLoaded && (
@@ -22,7 +23,7 @@ const WaterBottle = ({ meshRef, inheritPosition }) => {
           ref={meshRef}
           scale={[0.001, 0.001, 0.001]}
           position={inheritPosition}
-          rotation={randomV3Radians()}
+          rotation={randomRadians}
         >
           <bufferGeometry
             attach="geometry"

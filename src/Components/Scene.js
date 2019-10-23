@@ -5,10 +5,10 @@ import { TrackballControls } from "three/examples/jsm/controls/TrackballControls
 import { Canvas, extend, useThree, useRender } from "react-three-fiber";
 import * as THREE from "three";
 import { CanvasContext } from "./Context";
-import { Provider } from "../helpers/useCannon";
 import Sun from "./Sun";
 import Tree from "./Tree";
 import BirdScene from "./BirdScene";
+import { randomV3Radians } from "../helpers/numberGenerators";
 import TreeTool from "./TreeTool";
 extend({ OrbitControls });
 extend({ TrackballControls });
@@ -36,10 +36,12 @@ const SpawnTree = (variant, index, position) => (
   <Tree position={[...position]} variant={variant} key={index} />
 );
 
+const random = randomV3Radians();
 const Scene = () => {
   const [treeTool, toggleTreeTool] = useState(false);
   const [treeVectors, setTreeVectors] = useState([]);
   const [isDisabled, setDisabled] = useState(false);
+  const [randomRadians] = useState(random);
   return (
     <>
       <TreeTool
@@ -57,23 +59,17 @@ const Scene = () => {
         }}
       >
         <CanvasContext.Provider
-          value={{ treeTool, treeVectors, setTreeVectors }}
+          value={{ treeTool, treeVectors, setTreeVectors, randomRadians }}
         >
-          <Provider>
-            <ambientLight args={[0x404040]} />
-            {/* <fog attach={"fog"} args={["white", 5, 11]} /> */}
-
-            <Planet position={[0, 0, 0]}>
-              {treeVectors.map((tree, i) =>
-                SpawnTree("roseTree", i, [tree.x, tree.y, tree.z])
-              )}
-            </Planet>
-
-            <Sun />
-
-            <Controls disabled={isDisabled} />
-            <BirdScene />
-          </Provider>
+          <ambientLight args={[0x404040]} />
+          <BirdScene />
+          <Planet position={[0, 0, 0]}>
+            {treeVectors.map((tree, i) =>
+              SpawnTree("roseTree", i, [tree.x, tree.y, tree.z])
+            )}
+          </Planet>
+          <Sun />
+          <Controls disabled={isDisabled} />
         </CanvasContext.Provider>
       </Canvas>
     </>

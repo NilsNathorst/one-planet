@@ -1,5 +1,5 @@
-import React, { useRef, useEffect } from "react";
-import { useRender } from "react-three-fiber";
+import React, { useRef } from "react";
+
 const Sun = () => {
   const sunRef = useRef();
   const spotRef = useRef();
