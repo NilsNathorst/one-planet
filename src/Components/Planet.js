@@ -33,11 +33,7 @@ const Planet = ({ children, position }) => {
     model && workableSurfaceRef.current.rotateX(-Math.PI / 2);
     model && workableSurfaceRef.current.scale.set(1.01, 1.01, 1.01);
   }, [model, planetRef]);
-  let anim = 0;
-  useRender(() => {
-    model && planetRef.current.rotateX(anim);
-    anim += 0.0003;
-  });
+
   return (
     model && (
       <group ref={planetRef} position={[0, 0, 0]}>

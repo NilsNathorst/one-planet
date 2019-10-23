@@ -14,14 +14,11 @@ const WaterBottle = ({ meshRef, inheritPosition }) => {
   useEffect(() => {
     model && setLoaded(true);
   }, [model]);
-  const handleHover = () => {
-    console.log("fart");
-  };
+
   return (
     <>
       {model && isLoaded && (
         <mesh
-          onPointerOver={handleHover}
           ref={meshRef}
           scale={[0.001, 0.001, 0.001]}
           position={inheritPosition}

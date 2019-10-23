@@ -22,7 +22,7 @@ const Ocean = ({ meshRef, geometry }) => {
     const vector = new THREE.Vector3();
     const vectorArr = [];
 
-    for (let i = 0, length = position.length; i < length; i += 100) {
+    for (let i = 0, length = position.length; i < length; i += 1000) {
       vector.fromBufferAttribute(position, i);
       vector.applyMatrix4(meshRef.current.matrixWorld);
       let x = Math.trunc(vector.x * 100) / 100;

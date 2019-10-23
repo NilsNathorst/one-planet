@@ -1,7 +1,10 @@
 import React, { useEffect, useRef } from "react";
-import { setFromSpherical } from "../../helpers/numberGenerators";
+
 import * as THREE from "three";
-import { a } from "react-spring/three";
+
+import { Canvas, useThree } from "react-three-fiber";
+import { useDrag } from "react-use-gesture";
+import { useSpring, a } from "react-spring/three";
 
 const Magnet = () => {
   const magnetRef = useRef();
