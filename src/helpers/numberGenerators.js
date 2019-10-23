@@ -13,12 +13,4 @@ const randomV3Radians = () => {
   ];
 };
 
-const setFromSpherical = (radius, theta, phi) => {
-  return new THREE.Vector3().setFromSphericalCoords(
-    radius ? radius : 1.5,
-    theta ? theta : Math.random() * Math.PI,
-    phi ? phi : Math.random() * Math.PI
-  );
-};
-
-export { randomV3Radians, generateVector3Between, setFromSpherical };
+export { randomV3Radians, generateVector3Between };

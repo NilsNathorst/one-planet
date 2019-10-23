@@ -10,6 +10,7 @@ import Sun from "./Sun";
 import Tree from "./Tree";
 import BirdScene from "./BirdScene";
 import TreeTool from "./TreeTool";
+import Magnet from "./Tools/Magnet";
 extend({ OrbitControls });
 extend({ TrackballControls });
 
@@ -67,6 +68,7 @@ const Scene = () => {
             <Sun />
 
             <Controls />
+            <Magnet />
             <BirdScene />
           </Provider>
         </CanvasContext.Provider>

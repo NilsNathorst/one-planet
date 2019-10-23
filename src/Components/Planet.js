@@ -49,11 +49,7 @@ const Planet = ({ children, position }) => {
           meshRef={workableSurfaceRef}
           geometry={model.scene.children[0].geometry}
         />
-        <Ocean
-          meshRef={waterRef}
-          geometry={model.scene.children[2].geometry}
-          updateMatrixWorld
-        />
+        <Ocean meshRef={waterRef} geometry={model.scene.children[2].geometry} />
         {children}
       </group>
     )
