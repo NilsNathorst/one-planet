@@ -1,37 +1,16 @@
 import Planet from "./Planet";
 import React, { useRef, useState } from "react";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { TrackballControls } from "three/examples/jsm/controls/TrackballControls";
 import { Canvas, extend, useThree, useFrame } from "react-three-fiber";
 import * as THREE from "three";
 import { CanvasContext } from "./Context";
 import Sun from "./Sun";
-import Tree from "./Tree";
+import Tree from "./GraphicalComponents/Trees";
 import BirdScene from "./BirdScene";
 import { randomV3Radians } from "../helpers/numberGenerators";
 import TreeTool from "./TreeTool";
 extend({ OrbitControls });
-extend({ TrackballControls });
 
-const Controls = ({ disabled }) => {
-  const orbitRef = useRef();
-  const { camera, gl } = useThree();
-
-  useFrame(() => {
-    orbitRef.current.update();
-  });
-
-  return (
-    <trackballControls
-      enableDamping
-      noPan={disabled}
-      noRotate={disabled}
-      noZoom={disabled}
-      args={[camera, gl.domElement]}
-      ref={orbitRef}
-    />
-  );
-};
 const SpawnTree = (variant, index, position) => (
   <Tree position={[...position]} variant={variant} key={index} />
 );

@@ -1,24 +1,25 @@
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useLoader } from "react-three-fiber";
 import React, { useEffect, useRef } from "react";
+import oceanVectors from "../../database/oceanVectors.json";
 
 const SodaCan = ({ pos }) => {
-  const gltf = useLoader(GLTFLoader, "/models/sodacan/sodacan.gltf");
+  const gltf = useLoader(GLTFLoader, "/models/sodacan/can.gltf");
   const ref = useRef();
-
   useEffect(() => {
     ref.current.lookAt(0, 0, 0);
   }, []);
+
   return (
-    <mesh scale={[0.001, 0.001, 0.001]} ref={ref} position={pos}>
+    <mesh scale={[0.1, 0.1, 0.1]} ref={ref} position={pos}>
       <bufferGeometry attach="geometry" {...gltf.__$[1].geometry} />
-      <meshNormalMaterial attach="material" />
+      <meshStandardMaterial attach="material" />
     </mesh>
   );
 };
 
-const SodaCans = ({ matrix }) => {
-  return matrix.map((point, i) => {
+const SodaCans = () => {
+  return oceanVectors.map((point, i) => {
     return (
       <>
         <SodaCan key={i} pos={point} />

@@ -1,15 +1,41 @@
-import React from "react";
-import GlobalStyles from "../Styles/GlobalStyle";
+//DEPENDENCIES
+import React, { Suspense } from "react";
 import { ThemeProvider } from "styled-components";
-
+import { Canvas } from "react-three-fiber";
+import * as THREE from "three";
+//COMPONENTS
+import GlobalStyles from "../Styles/GlobalStyle";
 import Theme from "../Styles/Theme";
-import Scene from "./Scene";
+import Controls from "./Controls";
+import Dirt from "./GraphicalComponents/Dirt";
+import Ocean from "./GraphicalComponents/Ocean";
+import Grass from "./GraphicalComponents/Grass";
+import SodaCans from "./GraphicalComponents/SodaCan";
+import Trees from "./GraphicalComponents/Trees";
+import Sun from "./Sun";
 const App = () => {
   return (
     <>
       <ThemeProvider theme={Theme}>
         <GlobalStyles />
-        <Scene />
+        <Canvas
+          camera={{ position: [0, 0, 100] }}
+          onCreated={({ gl }) => {
+            gl.shadowMap.enabled = true;
+            gl.shadowMap.type = THREE.PCFSoftShadowMap;
+          }}
+        >
+          <Controls />
+          <Suspense fallback={null}>
+            <ambientLight />
+            <Sun />
+            <Dirt />
+            <Ocean />
+            <Grass />
+            <SodaCans />
+            <Trees />
+          </Suspense>
+        </Canvas>
       </ThemeProvider>
     </>
   );

@@ -1,10 +1,14 @@
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { useLoader } from "react-three-fiber";
 import React from "react";
 
-const Dirt = ({ meshRef, geometry }) => {
+const Dirt = () => {
+  const gltf = useLoader(GLTFLoader, "/models/planet/planet-v4.gltf");
+
   return (
-    <mesh ref={meshRef} receiveShadow>
-      <bufferGeometry attach="geometry" {...geometry} />
-      <meshLambertMaterial attach="material" color="brown" />
+    <mesh scale={[30, 30, 30]} position={[0, 0, 0]}>
+      <bufferGeometry attach="geometry" {...gltf.__$[2].geometry} />
+      <meshNormalMaterial attach="material" color="brown" />
     </mesh>
   );
 };
