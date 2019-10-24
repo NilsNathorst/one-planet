@@ -8,9 +8,9 @@ const Ocean = () => {
 
   return (
     <>
-      <mesh ref={ref} scale={[29, 29, 29]} position={[0, 0, 0]}>
+      <mesh recieveShadow ref={ref} scale={[29, 29, 29]} position={[0, 0, 0]}>
         <bufferGeometry attach="geometry" {...gltf.__$[3].geometry} />
-        <meshStandardMaterial attach="material" color="#158BC6" />
+        <meshBasicMaterial attach="material" color="#158BC6" />
       </mesh>
     </>
   );
