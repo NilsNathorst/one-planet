@@ -2,8 +2,9 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useLoader } from "react-three-fiber";
 import React, { useEffect, useRef } from "react";
 import oceanVectors from "../../database/oceanVectors.json";
-
+import { useThree } from "react-three-fiber";
 const SodaCan = ({ pos }) => {
+  const { intersect } = useThree();
   const gltf = useLoader(GLTFLoader, "/models/sodacan/can.gltf");
   const ref = useRef();
   useEffect(() => {
@@ -11,7 +12,20 @@ const SodaCan = ({ pos }) => {
   }, []);
 
   return (
-    <mesh scale={[0.1, 0.1, 0.1]} ref={ref} position={pos}>
+    <mesh
+      name="can"
+      onPointerDown={e => {
+        e.stopPropagation();
+
+        console.log(e.unprojectedPoint);
+        if (e.distance < 70) {
+          e.eventObject.material.color.r = 255;
+        }
+      }}
+      scale={[0.1, 0.1, 0.1]}
+      ref={ref}
+      position={pos}
+    >
       <bufferGeometry attach="geometry" {...gltf.__$[1].geometry} />
       <meshStandardMaterial attach="material" />
     </mesh>
