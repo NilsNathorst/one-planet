@@ -1,33 +1,34 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, Suspense } from "react";
 import { useThree } from "react-three-fiber";
 import * as THREE from "three";
-import SodaCan from "./SodaCan";
+import SodaCans from "./SodaCan";
 
+function computeVectors(pos, v, arr, matrix) {
+  for (let i = 0; i < pos.count; i += 100) {
+    v.fromBufferAttribute(pos, i);
+    v.applyMatrix4(matrix);
+    let x = Math.trunc(v.x * 100) / 100;
+    let y = Math.trunc(v.y * 100) / 100;
+    let z = Math.trunc(v.z * 100) / 100;
+    arr.push([x, y, z]);
+  }
+}
+function filterfunc(a, key) {
+  let seen = new Set();
+  return a.filter(item => {
+    let k = key(item);
+    return seen.has(k) ? false : seen.add(k);
+  });
+}
 const Ocean = ({ meshRef, geometry }) => {
   const sodacanRef = useRef();
   const [vectorsArray, setVectorsArray] = useState([]);
-
-  const filterfunc = (a, key) => {
-    let seen = new Set();
-    return a.filter(item => {
-      let k = key(item);
-      return seen.has(k) ? false : seen.add(k);
-    });
-  };
 
   useEffect(() => {
     const position = meshRef.current.geometry.attributes.position;
     const vector = new THREE.Vector3();
     const vectorArr = [];
-
-    for (let i = 0, length = position.length; i < length; i += 1000) {
-      vector.fromBufferAttribute(position, i);
-      vector.applyMatrix4(meshRef.current.matrixWorld);
-      let x = Math.trunc(vector.x * 100) / 100;
-      let y = Math.trunc(vector.y * 100) / 100;
-      let z = Math.trunc(vector.z * 100) / 100;
-      vectorArr.push([x, y, z]);
-    }
+    computeVectors(position, vector, vectorArr, meshRef.current.matrixWorld);
     setVectorsArray(filterfunc(vectorArr, JSON.stringify));
   }, []);
 
@@ -37,15 +38,10 @@ const Ocean = ({ meshRef, geometry }) => {
         <bufferGeometry attach="geometry" {...geometry} />
         <meshLambertMaterial attach="material" color="#158BC6" />
       </mesh>
-      {vectorsArray.map((vector, i) => {
-        return (
-          <SodaCan
-            key={i}
-            meshRef={sodacanRef}
-            inheritPosition={vectorsArray[i]}
-          />
-        );
-      })}
+
+      <Suspense fallback={null}>
+        <SodaCans matrix={vectorsArray} />
+      </Suspense>
     </>
   );
 };

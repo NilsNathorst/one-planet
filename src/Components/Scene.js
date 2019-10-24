@@ -2,7 +2,7 @@ import Planet from "./Planet";
 import React, { useRef, useState } from "react";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { TrackballControls } from "three/examples/jsm/controls/TrackballControls";
-import { Canvas, extend, useThree, useRender } from "react-three-fiber";
+import { Canvas, extend, useThree, useFrame } from "react-three-fiber";
 import * as THREE from "three";
 import { CanvasContext } from "./Context";
 import Sun from "./Sun";
@@ -17,7 +17,7 @@ const Controls = ({ disabled }) => {
   const orbitRef = useRef();
   const { camera, gl } = useThree();
 
-  useRender(() => {
+  useFrame(() => {
     orbitRef.current.update();
   });
 

@@ -1,45 +1,30 @@
-import React, { useEffect, useState, useContext } from "react";
-import { CanvasContext } from "../Context";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { useLoader } from "react-three-fiber";
+import React, { useEffect, useRef } from "react";
 
-import { randomV3Radians } from "../../helpers/numberGenerators";
-const WaterBottle = ({ meshRef, inheritPosition }) => {
-  const [model, setModel] = useState(null);
-  const [isLoaded, setLoaded] = useState(false);
-  const { randomRadians } = useContext(CanvasContext);
+const SodaCan = ({ pos }) => {
+  const gltf = useLoader(GLTFLoader, "/models/sodacan/sodacan.gltf");
+  const ref = useRef();
 
   useEffect(() => {
-    new GLTFLoader().load("/models/sodacan/sodacan.gltf", setModel);
+    ref.current.lookAt(0, 0, 0);
   }, []);
-
-  useEffect(() => {
-    model && setLoaded(true);
-  }, [model]);
-  
   return (
-    <>
-      {model && isLoaded && (
-        <mesh
-          ref={meshRef}
-          scale={[0.001, 0.001, 0.001]}
-          position={inheritPosition}
-          rotation={randomRadians}
-        >
-          <bufferGeometry
-            attach="geometry"
-            {...model.scene.children[0].geometry}
-          />
-          <meshStandardMaterial
-            attach="material"
-            roughness={0.5}
-            metalness={0.8}
-            emissive={0x000000}
-            color={0xffffff}
-          />
-        </mesh>
-      )}
-    </>
+    <mesh scale={[0.001, 0.001, 0.001]} ref={ref} position={pos}>
+      <bufferGeometry attach="geometry" {...gltf.__$[1].geometry} />
+      <meshNormalMaterial attach="material" />
+    </mesh>
   );
 };
 
-export default WaterBottle;
+const SodaCans = ({ matrix }) => {
+  return matrix.map((point, i) => {
+    return (
+      <>
+        <SodaCan key={i} pos={point} />
+      </>
+    );
+  });
+};
+
+export default SodaCans;
