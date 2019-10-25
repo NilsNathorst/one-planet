@@ -13,6 +13,7 @@ import Grass from "./GraphicalComponents/Grass";
 import SodaCans from "./GraphicalComponents/SodaCan";
 import Trees from "./GraphicalComponents/Trees";
 import Sun from "./Sun";
+import Background from "./GraphicalComponents/Background";
 const App = () => {
   return (
     <>
@@ -27,7 +28,8 @@ const App = () => {
         >
           <Controls />
           <Suspense fallback={null}>
-            <ambientLight />
+            <ambientLight intensity={0.1} />
+            <Background />
             <Sun />
             <Dirt />
             <Ocean />

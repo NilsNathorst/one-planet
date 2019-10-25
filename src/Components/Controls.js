@@ -15,7 +15,7 @@ const Controls = ({ disabled }) => {
     <trackballControls
       enableDamping
       maxDistance={340}
-      // minDistance={60}
+      minDistance={60}
       noPan
       args={[camera, gl.domElement]}
       ref={orbitRef}
