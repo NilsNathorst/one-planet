@@ -14,7 +14,7 @@ const Grass = () => {
       position={[0, 0, 0]}
     >
       <bufferGeometry attach="geometry" {...gltf.__$[1].geometry} />
-      <meshNormalMaterial attach="material" />
+      <meshStandardMaterial attach="material" color="springgreen" />
     </mesh>
   );
 };

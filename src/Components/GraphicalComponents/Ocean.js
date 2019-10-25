@@ -12,14 +12,16 @@ const Ocean = () => {
     <>
       <mesh
         name="Ocean"
-        onPointerMove={e => setMousePos(e.point)}
+        onPointerDown={e => {
+          e.stopPropagation();
+        }}
         recieveShadow
         ref={ref}
         scale={[29, 29, 29]}
         position={[0, 0, 0]}
       >
         <bufferGeometry attach="geometry" {...gltf.__$[3].geometry} />
-        <meshBasicMaterial attach="material" color="#158BC6" />
+        <meshStandardMaterial attach="material" color="dodgerblue" />
       </mesh>
     </>
   );

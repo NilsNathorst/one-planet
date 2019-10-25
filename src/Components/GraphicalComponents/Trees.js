@@ -18,7 +18,7 @@ const Tree = () => {
           attach="geometry"
           {...gltf.__$[3].geometry}
         />
-        <meshNormalMaterial attach="material" />
+        <meshStandardMaterial attach="material" color="forestgreen" />
       </mesh>
       <mesh ref={trunkRef}>
         <bufferGeometry
@@ -26,7 +26,7 @@ const Tree = () => {
           attach="geometry"
           {...gltf.__$[7].geometry}
         />
-        <meshNormalMaterial attach="material" />
+        <meshStandardMaterial attach="material" color="saddlebrown" />
       </mesh>
     </group>
   );

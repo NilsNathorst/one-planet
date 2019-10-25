@@ -8,7 +8,7 @@ const Dirt = () => {
   return (
     <mesh scale={[30, 30, 30]} position={[0, 0, 0]}>
       <bufferGeometry attach="geometry" {...gltf.__$[2].geometry} />
-      <meshNormalMaterial attach="material" color="brown" />
+      <meshStandardMaterial attach="material" color="brown" />
     </mesh>
   );
 };
