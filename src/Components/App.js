@@ -34,7 +34,7 @@ const App = () => {
             <Dirt />
             <Ocean />
             <Grass />
-            {/* <SodaCans /> */}
+            <SodaCans />
             <Trees />
           </Suspense>
         </Canvas>

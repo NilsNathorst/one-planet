@@ -6,7 +6,13 @@ const Dirt = () => {
   const gltf = useLoader(GLTFLoader, "/models/planet/planet-v4.gltf");
 
   return (
-    <mesh scale={[30, 30, 30]} position={[0, 0, 0]}>
+    <mesh
+      onPointerDown={e => {
+        e.stopPropagation();
+      }}
+      scale={[30, 30, 30]}
+      position={[0, 0, 0]}
+    >
       <bufferGeometry attach="geometry" {...gltf.__$[2].geometry} />
       <meshStandardMaterial attach="material" color="brown" />
     </mesh>
