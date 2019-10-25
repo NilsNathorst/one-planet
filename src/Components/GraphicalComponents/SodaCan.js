@@ -17,9 +17,6 @@ const SodaCan = ({ pos }) => {
       onPointerDown={e => {
         e.stopPropagation();
 
-        console.log(e.distance);
-        console.log(e.eventObject.parent.__objects[0].object.position);
-
         e.eventObject.material.color.r = 255;
         e.eventObject.material.color.g = 0;
         e.eventObject.material.color.b = 0;
