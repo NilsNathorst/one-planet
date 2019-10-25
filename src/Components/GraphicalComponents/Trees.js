@@ -1,17 +1,31 @@
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useLoader, useFrame } from "react-three-fiber";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { useSpring, a } from "react-spring/three";
 
 const Tree = () => {
   const gltf = useLoader(GLTFLoader, "/models/trees/trees.gltf");
   const ref = useRef();
   const trunkRef = useRef();
+  const [animated, setAnimated] = useState(false);
+  const { scale, ...props } = useSpring({
+    scale: animated ? [1, 1, 1] : [0.1, 0.1, 0.1],
+    config: { duration: 5000 }
+  });
 
   useEffect(() => {
     ref.current.lookAt(0, 0, 0);
   });
   return (
-    <group position={[15, 16, 42]} ref={ref}>
+    <a.group
+      position={[17, 18, 42]}
+      ref={ref}
+      scale={scale}
+      onPointerDown={() => {
+        setAnimated(!animated);
+        console.log(animated);
+      }}
+    >
       <mesh>
         <bufferGeometry
           name="leaves"
@@ -28,7 +42,7 @@ const Tree = () => {
         />
         <meshStandardMaterial attach="material" color="saddlebrown" />
       </mesh>
-    </group>
+    </a.group>
   );
 };
 
