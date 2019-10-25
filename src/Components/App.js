@@ -5,6 +5,7 @@ import { Canvas } from "react-three-fiber";
 import * as THREE from "three";
 //COMPONENTS
 import GlobalStyles from "../Styles/GlobalStyle";
+import { TreeProvider } from "./Context/Tree";
 import Theme from "../Styles/Theme";
 import Controls from "./Controls";
 import Dirt from "./GraphicalComponents/Dirt";
@@ -33,9 +34,11 @@ const App = () => {
             <Sun />
             <Dirt />
             <Ocean />
-            <Grass />
+            <TreeProvider>
+              <Grass />
+              <Trees />
+            </TreeProvider>
             {/* <SodaCans /> */}
-            <Trees />
           </Suspense>
         </Canvas>
       </ThemeProvider>
