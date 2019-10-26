@@ -16,7 +16,7 @@ const SodaCan = ({ scl, pos, magnetActive }) => {
     ref.current.position.setLength(42);
     ref.current.lookAt(0, 0, 0);
   });
-  const { position, scale, ...props } = useSpring({
+  const { position, scale, color, ...props } = useSpring({
     scale: hovered ? [0.2, 0.2, 0.2] : [0.1, 0.1, 0.1],
     position: active ? [mousePos.x, mousePos.y, mousePos.z] : pos,
     config: config.wobbly
@@ -48,7 +48,12 @@ const SodaCan = ({ scl, pos, magnetActive }) => {
       position={position}
     >
       <bufferGeometry attach="geometry" {...gltf.__$[1].geometry} />
-      <meshStandardMaterial attach="material" metalness={0.8} roughness={0.5} />
+      <meshStandardMaterial
+        attach="material"
+        metalness={1}
+        emissive={0x101010}
+        color={0x87cefa}
+      />
     </a.mesh>
   );
 };
