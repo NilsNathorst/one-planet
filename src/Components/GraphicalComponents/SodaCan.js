@@ -24,6 +24,7 @@ const SodaCan = ({ pos, magnetActive }) => {
 
   return (
     <a.mesh
+      castShadow
       name="can"
       onPointerMove={e => {
         if (magnetActive) setMousePos(e.point);

@@ -7,6 +7,7 @@ const Dirt = () => {
 
   return (
     <mesh
+      receiveShadow
       onPointerDown={e => {
         e.stopPropagation();
       }}
