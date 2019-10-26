@@ -1,33 +1,54 @@
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { useLoader } from "react-three-fiber";
-import React, { useEffect, useRef } from "react";
+import { useLoader, useFrame } from "react-three-fiber";
+import React, { useEffect, useRef, useState } from "react";
 import oceanVectors from "../../database/oceanVectors.json";
-import { useThree } from "react-three-fiber";
-const SodaCan = ({ pos }) => {
-  const { intersect } = useThree();
+import { useSpring, a, config } from "react-spring/three";
+
+const SodaCan = ({ pos, magnetIsActive }) => {
+  const [hovered, setHovered] = useState(false);
+  const [active, setActive] = useState(false);
+
+  const [mousePos, setMousePos] = useState();
   const gltf = useLoader(GLTFLoader, "/models/sodacan/untitled.gltf");
   const ref = useRef();
-  useEffect(() => {
+
+  useFrame(() => {
+    ref.current.position.setLength(42);
     ref.current.lookAt(0, 0, 0);
-  }, []);
+  });
+  const { position, scale, ...props } = useSpring({
+    scale: hovered ? [0.2, 0.2, 0.2] : [0.1, 0.1, 0.1],
+    position: active ? [mousePos.x, mousePos.y, mousePos.z] : pos,
+    config: config.wobbly
+  });
 
   return (
-    <mesh
+    <a.mesh
       name="can"
-      onPointerDown={e => {
-        e.stopPropagation();
-
-        e.eventObject.material.color.r = 155;
-        e.eventObject.material.color.g = 1;
-        e.eventObject.material.color.b = 1;
+      onPointerMove={e => {
+        if (magnetIsActive) setMousePos(e.point);
       }}
-      scale={[0.1, 0.1, 0.1]}
+      onPointerDown={e => {
+        if (magnetIsActive && e.eventObject.parnet != null) {
+          e.eventObject.parent.remove(e.eventObject);
+        }
+      }}
+      onPointerOver={e => {
+        if (magnetIsActive) {
+          setHovered(true);
+          setActive(true);
+        }
+      }}
+      onPointerOut={e => {
+        setHovered(false);
+      }}
+      scale={scale}
       ref={ref}
-      position={pos}
+      position={position}
     >
       <bufferGeometry attach="geometry" {...gltf.__$[1].geometry} />
       <meshStandardMaterial attach="material" metalness={0.8} roughness={0.5} />
-    </mesh>
+    </a.mesh>
   );
 };
 
@@ -36,7 +57,7 @@ const SodaCans = () => {
     if (i % 10 === 0) {
       return (
         <>
-          <SodaCan key={i} pos={point} />
+          <SodaCan pos={point} />
         </>
       );
     }
