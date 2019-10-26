@@ -3,9 +3,9 @@ import { useLoader, useFrame } from "react-three-fiber";
 import React, { useEffect, useRef, useState, useContext } from "react";
 import { ToolContext } from "../Tools/ToolContext";
 import oceanVectors from "../../database/oceanVectors.json";
-import { useSpring, a, config } from "react-spring/three";
+import { useTrail, useSpring, a, config } from "react-spring/three";
 
-const SodaCan = ({ pos, magnetActive }) => {
+const SodaCan = ({ scl, pos, magnetActive }) => {
   const [hovered, setHovered] = useState(false);
   const [active, setActive] = useState(false);
 
@@ -43,7 +43,7 @@ const SodaCan = ({ pos, magnetActive }) => {
       onPointerOut={e => {
         setHovered(false);
       }}
-      scale={scale}
+      scale={scl}
       ref={ref}
       position={position}
     >
@@ -54,11 +54,21 @@ const SodaCan = ({ pos, magnetActive }) => {
 };
 
 const SodaCans = ({ magnetActive }) => {
-  return oceanVectors.map((point, i) => {
+  const trail = useTrail(oceanVectors.length, {
+    scale: [0.1, 0.1, 0.1],
+    from: { scale: [0.01, 0.01, 0.01] },
+    config: { mass: 5, tension: 4000, friction: 200 }
+  });
+
+  return trail.map(({ scale, ...rest }, i) => {
     if (i % 10 === 0) {
       return (
         <>
-          <SodaCan magnetActive={magnetActive} pos={point} />
+          <SodaCan
+            scl={scale}
+            magnetActive={magnetActive}
+            pos={oceanVectors[i]}
+          />
         </>
       );
     }
