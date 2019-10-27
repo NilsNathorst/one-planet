@@ -17,6 +17,7 @@ const Ocean = () => {
           blending={THREE.CustomBlending}
           blendDst={THREE.SrcColorFactor}
           color={0x2191fb}
+          roughness={0}
         ></meshStandardMaterial>
       </mesh>
     </>

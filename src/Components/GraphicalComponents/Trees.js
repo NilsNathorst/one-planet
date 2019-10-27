@@ -14,7 +14,6 @@ const Tree = ({ variant, pos }) => {
   });
 
   useEffect(() => {
-    console.log(gltf);
     ref.current.lookAt(0, 0, 0);
   });
   return (
