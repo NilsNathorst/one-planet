@@ -1,24 +1,25 @@
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useLoader } from "react-three-fiber";
 import React, { useEffect, useRef, useState } from "react";
-import { useSpring, a } from "react-spring/three";
+import { useSpring, a, config } from "react-spring/three";
 
-const Tree = () => {
-  const gltf = useLoader(GLTFLoader, "/models/trees/trees.gltf");
+const Tree = ({ variant, pos }) => {
+  const gltf = useLoader(GLTFLoader, "/models/trees/newtrees.gltf");
   const ref = useRef();
   const trunkRef = useRef();
   const [animated, setAnimated] = useState(false);
   const { scale, ...props } = useSpring({
-    scale: animated ? [1, 1, 1] : [0.1, 0.1, 0.1],
-    config: { duration: 5000 }
+    scale: animated ? [0.3, 0.3, 0.3] : [0.1, 0.1, 0.1],
+    config: config.wobbly
   });
 
   useEffect(() => {
+    console.log(gltf);
     ref.current.lookAt(0, 0, 0);
   });
   return (
     <a.group
-      position={[17, 18, 42]}
+      position={pos}
       ref={ref}
       scale={scale}
       onPointerDown={() => {
@@ -30,7 +31,7 @@ const Tree = () => {
         <bufferGeometry
           name="leaves"
           attach="geometry"
-          {...gltf.__$[3].geometry}
+          {...gltf.__$[variant].geometry}
         />
         <meshStandardMaterial attach="material" color="forestgreen" />
       </mesh>
@@ -38,7 +39,7 @@ const Tree = () => {
         <bufferGeometry
           name="trunk"
           attach="geometry"
-          {...gltf.__$[7].geometry}
+          {...gltf.__$[variant + 4].geometry}
         />
         <meshStandardMaterial attach="material" color="saddlebrown" />
       </mesh>
@@ -47,7 +48,14 @@ const Tree = () => {
 };
 
 const Trees = () => {
-  return <Tree />;
+  return (
+    <>
+      <Tree pos={[17, 18, 42]} variant={1} />
+      <Tree pos={[17, 20, 42]} variant={2} />
+      <Tree pos={[17, 22, 40]} variant={3} />
+      <Tree pos={[17, 24, 40]} variant={4} />
+    </>
+  );
 };
 
 export default Trees;
