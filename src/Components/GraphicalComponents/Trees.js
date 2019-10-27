@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useSpring, a, config } from "react-spring/three";
 
 const Tree = ({ variant, pos }) => {
-  const gltf = useLoader(GLTFLoader, "/models/trees/newtrees.gltf");
+  const gltf = useLoader(GLTFLoader, "/models/trees/trees.gltf");
   const ref = useRef();
   const trunkRef = useRef();
   const [animated, setAnimated] = useState(false);
