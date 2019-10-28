@@ -15,7 +15,7 @@ const Dirt = () => {
       position={[0, 0, 0]}
     >
       <bufferGeometry attach="geometry" {...gltf.__$[1].geometry} />
-      <meshStandardMaterial attach="material" color="brown" roughness={1} />
+      <meshStandardMaterial attach="material" color="sienna" roughness={1} />
     </mesh>
   );
 };

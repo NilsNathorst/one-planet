@@ -11,7 +11,7 @@ import Theme from "../Styles/Theme";
 import Controls from "./Controls";
 import Dirt from "./GraphicalComponents/Dirt";
 import Ocean from "./GraphicalComponents/Ocean";
-import Grass from "./GraphicalComponents/Grass";
+
 import SodaCans from "./GraphicalComponents/SodaCan";
 import Trees from "./GraphicalComponents/Trees";
 import Sun from "./Sun";
@@ -28,7 +28,7 @@ const App = () => {
           <ToolBelt />
 
           <Canvas
-            camera={{ position: [0, 0, 100] }}
+            camera={{ position: [0, 0, 200] }}
             onCreated={({ gl }) => {
               gl.shadowMap.enabled = true;
               gl.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -39,11 +39,12 @@ const App = () => {
               <ambientLight intensity={0.5} />
               <Background />
               <Sun />
+
               <Dirt />
-              {/* <Grass /> */}
-              <SodaCans magnetActive={activeTool === "magnet" ? true : false} />
-              {/* <Trees /> */}
+              <Trees />
+
               <Ocean />
+              <SodaCans magnetActive={activeTool === "magnet" ? true : false} />
             </Suspense>
           </Canvas>
         </ToolContext.Provider>
