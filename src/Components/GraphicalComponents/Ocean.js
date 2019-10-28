@@ -1,6 +1,6 @@
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useLoader } from "react-three-fiber";
-import React, { useRef, useMemo, useEffect, useState } from "react";
+import React, { useRef } from "react";
 import * as THREE from "three";
 
 const Ocean = () => {

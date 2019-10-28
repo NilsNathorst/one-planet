@@ -1,7 +1,7 @@
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useLoader, useFrame } from "react-three-fiber";
-import React, { useEffect, useRef, useState, useContext } from "react";
-import { ToolContext } from "../Tools/ToolContext";
+import React, { useRef, useState } from "react";
+
 import oceanVectors from "../../database/oceanVectors.json";
 import { useTrail, useSpring, a, config } from "react-spring/three";
 
