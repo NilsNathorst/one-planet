@@ -8,12 +8,14 @@ import { useTrail, useSpring, a, config } from "react-spring/three";
 const SodaCan = ({ scl, pos, magnetActive }) => {
   const [hovered, setHovered] = useState(false);
   const [active, setActive] = useState(false);
-  const [dist, setDist] = useState(42);
+
   const [mousePos, setMousePos] = useState();
   const gltf = useLoader(GLTFLoader, "/models/sodacan/untitled.gltf");
   const ref = useRef();
   useFrame(() => {
-    ref.current.position.setLength(dist);
+    if (ref.current.position.length() >= 77) {
+      ref.current.position.setLength(77);
+    }
     ref.current.lookAt(0, 0, 0);
   });
   const { position, scale, color, ...props } = useSpring({
@@ -29,7 +31,6 @@ const SodaCan = ({ scl, pos, magnetActive }) => {
       onPointerMove={e => {
         if (magnetActive) {
           setMousePos(e.point);
-          setDist(43);
         }
       }}
       onPointerDown={e => {
@@ -45,7 +46,6 @@ const SodaCan = ({ scl, pos, magnetActive }) => {
       }}
       onPointerOut={e => {
         setHovered(false);
-        setDist(42);
       }}
       scale={scl}
       ref={ref}

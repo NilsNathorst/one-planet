@@ -40,9 +40,9 @@ const App = () => {
               <Background />
               <Sun />
               <Dirt />
-              <Grass />
+              {/* <Grass /> */}
               <SodaCans magnetActive={activeTool === "magnet" ? true : false} />
-              <Trees />
+              {/* <Trees /> */}
               <Ocean />
             </Suspense>
           </Canvas>

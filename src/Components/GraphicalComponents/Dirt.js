@@ -3,7 +3,7 @@ import { useLoader } from "react-three-fiber";
 import React from "react";
 
 const Dirt = () => {
-  const gltf = useLoader(GLTFLoader, "/models/planet/planet-v4.gltf");
+  const gltf = useLoader(GLTFLoader, "/models/planet/newplanet.gltf");
 
   return (
     <mesh
@@ -11,11 +11,11 @@ const Dirt = () => {
       onPointerDown={e => {
         e.stopPropagation();
       }}
-      scale={[30, 30, 30]}
+      scale={[29.3, 29.3, 29.3]}
       position={[0, 0, 0]}
     >
-      <bufferGeometry attach="geometry" {...gltf.__$[2].geometry} />
-      <meshStandardMaterial attach="material" color="brown" />
+      <bufferGeometry attach="geometry" {...gltf.__$[1].geometry} />
+      <meshStandardMaterial attach="material" color="brown" roughness={1} />
     </mesh>
   );
 };
