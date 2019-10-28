@@ -4,9 +4,9 @@ import * as THREE from "three";
 
 const Background = () => {
   const matRef = useRef();
-  const texture = useMemo(() =>
-    new THREE.TextureLoader().load("/assets/starmap-milkyway.jpg")
-  );
+  const texture = useMemo(() => {
+    return new THREE.TextureLoader().load("/assets/starmap-milkyway.jpg");
+  }, []);
   return (
     <>
       <fog attach="fog" args={[0x87cefa, 350, 800]} />

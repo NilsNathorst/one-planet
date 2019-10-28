@@ -1,43 +1,86 @@
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { useLoader } from "react-three-fiber";
-import React, { useEffect, useRef } from "react";
+import { useLoader, useFrame } from "react-three-fiber";
+import React, { useEffect, useRef, useState, useContext } from "react";
+import { ToolContext } from "../Tools/ToolContext";
 import oceanVectors from "../../database/oceanVectors.json";
-import { useThree } from "react-three-fiber";
-const SodaCan = ({ pos }) => {
-  const { intersect } = useThree();
-  const gltf = useLoader(GLTFLoader, "/models/sodacan/can.gltf");
+import { useTrail, useSpring, a, config } from "react-spring/three";
+
+const SodaCan = ({ scl, pos, magnetActive }) => {
+  const [hovered, setHovered] = useState(false);
+  const [active, setActive] = useState(false);
+  const [dist, setDist] = useState(42);
+  const [mousePos, setMousePos] = useState();
+  const gltf = useLoader(GLTFLoader, "/models/sodacan/untitled.gltf");
   const ref = useRef();
-  useEffect(() => {
+  useFrame(() => {
+    ref.current.position.setLength(dist);
     ref.current.lookAt(0, 0, 0);
-  }, []);
+  });
+  const { position, scale, color, ...props } = useSpring({
+    scale: hovered ? [0.2, 0.2, 0.2] : [0.1, 0.1, 0.1],
+    position: active ? [mousePos.x, mousePos.y, mousePos.z] : pos,
+    config: config.wobbly
+  });
 
   return (
-    <mesh
+    <a.mesh
+      castShadow
       name="can"
-      onPointerDown={e => {
-        e.stopPropagation();
-
-        e.eventObject.material.color.r = 255;
-        e.eventObject.material.color.g = 0;
-        e.eventObject.material.color.b = 0;
+      onPointerMove={e => {
+        if (magnetActive) {
+          setMousePos(e.point);
+          setDist(43);
+        }
       }}
-      scale={[0.1, 0.1, 0.1]}
+      onPointerDown={e => {
+        if (magnetActive && e.eventObject.parent != null) {
+          e.eventObject.parent.remove(e.eventObject);
+        }
+      }}
+      onPointerOver={e => {
+        if (magnetActive) {
+          setHovered(true);
+          setActive(true);
+        }
+      }}
+      onPointerOut={e => {
+        setHovered(false);
+        setDist(42);
+      }}
+      scale={scl}
       ref={ref}
-      position={pos}
+      position={position}
     >
       <bufferGeometry attach="geometry" {...gltf.__$[1].geometry} />
-      <meshStandardMaterial attach="material" />
-    </mesh>
+      <meshStandardMaterial
+        attach="material"
+        metalness={1}
+        emissive={0x101010}
+        color={0x87cefa}
+      />
+    </a.mesh>
   );
 };
 
-const SodaCans = () => {
-  return oceanVectors.map((point, i) => {
-    return (
-      <>
-        <SodaCan key={i} pos={point} />
-      </>
-    );
+const SodaCans = ({ magnetActive }) => {
+  const trail = useTrail(oceanVectors.length, {
+    scale: [0.1, 0.1, 0.1],
+    from: { scale: [0.01, 0.01, 0.01] },
+    config: { mass: 5, tension: 4000, friction: 200 }
+  });
+
+  return trail.map(({ scale, ...rest }, i) => {
+    if (i % 10 === 0) {
+      return (
+        <>
+          <SodaCan
+            scl={scale}
+            magnetActive={magnetActive}
+            pos={oceanVectors[i]}
+          />
+        </>
+      );
+    }
   });
 };
 
