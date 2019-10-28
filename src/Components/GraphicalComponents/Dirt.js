@@ -8,8 +8,17 @@ const Dirt = () => {
   return (
     <mesh
       receiveShadow
+      onPointerOver={e => {
+        //I want to change colors of vectors that i hover!
+        //console.log(e.point)
+      }}
       onPointerDown={e => {
         e.stopPropagation();
+
+        if (e.point.length() > 80) {
+          console.log(e.point);
+          //here we will plant some trees in the future
+        }
       }}
       scale={[29.3, 29.3, 29.3]}
       position={[0, 0, 0]}
