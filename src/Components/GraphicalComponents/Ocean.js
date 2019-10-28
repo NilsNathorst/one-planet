@@ -1,51 +1,29 @@
-import React, { useEffect, useState, useRef } from "react";
-import { useThree } from "react-three-fiber";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { useLoader } from "react-three-fiber";
+import React, { useRef } from "react";
 import * as THREE from "three";
-import SodaCan from "./SodaCan";
 
-const Ocean = ({ meshRef, geometry }) => {
-  const sodacanRef = useRef();
-  const [vectorsArray, setVectorsArray] = useState([]);
-
-  const filterfunc = (a, key) => {
-    let seen = new Set();
-    return a.filter(item => {
-      let k = key(item);
-      return seen.has(k) ? false : seen.add(k);
-    });
-  };
-
-  useEffect(() => {
-    const position = meshRef.current.geometry.attributes.position;
-    const vector = new THREE.Vector3();
-    const vectorArr = [];
-
-    for (let i = 0, length = position.length; i < length; i += 1000) {
-      vector.fromBufferAttribute(position, i);
-      vector.applyMatrix4(meshRef.current.matrixWorld);
-      let x = Math.trunc(vector.x * 100) / 100;
-      let y = Math.trunc(vector.y * 100) / 100;
-      let z = Math.trunc(vector.z * 100) / 100;
-      vectorArr.push([x, y, z]);
-    }
-    setVectorsArray(filterfunc(vectorArr, JSON.stringify));
-  }, []);
+const Ocean = () => {
+  const gltf = useLoader(GLTFLoader, "/models/planet/newplanet.gltf");
+  const ref = useRef();
 
   return (
     <>
-      <mesh ref={meshRef} receiveShadow>
-        <bufferGeometry attach="geometry" {...geometry} />
-        <meshLambertMaterial attach="material" color="#158BC6" />
+      <mesh
+        ref={ref}
+        name="Ocean"
+        scale={[29.2, 29.2, 29.2]}
+        position={[0, 0, 0]}
+      >
+        <bufferGeometry attach="geometry" {...gltf.__$[2].geometry} />
+        <meshStandardMaterial
+          attach="material"
+          blending={THREE.CustomBlending}
+          blendDst={THREE.SrcColorFactor}
+          color={0x2191fb}
+          roughness={0}
+        ></meshStandardMaterial>
       </mesh>
-      {vectorsArray.map((vector, i) => {
-        return (
-          <SodaCan
-            key={i}
-            meshRef={sodacanRef}
-            inheritPosition={vectorsArray[i]}
-          />
-        );
-      })}
     </>
   );
 };

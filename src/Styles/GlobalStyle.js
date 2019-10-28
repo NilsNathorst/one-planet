@@ -1,6 +1,7 @@
 import { createGlobalStyle } from "styled-components";
 import regularFont from "../assets/fonts/googlesans-regular-webfont.woff2";
 import boldFont from "../assets/fonts/googlesans-bold-webfont.woff2";
+
 const GlobalStyles = createGlobalStyle`
 
 @font-face {
@@ -23,11 +24,12 @@ const GlobalStyles = createGlobalStyle`
 		font-weight: normal;
 }
 canvas{
-    background: linear-gradient(#e66465, #9198e5);
+    background: black;
 }
 #root{
     width: 100vw;
     height: 100vh;
+
 }
 `;
 
