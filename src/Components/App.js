@@ -25,7 +25,7 @@ const App = () => {
       <ThemeProvider theme={Theme}>
         <GlobalStyles />
         <ToolContext.Provider value={{ activeTool, setActiveTool }}>
-          <ToolBelt />
+          {/* <ToolBelt /> */}
 
           <Canvas
             camera={{ position: [0, 0, 200] }}
