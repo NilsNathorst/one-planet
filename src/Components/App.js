@@ -28,6 +28,7 @@ import reduxThunk from "redux-thunk";
 import reducers from "../reducers";
 import plantIcon from "../assets/icons/plantable.png";
 import noPlantIcon from "../assets/icons/notPlantable.png";
+import Tools from "./Interface/Tools";
 const Wrapper = styled.div`
   cursor: ${props =>
     props.activeTool === "seed" && props.hovering
@@ -57,6 +58,7 @@ const App = () => {
         <GlobalStyles />
         <ToolContext.Provider value={{ activeTool, setActiveTool }}>
           <ToolBelt />
+          <Tools />
           <Suspense>
             <CanvasWrapper>
               <Canvas
@@ -67,8 +69,8 @@ const App = () => {
                 }}
               >
                 <Provider store={store}>
-                  <Controls />
                   <Suspense fallback={null}>
+                    <Controls />
                     <ambientLight intensity={0.5} />
                     <Background />
                     <Sun />
