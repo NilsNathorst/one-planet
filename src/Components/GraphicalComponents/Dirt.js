@@ -7,7 +7,6 @@ import { CursorContext } from "../Context/CursorContext";
 import { connect } from "react-redux";
 import { addTree } from "../../actions";
 const Dirt = props => {
-  console.log(props);
   const gltf = useLoader(GLTFLoader, "/models/planet/newplanet.gltf");
   const { setHovering, setPlantable } = useContext(CursorContext);
 
@@ -38,8 +37,7 @@ const Dirt = props => {
 };
 const mapStateToProps = ({ data, state }) => {
   return {
-    data,
-    fart: state.hovering
+    data
   };
 };
 export default connect(
