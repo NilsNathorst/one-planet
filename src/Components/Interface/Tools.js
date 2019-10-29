@@ -3,6 +3,10 @@ import styled from "styled-components";
 import magnet from "../../assets/icons/magnetIcon.png";
 import forest from "../../assets/icons/forestIcon.png";
 
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import * as Actions from "../../actions";
+
 const StyledDiv = styled.div`
   display: flex;
   height: 100%;
@@ -39,17 +43,35 @@ const ToolIcon = styled.div`
   }
 `;
 
-const Tools = () => {
-  useEffect(() => {
-    console.log("mounted");
-  }, []);
-
+const Tools = props => {
   return (
     <StyledDiv>
-      <ToolIcon icon={forest} />
-      <ToolIcon icon={magnet} />
+      <ToolIcon
+        icon={forest}
+        onClick={() => {
+          props.actions.setTool("TREE");
+        }}
+      />
+      <ToolIcon
+        icon={magnet}
+        onClick={() => {
+          props.actions.setTool("MAGNET");
+        }}
+      />
     </StyledDiv>
   );
 };
 
-export default Tools;
+const mapStateToProps = ({ data, state }) => {
+  return {
+    data,
+    state
+  };
+};
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators(Actions, dispatch)
+});
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Tools);

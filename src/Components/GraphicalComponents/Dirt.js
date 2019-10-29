@@ -7,24 +7,30 @@ import * as Actions from "../../actions";
 
 const Dirt = props => {
   const gltf = useLoader(GLTFLoader, "/models/planet/newplanet.gltf");
-  // const { setHovering, setPlantable } = useContext(CursorContext);
-  console.log(props);
   return (
     <mesh
       receiveShadow
       onPointerDown={e => {
-        props.actions.setTool("TREE");
+        if (props.state.plantable) {
+          props.actions.addTree(e.point);
+        }
       }}
-      // onPointerMove={e => {
-      //   e.stopPropagation();
-      //   if (e.point.length() > 80) {
-      //     setPlantable(true);
-      //   } else {
-      //     setPlantable(false);
-      //   }
-      // }}
-      // onPointerOver={() => setHovering(true)}
-      // onPointerOut={() => setHovering(false)}
+      onPointerMove={e => {
+        if (props.state.name === "TREE") {
+          e.stopPropagation();
+          if (e.point.length() > 80) {
+            props.actions.setPlantable(true);
+          } else {
+            props.actions.setPlantable(false);
+          }
+        }
+      }}
+      onPointerOver={() =>
+        props.state.name == "TREE" && props.actions.setHover(true)
+      }
+      onPointerOut={() =>
+        props.state.name == "TREE" && props.actions.setHover(false)
+      }
       scale={[29.3, 29.3, 29.3]}
       position={[0, 0, 0]}
     >
