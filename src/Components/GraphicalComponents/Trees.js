@@ -23,7 +23,6 @@ const Tree = ({ variant, pos }) => {
       scale={scale}
       onPointerDown={() => {
         setAnimated(!animated);
-        console.log(animated);
       }}
     >
       <mesh>

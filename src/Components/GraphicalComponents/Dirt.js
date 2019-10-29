@@ -1,25 +1,25 @@
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useLoader } from "react-three-fiber";
-import React from "react";
-
+import React, { useContext } from "react";
+import Styled from "styled-components";
+import { CursorContext } from "../Context/CursorContext";
 const Dirt = () => {
   const gltf = useLoader(GLTFLoader, "/models/planet/newplanet.gltf");
+  const { setHovering, setPlantable } = useContext(CursorContext);
 
   return (
     <mesh
       receiveShadow
-      onPointerOver={e => {
-        //I want to change colors of vectors that i hover!
-        //console.log(e.point)
-      }}
-      onPointerDown={e => {
+      onPointerMove={e => {
         e.stopPropagation();
-
         if (e.point.length() > 80) {
-          console.log(e.point);
-          //here we will plant some trees in the future
+          setPlantable(true);
+        } else {
+          setPlantable(false);
         }
       }}
+      onPointerOver={() => setHovering(true)}
+      onPointerOut={() => setHovering(false)}
       scale={[29.3, 29.3, 29.3]}
       position={[0, 0, 0]}
     >
