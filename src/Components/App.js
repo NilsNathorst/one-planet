@@ -72,14 +72,8 @@ const App = () => {
                     <ambientLight intensity={0.5} />
                     <Background />
                     <Sun />
-
-                    <CursorContext.Provider
-                      value={{ plantable, setPlantable, hovering, setHovering }}
-                    >
-                      <Dirt />
-                    </CursorContext.Provider>
+                    <Dirt />
                     <Trees />
-
                     <Ocean />
                     <SodaCans
                       magnetActive={activeTool === "magnet" ? true : false}

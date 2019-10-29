@@ -18,9 +18,7 @@ const Tree = ({ variant, pos }) => {
     ref.current.lookAt(0, 0, 0);
   });
   return (
-
     <a.group position={pos} ref={ref} scale={scale}>
-
       <mesh>
         <bufferGeometry
           name="leaves"
