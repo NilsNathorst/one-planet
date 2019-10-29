@@ -7,16 +7,16 @@ import { CursorContext } from "../Context/CursorContext";
 import { connect } from "react-redux";
 import { addTree } from "../../actions";
 const Dirt = props => {
-
+  console.log(props);
   const gltf = useLoader(GLTFLoader, "/models/planet/newplanet.gltf");
   const { setHovering, setPlantable } = useContext(CursorContext);
 
   return (
     <mesh
       receiveShadow
-    onPointerDown={e => {
-    addTree(e.point)
-    }}
+      onPointerDown={e => {
+        addTree(e.point);
+      }}
       onPointerMove={e => {
         e.stopPropagation();
 
@@ -25,7 +25,6 @@ const Dirt = props => {
         } else {
           setPlantable(false);
         }
-
       }}
       onPointerOver={() => setHovering(true)}
       onPointerOut={() => setHovering(false)}
@@ -37,9 +36,10 @@ const Dirt = props => {
     </mesh>
   );
 };
-const mapStateToProps = ({ data }) => {
+const mapStateToProps = ({ data, state }) => {
   return {
-    data
+    data,
+    fart: state.hovering
   };
 };
 export default connect(
