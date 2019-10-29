@@ -15,6 +15,6 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
-export default firebase;
+const databaseRef = firebase.database().ref();
 
-export const database = firebase.database();
+export const treesRef = databaseRef.child("trees");

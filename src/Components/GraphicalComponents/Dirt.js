@@ -1,8 +1,10 @@
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useLoader } from "react-three-fiber";
 import React from "react";
+import { connect } from "react-redux";
+import { addTree } from "../../actions";
 
-const Dirt = () => {
+const Dirt = props => {
   const gltf = useLoader(GLTFLoader, "/models/planet/newplanet.gltf");
 
   return (
@@ -10,6 +12,8 @@ const Dirt = () => {
       receiveShadow
       onPointerDown={e => {
         e.stopPropagation();
+        addTree(e.point);
+        console.log("click");
       }}
       scale={[29.3, 29.3, 29.3]}
       position={[0, 0, 0]}
@@ -19,5 +23,12 @@ const Dirt = () => {
     </mesh>
   );
 };
-
-export default Dirt;
+const mapStateToProps = ({ data }) => {
+  return {
+    data
+  };
+};
+export default connect(
+  mapStateToProps,
+  { addTree }
+)(Dirt);
