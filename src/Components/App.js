@@ -26,13 +26,14 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import reduxThunk from "redux-thunk";
 import reducers from "../reducers";
-
+import plantIcon from "../assets/icons/plantable.png";
+import noPlantIcon from "../assets/icons/notPlantable.png";
 const Wrapper = styled.div`
   cursor: ${props =>
     props.activeTool === "seed" && props.hovering
       ? props.plantable
-        ? "grab"
-        : "pointer"
+        ? `url(${plantIcon}), auto`
+        : `url(${noPlantIcon}), auto`
       : "default"};
   height: 100%;
   width: 100%;
@@ -44,22 +45,17 @@ const CanvasWrapper = styled.div`
   top: 0;
 `;
 
-
-
-
 const App = () => {
   const [activeTool, setActiveTool] = useState("");
   const [plantable, setPlantable] = useState(false);
   const [hovering, setHovering] = useState(false);
   const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
 
-
   return (
     <Wrapper activeTool={activeTool} hovering={hovering} plantable={plantable}>
       <ThemeProvider theme={Theme}>
         <GlobalStyles />
         <ToolContext.Provider value={{ activeTool, setActiveTool }}>
-
           <ToolBelt />
           <Suspense>
             <CanvasWrapper>
@@ -70,30 +66,29 @@ const App = () => {
                   gl.shadowMap.type = THREE.PCFSoftShadowMap;
                 }}
               >
-                            <Provider store={store}>
-                <Controls />
-                <Suspense fallback={null}>
-                  <ambientLight intensity={0.5} />
-                  <Background />
-                  <Sun />
+                <Provider store={store}>
+                  <Controls />
+                  <Suspense fallback={null}>
+                    <ambientLight intensity={0.5} />
+                    <Background />
+                    <Sun />
 
-                  <CursorContext.Provider
-                    value={{ plantable, setPlantable, hovering, setHovering }}
-                  >
-                    <Dirt />
-                  </CursorContext.Provider>
-                  <Trees />
+                    <CursorContext.Provider
+                      value={{ plantable, setPlantable, hovering, setHovering }}
+                    >
+                      <Dirt />
+                    </CursorContext.Provider>
+                    <Trees />
 
-                  <Ocean />
-                  <SodaCans
-                    magnetActive={activeTool === "magnet" ? true : false}
-                  />
-                </Suspense>
-      </Provider>
+                    <Ocean />
+                    <SodaCans
+                      magnetActive={activeTool === "magnet" ? true : false}
+                    />
+                  </Suspense>
+                </Provider>
               </Canvas>
             </CanvasWrapper>
           </Suspense>
-
         </ToolContext.Provider>
       </ThemeProvider>
     </Wrapper>
