@@ -1,6 +1,6 @@
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useLoader } from "react-three-fiber";
-import React, { useEffect, useRef, useState, useMemo } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSpring, a, config } from "react-spring/three";
 import { connect } from "react-redux";
 import { fetchTrees } from "../../actions";
@@ -10,7 +10,8 @@ const Tree = ({ variant, pos }) => {
   const trunkRef = useRef();
   const [animated, setAnimated] = useState(false);
   const { scale, ...props } = useSpring({
-    scale: animated ? [2, 2, 2] : [1, 1, 1],
+    scale: [0.5, 0.5, 0.5],
+    from: { scale: [0.1, 0.1, 0.1] },
     config: config.wobbly
   });
 
@@ -18,15 +19,7 @@ const Tree = ({ variant, pos }) => {
     ref.current.lookAt(0, 0, 0);
   });
   return (
-    <a.group
-      position={pos}
-      ref={ref}
-      scale={scale}
-      onPointerDown={() => {
-        setAnimated(!animated);
-        console.log(animated);
-      }}
-    >
+    <a.group position={pos} ref={ref} scale={scale}>
       <mesh>
         <bufferGeometry
           name="leaves"
@@ -51,16 +44,16 @@ const Trees = props => {
   const { data } = props;
   useEffect(() => {
     props.fetchTrees();
-    console.log("fetched");
   }, []);
   return (
     <>
       {data &&
-        Object.keys(data).map(item => {
+        Object.keys(data).map((item, i) => {
           return (
             <Tree
               pos={[data[item].x, data[item].y, data[item].z]}
               variant={2}
+              key={i}
             />
           );
         })}
