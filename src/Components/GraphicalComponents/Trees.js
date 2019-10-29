@@ -4,6 +4,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { useSpring, a, config } from "react-spring/three";
 import { connect } from "react-redux";
 import { fetchTrees } from "../../actions";
+import * as THREE from "three";
+import Grass from "./Grass";
 const Tree = ({ variant, pos }) => {
   const gltf = useLoader(GLTFLoader, "/models/trees/trees.gltf");
   const ref = useRef();
@@ -46,6 +48,8 @@ const Trees = props => {
   }, []);
   return (
     <>
+      <Grass />
+
       {data &&
         Object.keys(data).map((item, i) => {
           return (
