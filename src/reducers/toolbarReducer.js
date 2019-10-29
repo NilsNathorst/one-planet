@@ -1,14 +1,19 @@
-import { ACTIVE_TOOL } from "../actions/types";
+import { SET_STATE } from "../actions/types";
 
-const initState = {
-  activeTool: { name: "", isHovering: false }
+const iState = {
+  name: "",
+  hoverActive: false
 };
-export default (state = initState, action) => {
-  switch (action.type) {
-    case ACTIVE_TOOL:
-      return (state.activeTool.name = action.text);
 
-    default:
-      return state;
+const toolbarReducer = (state = iState, action) => {
+  if (action.type === SET_STATE) {
+    return {
+      ...state,
+      name: action.payload,
+      hoverActive: true
+    };
   }
+  return state;
 };
+
+export default toolbarReducer;

@@ -13,8 +13,7 @@ const Dirt = props => {
     <mesh
       receiveShadow
       onPointerDown={e => {
-        props.actions.setTool({ text: "fart" });
-        console.log(props);
+        props.actions.setTool("TREE");
       }}
       // onPointerMove={e => {
       //   e.stopPropagation();
