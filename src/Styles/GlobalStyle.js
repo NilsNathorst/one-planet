@@ -23,8 +23,9 @@ const GlobalStyles = createGlobalStyle`
 		font-family: Google Sans;
 		font-weight: normal;
 }
-canvas{
+canvas {
     background: black;
+    
 }
 #root{
     width: 100vw;

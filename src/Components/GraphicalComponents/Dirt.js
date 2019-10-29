@@ -1,20 +1,34 @@
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useLoader } from "react-three-fiber";
-import React from "react";
+
+import React, { useContext } from "react";
+import Styled from "styled-components";
+import { CursorContext } from "../Context/CursorContext";
 import { connect } from "react-redux";
 import { addTree } from "../../actions";
-
 const Dirt = props => {
+
   const gltf = useLoader(GLTFLoader, "/models/planet/newplanet.gltf");
+  const { setHovering, setPlantable } = useContext(CursorContext);
 
   return (
     <mesh
       receiveShadow
-      onPointerDown={e => {
+    onPointerDown={e => {
+    addTree(e.point)
+    }}
+      onPointerMove={e => {
         e.stopPropagation();
-        addTree(e.point);
-        console.log("click");
+
+        if (e.point.length() > 80) {
+          setPlantable(true);
+        } else {
+          setPlantable(false);
+        }
+
       }}
+      onPointerOver={() => setHovering(true)}
+      onPointerOut={() => setHovering(false)}
       scale={[29.3, 29.3, 29.3]}
       position={[0, 0, 0]}
     >

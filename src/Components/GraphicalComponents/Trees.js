@@ -8,7 +8,6 @@ const Tree = ({ variant, pos }) => {
   const gltf = useLoader(GLTFLoader, "/models/trees/trees.gltf");
   const ref = useRef();
   const trunkRef = useRef();
-  const [animated, setAnimated] = useState(false);
   const { scale, ...props } = useSpring({
     scale: [0.5, 0.5, 0.5],
     from: { scale: [0.1, 0.1, 0.1] },
@@ -19,7 +18,9 @@ const Tree = ({ variant, pos }) => {
     ref.current.lookAt(0, 0, 0);
   });
   return (
+
     <a.group position={pos} ref={ref} scale={scale}>
+
       <mesh>
         <bufferGeometry
           name="leaves"
