@@ -11,7 +11,7 @@ const StyledDiv = styled.div`
   width: 100vw;
   background-image: url(${bg});
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover;
   h1 {
     color: white;
   }
