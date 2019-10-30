@@ -17,13 +17,14 @@ import Trees from "./GraphicalComponents/Trees";
 import Sun from "./Sun";
 import Background from "./GraphicalComponents/Background";
 import InterfaceWrapper from "./Interface/InterfaceWrapper";
+import Tools from "./Interface/Tools";
+import Start from "./Interface/Start";
+import BirdScene from "./BirdScene";
 // Redux
 import { Provider, ReactReduxContext } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import reduxThunk from "redux-thunk";
 import reducers from "../reducers";
-
-import Tools from "./Interface/Tools";
 
 const CanvasWrapper = styled.div`
   position: absolute;
@@ -33,9 +34,6 @@ const CanvasWrapper = styled.div`
 `;
 
 const App = () => {
-  const [activeTool, setActiveTool] = useState("");
-  const [plantable, setPlantable] = useState(false);
-  const [hovering, setHovering] = useState(false);
   const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
 
   return (
@@ -44,6 +42,7 @@ const App = () => {
       <CanvasWrapper>
         <Provider store={store}>
           <InterfaceWrapper>
+            <Start />
             <Tools />
             <ReactReduxContext.Consumer>
               {({ store }) => (
@@ -57,6 +56,7 @@ const App = () => {
                   <Suspense fallback={null}>
                     <Controls store={store} />
                     <ambientLight intensity={0.5} />
+                    <BirdScene />
                     <Background />
                     <Sun />
                     <Dirt store={store} />
