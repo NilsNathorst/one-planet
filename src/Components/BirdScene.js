@@ -22,8 +22,8 @@ function Bird() {
   }, []);
   useEffect(() => {
     if (model) {
-      groupRef.current.scale.set(0.1, 0.1, 0.1);
-      groupRef.current.position.y = 6;
+      groupRef.current.scale.set(1, 1, 1);
+      groupRef.current.position.y = 100;
       groupRef.current.rotation.x = -Math.PI / 2;
       void mixer.clipAction(model.animations[0], groupRef.current).play();
     }
