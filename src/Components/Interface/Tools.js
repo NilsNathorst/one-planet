@@ -44,18 +44,31 @@ const ToolIcon = styled.div`
 `;
 
 const Tools = props => {
+  const [toolActive, setToolActive] = useState(false);
   return (
     <StyledDiv>
       <ToolIcon
         icon={forest}
         onClick={() => {
-          props.actions.setTool("TREE");
+          if (!toolActive) {
+            setToolActive(true);
+            props.actions.setTool("TREE");
+          } else if (toolActive) {
+            setToolActive(false);
+            props.actions.setTool("NONE");
+          }
         }}
       />
       <ToolIcon
         icon={magnet}
         onClick={() => {
-          props.actions.setTool("MAGNET");
+          if (!toolActive) {
+            setToolActive(true);
+            props.actions.setTool("MAGNET");
+          } else if (toolActive) {
+            setToolActive(false);
+            props.actions.setTool("NONE");
+          }
         }}
       />
     </StyledDiv>
