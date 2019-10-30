@@ -18,9 +18,9 @@ const Dirt = props => {
       onPointerMove={e => {
         if (props.state.name === "TREE") {
           e.stopPropagation();
-          if (e.point.length() > 80) {
+          if (e.point.length() > 80 && props.state.plantable === false) {
             props.actions.setPlantable(true);
-          } else {
+          } else if (e.point.length() < 80 && props.state.plantable === true) {
             props.actions.setPlantable(false);
           }
         }

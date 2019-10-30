@@ -27,7 +27,7 @@ const Tree = ({ variant, pos }) => {
           attach="geometry"
           {...gltf.__$[variant].geometry}
         />
-        <meshStandardMaterial attach="material" color="forestgreen" />
+        <meshStandardMaterial attach="material" color="hotpink" />
       </mesh>
       <mesh ref={trunkRef}>
         <bufferGeometry
@@ -41,10 +41,9 @@ const Tree = ({ variant, pos }) => {
   );
 };
 
-const Trees = props => {
-  const { data } = props;
+const Trees = ({ data, fetchTrees }) => {
   useEffect(() => {
-    props.fetchTrees();
+    fetchTrees();
   }, []);
   return (
     <>
