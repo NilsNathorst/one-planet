@@ -15,10 +15,6 @@ const Wrapper = styled.div`
   width: 100vw;
 `;
 const InterfaceWrapper = props => {
-  useEffect(() => {
-    console.log(props);
-  }, [props]);
-
   return (
     <Wrapper
       className="wrapper"

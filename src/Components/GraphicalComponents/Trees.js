@@ -49,23 +49,16 @@ const Trees = props => {
   return (
     <>
       <Grass />
-
       {data &&
-        Object.keys(data).map((item, i) => {
-          return (
-            <Tree
-              pos={[data[item].x, data[item].y, data[item].z]}
-              variant={2}
-              key={i}
-            />
-          );
+        data.map((item, i) => {
+          return <Tree pos={[item.x, item.y, item.z]} variant={2} key={i} />;
         })}
     </>
   );
 };
 const mapStateToProps = ({ data }) => {
   return {
-    data
+    data: Object.values(data)
   };
 };
 

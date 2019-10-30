@@ -5,7 +5,6 @@ import React, { useRef } from "react";
 const Grass = () => {
   const gltf = useLoader(GLTFLoader, "/models/grass/scene.gltf");
   const ref = useRef();
-  // console.log(gltf);
   return null;
 };
 

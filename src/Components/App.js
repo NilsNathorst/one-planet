@@ -41,40 +41,39 @@ const App = () => {
   return (
     <ThemeProvider theme={Theme}>
       <GlobalStyles />
-      <Suspense>
-        <CanvasWrapper>
-          <Provider store={store}>
-            {console.log(store)}
-            <InterfaceWrapper>
-              <Tools />
-              <ReactReduxContext.Consumer>
-                {({ store }) => (
-                  <Canvas
-                    camera={{ position: [0, 0, 200] }}
-                    onCreated={({ gl }) => {
-                      gl.shadowMap.enabled = true;
-                      gl.shadowMap.type = THREE.PCFSoftShadowMap;
-                    }}
-                  >
+      <CanvasWrapper>
+        <Provider store={store}>
+          <InterfaceWrapper>
+            <Tools />
+            <ReactReduxContext.Consumer>
+              {({ store }) => (
+                <Canvas
+                  camera={{ position: [0, 0, 200] }}
+                  onCreated={({ gl }) => {
+                    gl.shadowMap.enabled = true;
+                    gl.shadowMap.type = THREE.PCFSoftShadowMap;
+                  }}
+                >
+                  <Suspense fallback={null}>
+                    <Controls />
+                    <ambientLight intensity={0.5} />
+                    <Background />
+                    <Sun />
+                    <Dirt store={store} />
                     <Suspense fallback={null}>
-                      <Controls />
-                      <ambientLight intensity={0.5} />
-                      <Background />
-                      <Sun />
-                      <Dirt store={store} />
                       <Trees store={store} />
-                      <Ocean />
-                      <SodaCans
-                        magnetActive={activeTool === "magnet" ? true : false}
-                      />
                     </Suspense>
-                  </Canvas>
-                )}
-              </ReactReduxContext.Consumer>
-            </InterfaceWrapper>
-          </Provider>
-        </CanvasWrapper>
-      </Suspense>
+                    <Ocean />
+                    <SodaCans
+                      magnetActive={activeTool === "magnet" ? true : false}
+                    />
+                  </Suspense>
+                </Canvas>
+              )}
+            </ReactReduxContext.Consumer>
+          </InterfaceWrapper>
+        </Provider>
+      </CanvasWrapper>
     </ThemeProvider>
   );
 };
