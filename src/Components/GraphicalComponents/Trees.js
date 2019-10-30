@@ -27,7 +27,7 @@ const Tree = ({ variant, pos }) => {
           attach="geometry"
           {...gltf.__$[variant].geometry}
         />
-        <meshStandardMaterial attach="material" color="hotpink" />
+        <meshStandardMaterial attach="material" color="forestgreen" />
       </mesh>
       <mesh ref={trunkRef}>
         <bufferGeometry
