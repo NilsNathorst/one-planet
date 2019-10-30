@@ -11,11 +11,6 @@ const StyledDiv = styled.div`
 
 const Start = () => {
   const [myState, setmyState] = useState(null);
-
-  useEffect(() => {
-    console.log("mounted");
-  }, []);
-
   return (
     <StyledDiv>
       <h1>Start</h1>

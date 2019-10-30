@@ -1,9 +1,9 @@
 import { combineReducers } from "redux";
 
 import data from "./dataReducer";
-import toolbar from "./toolbarReducer";
+import state from "./toolbarReducer";
 
 export default combineReducers({
   data,
-  toolbar
+  state
 });

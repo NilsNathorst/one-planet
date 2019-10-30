@@ -4,6 +4,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { useSpring, a, config } from "react-spring/three";
 import { connect } from "react-redux";
 import { fetchTrees } from "../../actions";
+import * as THREE from "three";
+import Grass from "./Grass";
 const Tree = ({ variant, pos }) => {
   const gltf = useLoader(GLTFLoader, "/models/trees/trees.gltf");
   const ref = useRef();
@@ -18,9 +20,7 @@ const Tree = ({ variant, pos }) => {
     ref.current.lookAt(0, 0, 0);
   });
   return (
-
     <a.group position={pos} ref={ref} scale={scale}>
-
       <mesh>
         <bufferGeometry
           name="leaves"
@@ -48,22 +48,17 @@ const Trees = props => {
   }, []);
   return (
     <>
+      <Grass />
       {data &&
-        Object.keys(data).map((item, i) => {
-          return (
-            <Tree
-              pos={[data[item].x, data[item].y, data[item].z]}
-              variant={2}
-              key={i}
-            />
-          );
+        data.map((item, i) => {
+          return <Tree pos={[item.x, item.y, item.z]} variant={2} key={i} />;
         })}
     </>
   );
 };
 const mapStateToProps = ({ data }) => {
   return {
-    data
+    data: Object.values(data)
   };
 };
 

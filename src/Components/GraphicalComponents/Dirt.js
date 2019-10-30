@@ -1,32 +1,36 @@
+import React from "react";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useLoader } from "react-three-fiber";
-
-import React, { useContext } from "react";
-import Styled from "styled-components";
-import { CursorContext } from "../Context/CursorContext";
+import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { addTree } from "../../actions";
+import * as Actions from "../../actions";
+
 const Dirt = props => {
   const gltf = useLoader(GLTFLoader, "/models/planet/newplanet.gltf");
-  const { setHovering, setPlantable } = useContext(CursorContext);
-
   return (
     <mesh
       receiveShadow
       onPointerDown={e => {
-        addTree(e.point);
-      }}
-      onPointerMove={e => {
-        e.stopPropagation();
-
-        if (e.point.length() > 80) {
-          setPlantable(true);
-        } else {
-          setPlantable(false);
+        if (props.state.plantable) {
+          props.actions.addTree(e.point);
         }
       }}
-      onPointerOver={() => setHovering(true)}
-      onPointerOut={() => setHovering(false)}
+      onPointerMove={e => {
+        if (props.state.name === "TREE") {
+          e.stopPropagation();
+          if (e.point.length() > 80) {
+            props.actions.setPlantable(true);
+          } else {
+            props.actions.setPlantable(false);
+          }
+        }
+      }}
+      onPointerOver={() =>
+        props.state.name == "TREE" && props.actions.setHover(true)
+      }
+      onPointerOut={() =>
+        props.state.name == "TREE" && props.actions.setHover(false)
+      }
       scale={[29.3, 29.3, 29.3]}
       position={[0, 0, 0]}
     >
@@ -37,10 +41,14 @@ const Dirt = props => {
 };
 const mapStateToProps = ({ data, state }) => {
   return {
-    data
+    data,
+    state
   };
 };
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators(Actions, dispatch)
+});
 export default connect(
   mapStateToProps,
-  { addTree }
+  mapDispatchToProps
 )(Dirt);
