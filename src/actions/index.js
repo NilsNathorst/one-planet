@@ -13,7 +13,6 @@ export const addTree = newTree => async dispatch => {
 
 export const fetchTrees = () => async dispatch => {
   treesRef.on("value", snapshot => {
-    console.log("fetched trees");
     dispatch({
       type: FETCH_TREES,
       payload: snapshot.val()

@@ -11,7 +11,7 @@ const Dirt = props => {
     <mesh
       receiveShadow
       onPointerDown={e => {
-        if (props.state.plantable) {
+        if (props.state.plantable && props.state.name === "TREE") {
           props.actions.addTree(e.point);
         }
       }}

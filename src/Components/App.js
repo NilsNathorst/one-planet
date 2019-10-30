@@ -26,6 +26,8 @@ import { createStore, applyMiddleware } from "redux";
 import reduxThunk from "redux-thunk";
 import reducers from "../reducers";
 
+import Hud from "./Interface/Hud";
+
 const CanvasWrapper = styled.div`
   position: absolute;
   height: 100vh;
@@ -43,6 +45,7 @@ const App = () => {
         <Provider store={store}>
           <InterfaceWrapper>
             <Start />
+            <Hud />
             <Tools />
             <ReactReduxContext.Consumer>
               {({ store }) => (

@@ -10,9 +10,7 @@ extend({ TrackballControls });
 const Controls = ({ ui, setZoomedOut }) => {
   const orbitRef = useRef();
   const { camera, gl } = useThree();
-  useEffect(() => {
-    console.log(ui);
-  }, [ui]);
+  useEffect(() => {}, [ui]);
   useFrame(() => {
     orbitRef.current.update();
     if (
