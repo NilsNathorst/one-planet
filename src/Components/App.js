@@ -55,7 +55,7 @@ const App = () => {
                   }}
                 >
                   <Suspense fallback={null}>
-                    <Controls />
+                    <Controls store={store} />
                     <ambientLight intensity={0.5} />
                     <Background />
                     <Sun />
@@ -64,9 +64,7 @@ const App = () => {
                       <Trees store={store} />
                     </Suspense>
                     <Ocean />
-                    <SodaCans
-                      magnetActive={activeTool === "magnet" ? true : false}
-                    />
+                    <SodaCans store={store} />
                   </Suspense>
                 </Canvas>
               )}

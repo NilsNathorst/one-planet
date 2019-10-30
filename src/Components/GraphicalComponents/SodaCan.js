@@ -4,9 +4,8 @@ import React, { useRef, useState } from "react";
 
 import oceanVectors from "../../database/oceanVectors.json";
 import { useTrail, useSpring, a, config } from "react-spring/three";
-
+import { connect } from "react-redux";
 const SodaCan = ({ scl, pos, magnetActive }) => {
-  const [hovered, setHovered] = useState(false);
   const [active, setActive] = useState(false);
 
   const [mousePos, setMousePos] = useState();
@@ -18,8 +17,7 @@ const SodaCan = ({ scl, pos, magnetActive }) => {
     }
     ref.current.lookAt(0, 0, 0);
   });
-  const { position, scale, color, ...props } = useSpring({
-    scale: hovered ? [0.2, 0.2, 0.2] : [0.1, 0.1, 0.1],
+  const { position, color, ...props } = useSpring({
     position: active ? [mousePos.x, mousePos.y, mousePos.z] : pos,
     config: config.wobbly
   });
@@ -40,12 +38,8 @@ const SodaCan = ({ scl, pos, magnetActive }) => {
       }}
       onPointerOver={e => {
         if (magnetActive) {
-          setHovered(true);
           setActive(true);
         }
-      }}
-      onPointerOut={e => {
-        setHovered(false);
       }}
       scale={scl}
       ref={ref}
@@ -62,7 +56,7 @@ const SodaCan = ({ scl, pos, magnetActive }) => {
   );
 };
 
-const SodaCans = ({ magnetActive }) => {
+const SodaCans = ({ state }) => {
   const trail = useTrail(oceanVectors.length, {
     scale: [0.1, 0.1, 0.1],
     from: { scale: [0.01, 0.01, 0.01] },
@@ -75,7 +69,7 @@ const SodaCans = ({ magnetActive }) => {
         <>
           <SodaCan
             scl={scale}
-            magnetActive={magnetActive}
+            magnetActive={state.name === "MAGNET" ? true : false}
             pos={oceanVectors[i]}
           />
         </>
@@ -83,5 +77,9 @@ const SodaCans = ({ magnetActive }) => {
     }
   });
 };
-
-export default SodaCans;
+const mapStateToProps = ({ state }) => {
+  return {
+    state
+  };
+};
+export default connect(mapStateToProps)(SodaCans);
