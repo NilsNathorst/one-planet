@@ -8,11 +8,13 @@ import { connect } from "react-redux";
 import * as Actions from "../../actions";
 
 const StyledDiv = styled.div`
+  transition: 0.55s;
   display: flex;
   height: 100%;
   bottom: 0;
   justify-content: center;
-
+  transform: ${props =>
+    props.inView === "inView" ? "translate(-100px,0)" : "translate(0,0)"};
   flex-direction: column;
   position: absolute;
   z-index: 100;
@@ -26,6 +28,8 @@ const StyledDiv = styled.div`
   }
 `;
 const ToolIcon = styled.div`
+  transition: 0.25s;
+
   background-image: url(${props => props.icon});
   background-repeat: no-repeat;
   background-size: contain;
@@ -41,33 +45,32 @@ const ToolIcon = styled.div`
   &:hover {
     border: solid 2px white;
   }
+  opacity: ${props => (props.active ? 1 : 0.7)};
 `;
 
-const Tools = props => {
-  const [toolActive, setToolActive] = useState(false);
+const Tools = ({ actions, ui, state }) => {
+  console.log(ui.zoomedOut);
   return (
-    <StyledDiv>
+    <StyledDiv inView={ui.zoomedOut ? "inView" : null}>
       <ToolIcon
         icon={forest}
+        active={state.name === "TREE" ? true : false}
         onClick={() => {
-          if (!toolActive) {
-            setToolActive(true);
-            props.actions.setTool("TREE");
-          } else if (toolActive) {
-            setToolActive(false);
-            props.actions.setTool("NONE");
+          if (state.name != "TREE") {
+            actions.setTool("TREE");
+          } else if (state.name === "TREE") {
+            actions.setTool("NONE");
           }
         }}
       />
       <ToolIcon
         icon={magnet}
+        active={state.name === "MAGNET" ? true : false}
         onClick={() => {
-          if (!toolActive) {
-            setToolActive(true);
-            props.actions.setTool("MAGNET");
-          } else if (toolActive) {
-            setToolActive(false);
-            props.actions.setTool("NONE");
+          if (state.name != "MAGNET") {
+            actions.setTool("MAGNET");
+          } else if (state.name === "MAGNET") {
+            actions.setTool("NONE");
           }
         }}
       />
@@ -75,9 +78,9 @@ const Tools = props => {
   );
 };
 
-const mapStateToProps = ({ data, state }) => {
+const mapStateToProps = ({ ui, state }) => {
   return {
-    data,
+    ui,
     state
   };
 };

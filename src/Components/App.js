@@ -24,6 +24,7 @@ import reduxThunk from "redux-thunk";
 import reducers from "../reducers";
 
 import Tools from "./Interface/Tools";
+import Hud from "./Interface/Hud";
 
 const CanvasWrapper = styled.div`
   position: absolute;
@@ -44,6 +45,7 @@ const App = () => {
       <CanvasWrapper>
         <Provider store={store}>
           <InterfaceWrapper>
+            <Hud />
             <Tools />
             <ReactReduxContext.Consumer>
               {({ store }) => (
