@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import magnet from "../../assets/icons/magnetIcon.png";
 import forest from "../../assets/icons/forestIcon.png";
@@ -49,14 +49,13 @@ const ToolIcon = styled.div`
 `;
 
 const Tools = ({ actions, ui, state }) => {
-  console.log(ui.zoomedOut);
   return (
     <StyledDiv inView={ui.zoomedOut ? "inView" : null}>
       <ToolIcon
         icon={forest}
         active={state.name === "TREE" ? true : false}
         onClick={() => {
-          if (state.name != "TREE") {
+          if (state.name !== "TREE") {
             actions.setTool("TREE");
           } else if (state.name === "TREE") {
             actions.setTool("NONE");
@@ -67,7 +66,7 @@ const Tools = ({ actions, ui, state }) => {
         icon={magnet}
         active={state.name === "MAGNET" ? true : false}
         onClick={() => {
-          if (state.name != "MAGNET") {
+          if (state.name !== "MAGNET") {
             actions.setTool("MAGNET");
           } else if (state.name === "MAGNET") {
             actions.setTool("NONE");

@@ -26,10 +26,10 @@ const Dirt = props => {
         }
       }}
       onPointerOver={() =>
-        props.state.name == "TREE" && props.actions.setHover(true)
+        props.state.name === "TREE" && props.actions.setHover(true)
       }
       onPointerOut={() =>
-        props.state.name == "TREE" && props.actions.setHover(false)
+        props.state.name === "TREE" && props.actions.setHover(false)
       }
       scale={[29.3, 29.3, 29.3]}
       position={[0, 0, 0]}

@@ -5,7 +5,7 @@ import React, { useRef, useState } from "react";
 import oceanVectors from "../../database/oceanVectors.json";
 import { useTrail, useSpring, a, config } from "react-spring/three";
 import { connect } from "react-redux";
-const SodaCan = ({ scl, pos, magnetActive }) => {
+const SodaCan = ({ scl, pos, magnetActive, index }) => {
   const [active, setActive] = useState(false);
 
   const [mousePos, setMousePos] = useState();
@@ -17,13 +17,14 @@ const SodaCan = ({ scl, pos, magnetActive }) => {
     }
     ref.current.lookAt(0, 0, 0);
   });
-  const { position, color, ...props } = useSpring({
+  const { position } = useSpring({
     position: active ? [mousePos.x, mousePos.y, mousePos.z] : pos,
     config: config.wobbly
   });
 
   return (
     <a.mesh
+      key={index}
       castShadow
       name="can"
       onPointerMove={e => {
@@ -66,13 +67,13 @@ const SodaCans = ({ state }) => {
   return trail.map(({ scale, ...rest }, i) => {
     if (i % 10 === 0) {
       return (
-        <>
-          <SodaCan
-            scl={scale}
-            magnetActive={state.name === "MAGNET" ? true : false}
-            pos={oceanVectors[i]}
-          />
-        </>
+        <SodaCan
+          scl={scale}
+          magnetActive={state.name === "MAGNET" ? true : false}
+          pos={oceanVectors[i]}
+          index={i}
+          key={i}
+        />
       );
     }
   });

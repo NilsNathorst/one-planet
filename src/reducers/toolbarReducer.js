@@ -25,8 +25,9 @@ const toolbarReducer = (state = iState, action) => {
         ...state,
         plantable: action.payload
       };
+    default:
+      return state;
   }
-  return state;
 };
 
 export default toolbarReducer;

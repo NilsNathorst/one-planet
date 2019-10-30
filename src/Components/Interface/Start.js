@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import bg from "../../assets/images/starmap-milkyway.jpg";
 const StyledDiv = styled.div`
-  display: ${props => (props.display ? "flex" : "none")};
+  display: ${props => (props.isVisible ? "flex" : "none")};
   align-items: center;
   justify-content: center;
   position: absolute;
@@ -20,7 +20,7 @@ const StyledDiv = styled.div`
 const Start = () => {
   const [display, setDisplay] = useState(true);
   return (
-    <StyledDiv display={display}>
+    <StyledDiv isVisible={display}>
       <h1 onClick={() => setDisplay(!display)}>Start</h1>
     </StyledDiv>
   );

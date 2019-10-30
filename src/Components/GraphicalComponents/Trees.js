@@ -1,16 +1,16 @@
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useLoader } from "react-three-fiber";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { useSpring, a, config } from "react-spring/three";
 import { connect } from "react-redux";
 import { fetchTrees } from "../../actions";
-import * as THREE from "three";
 import Grass from "./Grass";
+
 const Tree = ({ variant, pos }) => {
   const gltf = useLoader(GLTFLoader, "/models/trees/trees.gltf");
   const ref = useRef();
   const trunkRef = useRef();
-  const { scale, ...props } = useSpring({
+  const { scale } = useSpring({
     scale: [0.5, 0.5, 0.5],
     from: { scale: [0.1, 0.1, 0.1] },
     config: config.wobbly

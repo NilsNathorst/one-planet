@@ -11,8 +11,9 @@ const interfaceReducer = (state = iState, action) => {
         ...state,
         zoomedOut: action.payload
       };
+    default:
+      return state;
   }
-  return state;
 };
 
 export default interfaceReducer;

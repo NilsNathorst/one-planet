@@ -1,10 +1,9 @@
 import { extend, useThree, useFrame } from "react-three-fiber";
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect } from "react";
 import { TrackballControls } from "three/examples/jsm/controls/TrackballControls";
-import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { setZoomedOut } from "../actions";
-import * as THREE from "three";
+
 extend({ TrackballControls });
 
 const Controls = ({ ui, setZoomedOut }) => {
