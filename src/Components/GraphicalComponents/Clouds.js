@@ -38,7 +38,9 @@ const Clouds = () => {
   return (
     <>
       {[...Array(10)].map(item => {
-        return <Cloud pos={setFromSpherical(103)} />;
+        return (
+          <Cloud pos={setFromSpherical(Math.floor(Math.random() * 15 + 100))} />
+        );
       })}
     </>
   );
