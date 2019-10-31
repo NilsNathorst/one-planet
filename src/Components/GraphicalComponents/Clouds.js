@@ -3,7 +3,6 @@ import { useLoader, useFrame } from "react-three-fiber";
 import React, { useRef, useEffect } from "react";
 import { setFromSpherical } from "../../helpers/numberGenerators";
 import { a } from "react-spring/three";
-import * as THREE from "three";
 
 const Cloud = ({ pos }) => {
   const gltf = useLoader(GLTFLoader, "/models/cloud/cloudcube.gltf");
@@ -36,9 +35,12 @@ const Cloud = ({ pos }) => {
 const Clouds = () => {
   return (
     <>
-      {[...Array(10)].map(item => {
+      {[...Array(10)].map((item, i) => {
         return (
-          <Cloud pos={setFromSpherical(Math.floor(Math.random() * 15 + 100))} />
+          <Cloud
+            pos={setFromSpherical(Math.floor(Math.random() * 15 + 100))}
+            key={i}
+          />
         );
       })}
     </>

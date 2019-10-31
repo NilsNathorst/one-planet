@@ -47,7 +47,7 @@ const Trees = ({ data, fetchTrees }) => {
   return (
     <>
       {data &&
-        data.map((item, i) => {
+        Object.values(data).map((item, i) => {
           return <Tree pos={[item.x, item.y, item.z]} variant={2} key={i} />;
         })}
     </>
@@ -55,7 +55,7 @@ const Trees = ({ data, fetchTrees }) => {
 };
 const mapStateToProps = ({ data }) => {
   return {
-    data: Object.values(data)
+    data: data
   };
 };
 

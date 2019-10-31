@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import { useTransition, animated } from "react-spring";
 import styled from "styled-components";
 const StyledDiv = styled.div`
