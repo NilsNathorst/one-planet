@@ -76,6 +76,7 @@ const SodaCans = ({ state }) => {
         />
       );
     }
+    return null;
   });
 };
 const mapStateToProps = ({ state }) => {
