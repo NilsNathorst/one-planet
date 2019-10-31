@@ -25,6 +25,8 @@ const StyledDiv = styled.div`
     align-items: flex-end;
     bottom: 0;
     height: 60px;
+    transform: ${props =>
+      props.inView === "inView" ? "translate(0,100px)" : "translate(0,0)"};
   }
 `;
 const ToolIcon = styled.div`
