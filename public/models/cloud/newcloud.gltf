@@ -8,7 +8,7 @@
         {
             "name" : "Scene",
             "nodes" : [
-                3
+                0
             ]
         }
     ],
@@ -22,63 +22,6 @@
                 0,
                 0
             ]
-        },
-        {
-            "children" : [
-                0
-            ],
-            "name" : "aac6d3af1717478786bd50f7c006ca5e.stl.cleaner.materialmerger.gle",
-            "rotation" : [
-                0,
-                0,
-                0,
-                0
-            ]
-        },
-        {
-            "children" : [
-                1
-            ],
-            "name" : "RootNode (model correction matrix)",
-            "rotation" : [
-                0,
-                0,
-                0,
-                0
-            ]
-        },
-        {
-            "children" : [
-                2
-            ],
-            "name" : "RootNode (gltf orientation matrix)",
-            "rotation" : [
-                0,
-                0,
-                0,
-                0
-            ]
-        }
-    ],
-    "materials" : [
-        {
-            "doubleSided" : true,
-            "emissiveFactor" : [
-                0,
-                0,
-                0
-            ],
-            "name" : "Scene_-_Root",
-            "pbrMetallicRoughness" : {
-                "baseColorFactor" : [
-                    1,
-                    1,
-                    1,
-                    1
-                ],
-                "metallicFactor" : 0,
-                "roughnessFactor" : 0.6000000238418579
-            }
         }
     ],
     "meshes" : [
@@ -90,8 +33,7 @@
                         "POSITION" : 0,
                         "NORMAL" : 1
                     },
-                    "indices" : 2,
-                    "material" : 0
+                    "indices" : 2
                 }
             ]
         }
@@ -102,14 +44,14 @@
             "componentType" : 5126,
             "count" : 868,
             "max" : [
-                29.29044532775879,
-                27.153915405273438,
-                14.623809814453125
+                31.611061096191406,
+                -3.1478700637817383,
+                11.028736114501953
             ],
             "min" : [
-                -29.699193954467773,
-                2.330523729324341,
-                -14.504594802856445
+                -27.212726593017578,
+                -28.598346710205078,
+                -16.45274543762207
             ],
             "type" : "VEC3"
         },
@@ -146,7 +88,7 @@
     "buffers" : [
         {
             "byteLength" : 25296,
-            "uri" : "cloud.bin"
+            "uri" : "newcloud.bin"
         }
     ]
 }
