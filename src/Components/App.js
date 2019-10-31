@@ -27,6 +27,7 @@ import reduxThunk from "redux-thunk";
 import reducers from "../reducers";
 
 import Hud from "./Interface/Hud";
+import Clouds from "./GraphicalComponents/Clouds";
 
 const CanvasWrapper = styled.div`
   position: absolute;
@@ -44,7 +45,7 @@ const App = () => {
       <CanvasWrapper>
         <Provider store={store}>
           <InterfaceWrapper>
-            <Start />
+            {/* <Start /> */}
             <Hud />
             <Tools />
             <ReactReduxContext.Consumer>
@@ -62,6 +63,7 @@ const App = () => {
                     <BirdScene />
                     <Background />
                     <Sun />
+                    <Clouds />
                     <Dirt store={store} />
                     <Suspense fallback={null}>
                       <Trees store={store} />

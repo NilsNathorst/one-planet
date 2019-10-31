@@ -1,0 +1,139 @@
+{
+    "asset" : {
+        "generator" : "Khronos glTF Blender I/O v0.9.36",
+        "version" : "2.0"
+    },
+    "scene" : 0,
+    "scenes" : [
+        {
+            "name" : "Scene",
+            "nodes" : [
+                3
+            ]
+        }
+    ],
+    "nodes" : [
+        {
+            "mesh" : 0,
+            "name" : "Object_3",
+            "rotation" : [
+                0,
+                0,
+                0,
+                0
+            ],
+            "translation" : [
+                -0.5782839059829712,
+                -11.545711517333984,
+                0.4395853281021118
+            ]
+        },
+        {
+            "children" : [
+                0
+            ],
+            "name" : "aac6d3af1717478786bd50f7c006ca5e.stl.cleaner.materialmerger.gle"
+        },
+        {
+            "children" : [
+                1
+            ],
+            "name" : "RootNode (model correction matrix)"
+        },
+        {
+            "children" : [
+                2
+            ],
+            "name" : "RootNode (gltf orientation matrix)"
+        }
+    ],
+    "materials" : [
+        {
+            "doubleSided" : true,
+            "emissiveFactor" : [
+                0,
+                0,
+                0
+            ],
+            "name" : "Scene_-_Root",
+            "pbrMetallicRoughness" : {
+                "baseColorFactor" : [
+                    1,
+                    1,
+                    1,
+                    1
+                ],
+                "metallicFactor" : 0,
+                "roughnessFactor" : 0.6000000238418579
+            }
+        }
+    ],
+    "meshes" : [
+        {
+            "name" : "Mesh_0.001",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 0,
+                        "NORMAL" : 1
+                    },
+                    "indices" : 2,
+                    "material" : 0
+                }
+            ]
+        }
+    ],
+    "accessors" : [
+        {
+            "bufferView" : 0,
+            "componentType" : 5126,
+            "count" : 803,
+            "max" : [
+                31.16145896911621,
+                13.652205467224121,
+                15.148764610290527
+            ],
+            "min" : [
+                -27.751943588256836,
+                -12.70626449584961,
+                -14.246291160583496
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 1,
+            "componentType" : 5126,
+            "count" : 803,
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 2,
+            "componentType" : 5123,
+            "count" : 2232,
+            "type" : "SCALAR"
+        }
+    ],
+    "bufferViews" : [
+        {
+            "buffer" : 0,
+            "byteLength" : 9636,
+            "byteOffset" : 0
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 9636,
+            "byteOffset" : 9636
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 4464,
+            "byteOffset" : 19272
+        }
+    ],
+    "buffers" : [
+        {
+            "byteLength" : 23736,
+            "uri" : "cloud2.bin"
+        }
+    ]
+}
