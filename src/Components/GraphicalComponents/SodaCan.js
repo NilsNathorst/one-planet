@@ -1,6 +1,6 @@
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useLoader, useFrame } from "react-three-fiber";
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useMemo, Suspense } from "react";
 import { fetchCans } from "../../actions";
 import oceanVectors from "../../database/oceanVectors.json";
 import { useTrail, useSpring, a, config } from "react-spring/three";
@@ -69,15 +69,24 @@ const SodaCans = ({ name, cans, fetchCans }) => {
     config: { mass: 5, tension: 4000, friction: 200 }
   });
 
+  const indexes = useMemo(() => {
+    let arr = [];
+    for (let i = 0; i < Object.keys(cans).length; i++) {
+      arr.push(Math.floor(Math.random() * oceanVectors.length));
+    }
+    return arr;
+  }, [cans]);
+
+  console.log(indexes);
   return trail.map(({ scale, ...rest }, i) => {
-    const randomPos =
-      oceanVectors[Math.floor(Math.random() * oceanVectors.length)];
     return (
-      <SodaCan
-        pos={randomPos}
-        scl={scale}
-        magnetActive={name === "MAGNET" ? true : false}
-      />
+      <Suspense fallback={null}>
+        <SodaCan
+          pos={oceanVectors[indexes[i]]}
+          scl={scale}
+          magnetActive={name === "MAGNET" ? true : false}
+        />
+      </Suspense>
     );
   });
 };
