@@ -1,6 +1,7 @@
-import { treesRef } from "../database/firebase";
+import { treesRef, cansRef } from "../database/firebase";
 import {
   FETCH_TREES,
+  FETCH_CANS,
   SET_ZOOMED_OUT,
   SET_PLANTABLE,
   SET_HOVER,
@@ -15,6 +16,14 @@ export const fetchTrees = () => async dispatch => {
   treesRef.on("value", snapshot => {
     dispatch({
       type: FETCH_TREES,
+      payload: snapshot.val()
+    });
+  });
+};
+export const fetchCans = () => async dispatch => {
+  cansRef.on("value", snapshot => {
+    dispatch({
+      type: FETCH_CANS,
       payload: snapshot.val()
     });
   });

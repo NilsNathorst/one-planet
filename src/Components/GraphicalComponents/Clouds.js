@@ -9,7 +9,7 @@ const Cloud = ({ pos }) => {
   const gltf = useLoader(GLTFLoader, "/models/cloud/cloudcube.gltf");
   const ref = useRef();
   const grpRef = useRef();
-  console.log(gltf);
+
   let xR = Math.random() * 0.0003;
   let yR = Math.random() * 0.0003;
   let zR = Math.random() * 0.0003;
