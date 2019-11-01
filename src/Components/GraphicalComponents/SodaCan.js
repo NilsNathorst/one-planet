@@ -37,7 +37,6 @@ const SodaCan = ({ destroyCan, firebaseId, scl, magnetActive, pos }) => {
       onPointerDown={e => {
         if (magnetActive && e.eventObject.parent != null) {
           e.eventObject.parent.remove(e.eventObject);
-          console.log(e.eventObject.firebaseId);
           destroyCan(firebaseId);
         }
       }}

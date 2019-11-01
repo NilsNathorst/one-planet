@@ -41,7 +41,6 @@ const Tree = ({ variant, pos }) => {
 };
 
 const Trees = ({ data, fetchTrees }) => {
-  console.log(data);
   useEffect(() => {
     fetchTrees();
   }, [fetchTrees]);

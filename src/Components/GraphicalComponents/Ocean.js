@@ -6,7 +6,6 @@ import * as THREE from "three";
 const Ocean = () => {
   const gltf = useLoader(GLTFLoader, "/models/planet/newplanet.gltf");
   const ref = useRef();
-  console.log(ref);
   return (
     <>
       <mesh
