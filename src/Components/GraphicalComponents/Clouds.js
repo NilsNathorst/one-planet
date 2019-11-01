@@ -19,9 +19,15 @@ const Cloud = ({ pos }) => {
     grpRef.current.rotation.z += zR;
     grpRef.current.rotation.y += yR;
   });
+  const randomFloat = Math.random() * 0.4 + 0.1;
   return (
     <a.group ref={grpRef}>
-      <a.mesh position={pos} ref={ref} castShadow scale={[0.2, 0.2, 0.2]}>
+      <a.mesh
+        position={pos}
+        ref={ref}
+        castShadow
+        scale={[randomFloat, randomFloat, randomFloat]}
+      >
         <bufferGeometry attach="geometry" {...gltf.__$[1].geometry} />
         <meshBasicMaterial
           attach="material"
@@ -38,7 +44,7 @@ const Clouds = () => {
       {[...Array(10)].map((item, i) => {
         return (
           <Cloud
-            pos={setFromSpherical(Math.floor(Math.random() * 15 + 100))}
+            pos={setFromSpherical(Math.floor(Math.random() * 15 + 105))}
             key={i}
           />
         );
