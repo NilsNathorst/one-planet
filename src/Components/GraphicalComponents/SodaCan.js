@@ -64,8 +64,8 @@ const SodaCans = ({ name, cans, fetchCans }) => {
   }, [fetchCans]);
 
   const trail = useTrail(Object.keys(cans).length, {
-    scale: [1.1, 1.1, 1.1],
-    from: { scale: [0.1, 0.1, 0.1] },
+    scale: [0.1, 0.1, 0.1],
+    from: { scale: [0.01, 0.01, 0.01] },
     config: { mass: 5, tension: 4000, friction: 200 }
   });
 
@@ -77,7 +77,6 @@ const SodaCans = ({ name, cans, fetchCans }) => {
     return arr;
   }, [cans]);
 
-  console.log(indexes);
   return trail.map(({ scale, ...rest }, i) => {
     return (
       <Suspense fallback={null}>
@@ -85,6 +84,7 @@ const SodaCans = ({ name, cans, fetchCans }) => {
           pos={oceanVectors[indexes[i]]}
           scl={scale}
           magnetActive={name === "MAGNET" ? true : false}
+          key={i}
         />
       </Suspense>
     );

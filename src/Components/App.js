@@ -18,7 +18,6 @@ import Sun from "./Sun";
 import Background from "./GraphicalComponents/Background";
 import InterfaceWrapper from "./Interface/InterfaceWrapper";
 import Tools from "./Interface/Tools";
-import Start from "./Interface/Start";
 import BirdScene from "./BirdScene";
 // Redux
 import { Provider, ReactReduxContext } from "react-redux";
@@ -45,7 +44,6 @@ const App = () => {
       <CanvasWrapper>
         <Provider store={store}>
           <InterfaceWrapper>
-            {/* <Start /> */}
             <Hud />
             <Tools />
             <ReactReduxContext.Consumer>
