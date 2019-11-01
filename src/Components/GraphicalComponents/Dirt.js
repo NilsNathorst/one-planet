@@ -12,7 +12,7 @@ const Dirt = props => {
       receiveShadow
       onPointerDown={e => {
         if (props.state.plantable && props.state.name === "TREE") {
-          props.actions.addTree(e.point);
+          props.actions.addTree({ pos: e.point, created_at: Date.now() });
         }
       }}
       onPointerMove={e => {
