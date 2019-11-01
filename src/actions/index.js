@@ -11,7 +11,9 @@ import {
 export const addTree = newTree => async dispatch => {
   treesRef.push().set(newTree);
 };
-
+export const destroyCan = id => async dispatch => {
+  cansRef.child(id).remove();
+};
 export const fetchTrees = () => async dispatch => {
   treesRef.on("value", snapshot => {
     dispatch({
