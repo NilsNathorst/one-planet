@@ -62,7 +62,6 @@ const Start = () => {
   const handleClick = () => {
     setDisplay(!display);
   };
-
   const onClick = useCallback(() => set(state => (state + 1) % 3), []);
   const transitions = useTransition(index, p => p, {
     from: { opacity: 0, transform: "translate3d(0,0,100%)" },
