@@ -8,10 +8,10 @@ import { connect } from "react-redux";
 
 const SodaCan = ({ scl, magnetActive, pos }) => {
   const [active, setActive] = useState(false);
-
   const [mousePos, setMousePos] = useState();
   const gltf = useLoader(GLTFLoader, "/models/sodacan/untitled.gltf");
   const ref = useRef();
+
   useFrame(() => {
     if (ref.current.position.length() >= 77) {
       ref.current.position.setLength(77);
@@ -79,7 +79,7 @@ const SodaCans = ({ name, cans, fetchCans }) => {
 
   return trail.map(({ scale, ...rest }, i) => {
     return (
-      <Suspense fallback={null}>
+      <Suspense fallback={null} key={i}>
         <SodaCan
           pos={oceanVectors[indexes[i]]}
           scl={scale}
@@ -90,6 +90,7 @@ const SodaCans = ({ name, cans, fetchCans }) => {
     );
   });
 };
+
 const mapStateToProps = ({ cans, state }) => {
   return {
     name: state.name,

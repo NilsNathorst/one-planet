@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import treeImage from "../../assets/icons/treeScore.png";
 import { connect } from "react-redux";
@@ -11,6 +11,7 @@ const StyledDiv = styled.div`
   transition: 0.55s;
   color: white;
 `;
+
 const TreeDiv = styled.div`
   position: absolute;
   display: flex;

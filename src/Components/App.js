@@ -1,12 +1,11 @@
-//DEPENDENCIES
+// Dependencies
 import React, { Suspense } from "react";
 import { ThemeProvider } from "styled-components";
 import { Canvas } from "react-three-fiber";
 import * as THREE from "three";
-
 import styled from "styled-components";
 
-//COMPONENTS
+// Components
 import GlobalStyles from "../Styles/GlobalStyle";
 import Theme from "../Styles/Theme";
 import Controls from "./Controls";
@@ -19,14 +18,14 @@ import Background from "./GraphicalComponents/Background";
 import InterfaceWrapper from "./Interface/InterfaceWrapper";
 import Tools from "./Interface/Tools";
 import BirdScene from "./BirdScene";
+import Hud from "./Interface/Hud";
+import Clouds from "./GraphicalComponents/Clouds";
+
 // Redux
 import { Provider, ReactReduxContext } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import reduxThunk from "redux-thunk";
 import reducers from "../reducers";
-
-import Hud from "./Interface/Hud";
-import Clouds from "./GraphicalComponents/Clouds";
 
 const CanvasWrapper = styled.div`
   position: absolute;

@@ -1,6 +1,7 @@
 import firebase from "firebase/app";
 import "firebase/firebase-analytics";
 import "firebase/firebase-database";
+
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
   authDomain: "only-one-planet.firebaseapp.com",

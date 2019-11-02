@@ -6,7 +6,6 @@ import * as THREE from "three";
 const Ocean = () => {
   const gltf = useLoader(GLTFLoader, "/models/planet/newplanet.gltf");
   const ref = useRef();
-  console.log(ref);
   return (
     <>
       <mesh
@@ -17,6 +16,7 @@ const Ocean = () => {
       >
         <bufferGeometry attach="geometry" {...gltf.__$[2].geometry} />
         <meshStandardMaterial
+          transparent
           attach="material"
           blending={THREE.CustomBlending}
           blendDst={THREE.SrcColorFactor}

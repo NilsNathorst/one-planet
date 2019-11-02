@@ -18,6 +18,7 @@ const Tree = ({ variant, pos }) => {
   useEffect(() => {
     ref.current.lookAt(0, 0, 0);
   });
+
   return (
     <a.group position={pos} ref={ref} scale={scale}>
       <mesh>
@@ -41,10 +42,10 @@ const Tree = ({ variant, pos }) => {
 };
 
 const Trees = ({ data, fetchTrees }) => {
-  console.log(data);
   useEffect(() => {
     fetchTrees();
   }, [fetchTrees]);
+
   return (
     <>
       {data &&
@@ -60,6 +61,7 @@ const Trees = ({ data, fetchTrees }) => {
     </>
   );
 };
+
 const mapStateToProps = ({ data }) => {
   return {
     data: data

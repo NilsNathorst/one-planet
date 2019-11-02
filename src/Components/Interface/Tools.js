@@ -29,9 +29,9 @@ const StyledDiv = styled.div`
       props.inView === "inView" ? "translate(0,100px)" : "translate(0,0)"};
   }
 `;
+
 const ToolIcon = styled.div`
   transition: 0.25s;
-
   background-image: url(${props => props.icon});
   background-repeat: no-repeat;
   background-size: contain;
@@ -85,9 +85,11 @@ const mapStateToProps = ({ ui, state }) => {
     state
   };
 };
+
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(Actions, dispatch)
 });
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps

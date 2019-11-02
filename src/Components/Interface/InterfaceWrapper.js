@@ -3,6 +3,7 @@ import styled from "styled-components";
 import plantIcon from "../../assets/icons/s-plantable.png";
 import noPlantIcon from "../../assets/icons/s-notPlantable.png";
 import { connect } from "react-redux";
+
 const Wrapper = styled.div`
   position: absolute;
   cursor: ${props =>
@@ -14,6 +15,7 @@ const Wrapper = styled.div`
   height: 100vh;
   width: 100vw;
 `;
+
 const InterfaceWrapper = props => {
   return (
     <Wrapper
