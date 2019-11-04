@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import treeImage from "../../assets/icons/treeScore.png";
+import trashImage from "../../assets/icons/trashScore.png";
 import { connect } from "react-redux";
 
 const StyledDiv = styled.div`
@@ -12,14 +13,14 @@ const StyledDiv = styled.div`
   color: white;
 `;
 
-const TreeDiv = styled.div`
+const IconDiv = styled.div`
   position: absolute;
   display: flex;
   flex-direction: row;
+  width: 80px;
   align-items: center;
-  justify-content: center;
-  left: 5vw;
-  top: 5vh;
+  left: ${props => props.left};
+  top: ${props => props.top};
 
   img {
     height: 50px;
@@ -27,24 +28,32 @@ const TreeDiv = styled.div`
     background-color: hotpink;
     border-radius: 50px;
   }
+  h2 {
+    margin-left: 5px;
+  }
 `;
 
-const Hud = ({ ui, data }) => {
+const Hud = ({ ui, data, cans }) => {
   return (
     <StyledDiv inView={ui.zoomedOut ? "inView" : null}>
       {/* <h1>Day the world ends: {new Date().toString()}</h1> */}
-      <TreeDiv>
+      <IconDiv left={"5vw"} top={"5vh"}>
         <img src={treeImage} alt="" />
         <h2>{data.length}</h2>
-      </TreeDiv>
+      </IconDiv>
+      <IconDiv left={"15vw"} top={"5vh"}>
+        <img src={trashImage} alt="" />
+        <h2>{cans.length}</h2>
+      </IconDiv>
     </StyledDiv>
   );
 };
 
-const mapStateToProps = ({ ui, data }) => {
+const mapStateToProps = ({ ui, data, cans }) => {
   return {
     ui,
-    data: Object.values(data)
+    data: Object.values(data),
+    cans: Object.values(cans)
   };
 };
 

@@ -54,20 +54,22 @@ const App = () => {
                     gl.shadowMap.type = THREE.PCFSoftShadowMap;
                   }}
                 >
-                  <Suspense fallback={null}>
-                    <Controls store={store} />
-                    <ambientLight intensity={0.5} />
-                    <BirdScene />
-                    <Background />
-                    <Sun />
-                    <Clouds />
-                    <Dirt store={store} />
+                  <Provider store={store}>
                     <Suspense fallback={null}>
-                      <Trees store={store} />
+                      <Controls />
+                      <ambientLight intensity={0.5} />
+                      <BirdScene />
+                      <Background />
+                      <Sun />
+                      <Clouds />
+                      <Dirt />
+                      <Suspense fallback={null}>
+                        <Trees />
+                      </Suspense>
+                      <Ocean />
+                      <SodaCans />
                     </Suspense>
-                    <Ocean />
-                    <SodaCans store={store} />
-                  </Suspense>
+                  </Provider>
                 </Canvas>
               )}
             </ReactReduxContext.Consumer>
