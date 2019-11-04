@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect } from "react";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useLoader } from "react-three-fiber";
-import { bindActionCreators } from "redux";
 import { connect, useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
 import * as Actions from "../../actions";
 const Dirt = props => {
   const dispatch = useDispatch();
@@ -15,7 +15,6 @@ const Dirt = props => {
   }, []);
 
   var date = new Date(props.state.planet_end);
-  console.log(date.toString());
 
   const gltf = useLoader(GLTFLoader, "/models/planet/newplanet.gltf");
   return (

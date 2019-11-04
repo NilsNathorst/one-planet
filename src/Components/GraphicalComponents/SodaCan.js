@@ -87,7 +87,7 @@ const SodaCans = ({ destroyCan, name, cans, fetchCans }) => {
 const mapStateToProps = ({ cans, state }) => {
   return {
     name: state.name,
-    cans
+    cans: state.cans
   };
 };
 

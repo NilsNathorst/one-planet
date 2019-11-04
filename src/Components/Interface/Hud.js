@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import styled from "styled-components";
 import treeImage from "../../assets/icons/treeScore.png";
 import trashImage from "../../assets/icons/trashScore.png";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 
 const StyledDiv = styled.div`
   position: absolute;
@@ -33,7 +33,18 @@ const IconDiv = styled.div`
   }
 `;
 
-const Hud = ({ zoomedOut, trees, cans }) => {
+const Hud = ({ zoomedOut, trees, cans, planet_end }) => {
+  const dispatch = useDispatch();
+  const getPlanetEnd = useCallback(() => dispatch({ type: "FETCH_PLANET" }), [
+    dispatch
+  ]);
+
+  useEffect(() => {
+    getPlanetEnd();
+  }, []);
+
+  const date = new Date(planet_end);
+
   return (
     <StyledDiv inView={zoomedOut ? "inView" : null}>
       {/* <h1>Day the world ends: {new Date().toString()}</h1> */}
@@ -45,6 +56,9 @@ const Hud = ({ zoomedOut, trees, cans }) => {
         <img src={trashImage} alt="" />
         <h2>{cans.length}</h2>
       </IconDiv>
+      <IconDiv left={"80vw"} top={"5vh"}>
+        <h2>{date.toDateString()}</h2>
+      </IconDiv>
     </StyledDiv>
   );
 };
@@ -53,7 +67,8 @@ const mapStateToProps = ({ state }) => {
   return {
     zoomedOut: state.zoomedOut,
     trees: Object.values(state.trees),
-    cans: Object.values(state.cans)
+    cans: Object.values(state.cans),
+    planet_end: state.planet_end
   };
 };
 

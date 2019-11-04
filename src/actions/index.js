@@ -4,6 +4,10 @@ import { FETCH_TREES, FETCH_CANS, FETCH_PLANET } from "./types";
 
 export const addTree = newTree => async dispatch => {
   treesRef.push().set(newTree);
+  planetRef.once("value", snapshot => {
+    // Currently adds 24h to planet_end
+    planetRef.set(snapshot.val() + 1000 * 60 * 60 * 24);
+  });
 };
 
 export const fetchTrees = () => async dispatch => {
@@ -20,7 +24,6 @@ export const destroyCan = id => async dispatch => {
 };
 
 export const fetchCans = () => async dispatch => {
-  console.log("hejsan");
   cansRef.on("value", snapshot => {
     Object.keys(snapshot.val()).map(canId => {
       if (!snapshot.val()[canId].id) {
@@ -29,7 +32,6 @@ export const fetchCans = () => async dispatch => {
         )},${Math.floor(Math.random() * 255)})`;
         const pos =
           oceanVectors[Math.floor(Math.random() * oceanVectors.length)];
-        console.log("added id");
         cansRef.child(`${canId}`).set({ id: canId, pos: pos, color: color });
       }
     });
@@ -42,7 +44,6 @@ export const fetchCans = () => async dispatch => {
 
 export const fetchPlanetEnd = () => async dispatch => {
   planetRef.on("value", snapshot => {
-    console.log(snapshot.val());
     dispatch({
       type: FETCH_PLANET,
       payload: snapshot.val()

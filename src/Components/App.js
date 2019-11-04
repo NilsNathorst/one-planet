@@ -66,7 +66,7 @@ const App = () => {
                         <Trees />
                       </Suspense>
                       <Ocean />
-                      {/* <SodaCans /> */}
+                      <SodaCans />
                     </Suspense>
                   </Provider>
                 </Canvas>
