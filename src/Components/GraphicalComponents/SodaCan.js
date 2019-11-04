@@ -1,98 +1,97 @@
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useLoader, useFrame } from "react-three-fiber";
-import React, { useRef, useState, useEffect, Suspense } from "react";
+import React, { useRef, useState, useEffect, Suspense, useMemo } from "react";
+import { fetchCans, destroyCan } from "../../actions";
+
 import { useSpring, a, config } from "react-spring/three";
-
-import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import * as Actions from "../../actions";
 
-const SodaCan = props => {
+const SodaCan = ({ destroyCan, firebaseId, magnetActive, pos, url, color }) => {
   const [active, setActive] = useState(false);
-  const [mousePos, setMousePos] = useState();
-  const gltf = useLoader(GLTFLoader, "/models/sodacan/untitled.gltf");
-  const ref = useRef();
+  const [hovering, setHovering] = useState(false);
+  const [mousePos, setMousePos] = useState(0);
 
+  const gltf = useLoader(GLTFLoader, url);
+  const ref = useRef();
   useFrame(() => {
     if (ref.current.position.length() >= 77) {
       ref.current.position.setLength(77);
     }
     ref.current.lookAt(0, 0, 0);
   });
-
-  const { position } = useSpring({
-    position: active ? [mousePos.x, mousePos.y, mousePos.z] : props.pos,
-    config: config.wobbly
+  const { position, scale, ...props } = useSpring({
+    scale: hovering ? [0.5, 0.5, 0.5] : [0.3, 0.3, 0.3],
+    position: active && hovering ? [mousePos.x, mousePos.y, mousePos.z] : pos,
+    config: config.slow
   });
 
   return (
     <a.mesh
-      firebaseId={props.firebaseId}
+      firebaseId={firebaseId}
       castShadow
       name="can"
       onPointerMove={e => {
-        if (props.magnetActive) {
+        if (magnetActive) {
           setMousePos(e.point);
         }
       }}
       onPointerDown={e => {
-        if (props.magnetActive && e.eventObject.parent != null) {
-          e.eventObject.parent.remove(e.eventObject);
-          props.destroyCan(props.firebaseId);
+        e.stopPropagation();
+        if (magnetActive && e.eventObject.parent != null) {
+          console.log(e.eventObject);
         }
       }}
       onPointerOver={e => {
-        if (props.magnetActive) {
+        e.stopPropagation();
+        if (magnetActive) {
+          setHovering(true);
           setActive(true);
         }
       }}
+      onPointerOut={e => {
+        setHovering(false);
+        setActive(false);
+      }}
+      scale={scale}
       ref={ref}
       position={position}
     >
       <bufferGeometry attach="geometry" {...gltf.__$[1].geometry} />
-      <meshStandardMaterial
-        attach="material"
-        metalness={1}
-        emissive={0x101010}
-        color={0x87cefa}
-      />
+      <meshStandardMaterial attach="material" color={color} />
     </a.mesh>
   );
 };
 
-const SodaCans = props => {
+const SodaCans = ({ destroyCan, name, cans, fetchCans }) => {
   useEffect(() => {
-    props.actions.fetchCans();
-  }, []);
+    fetchCans();
+  }, [fetchCans]);
 
-  return (
-    props.state.cans &&
-    Object.values(props.state.cans).map((can, i) => {
-      return (
-        <Suspense fallback={null}>
+  return Object.values(cans).map(can => {
+    return (
+      <Suspense fallback={null}>
+        {can.id && can.pos && (
           <SodaCan
             pos={can.pos}
-            magnetActive={props.state.name === "MAGNET" ? true : false}
-            key={i}
+            magnetActive={name === "MAGNET" ? true : false}
             firebaseId={can.id}
-            destroyCan={props.actions.destroyCan}
+            destroyCan={destroyCan}
+            color={can.color}
+            url={"/models/sodacan/untitled.gltf"}
           />
-        </Suspense>
-      );
-    })
-  );
+        )}
+      </Suspense>
+    );
+  });
 };
-
-const mapStateToProps = ({ state }) => {
+const mapStateToProps = ({ cans, state }) => {
   return {
-    state
+    name: state.name,
+    cans
   };
 };
-const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators(Actions, dispatch)
-});
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  { fetchCans, destroyCan }
 )(SodaCans);

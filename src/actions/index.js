@@ -20,12 +20,17 @@ export const destroyCan = id => async dispatch => {
 };
 
 export const fetchCans = () => async dispatch => {
+  console.log("hejsan");
   cansRef.on("value", snapshot => {
     Object.keys(snapshot.val()).map(canId => {
-      if (!snapshot.val()[canId].pos) {
-        cansRef
-          .child(`${canId}/pos`)
-          .set(oceanVectors[Math.floor(Math.random() * oceanVectors.length)]);
+      if (!snapshot.val()[canId].id) {
+        const color = `rgb(${Math.floor(Math.random() * 255)},${Math.floor(
+          Math.random() * 255
+        )},${Math.floor(Math.random() * 255)})`;
+        const pos =
+          oceanVectors[Math.floor(Math.random() * oceanVectors.length)];
+        console.log("added id");
+        cansRef.child(`${canId}`).set({ id: canId, pos: pos, color: color });
       }
     });
     dispatch({
@@ -37,6 +42,7 @@ export const fetchCans = () => async dispatch => {
 
 export const fetchPlanetEnd = () => async dispatch => {
   planetRef.on("value", snapshot => {
+    console.log(snapshot.val());
     dispatch({
       type: FETCH_PLANET,
       payload: snapshot.val()
