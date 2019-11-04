@@ -1,12 +1,13 @@
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useLoader, useFrame } from "react-three-fiber";
-import React, { useRef, useState, useEffect, useMemo, Suspense } from "react";
-import { fetchCans, destroyCan } from "../../actions";
-import oceanVectors from "../../database/oceanVectors.json";
-import { useTrail, useSpring, a, config } from "react-spring/three";
-import { connect } from "react-redux";
+import React, { useRef, useState, useEffect, Suspense } from "react";
+import { useSpring, a, config } from "react-spring/three";
 
-const SodaCan = ({ destroyCan, firebaseId, scl, magnetActive, pos }) => {
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import * as Actions from "../../actions";
+
+const SodaCan = props => {
   const [active, setActive] = useState(false);
   const [mousePos, setMousePos] = useState();
   const gltf = useLoader(GLTFLoader, "/models/sodacan/untitled.gltf");
@@ -20,32 +21,31 @@ const SodaCan = ({ destroyCan, firebaseId, scl, magnetActive, pos }) => {
   });
 
   const { position } = useSpring({
-    position: active ? [mousePos.x, mousePos.y, mousePos.z] : pos,
+    position: active ? [mousePos.x, mousePos.y, mousePos.z] : props.pos,
     config: config.wobbly
   });
 
   return (
     <a.mesh
-      firebaseId={firebaseId}
+      firebaseId={props.firebaseId}
       castShadow
       name="can"
       onPointerMove={e => {
-        if (magnetActive) {
+        if (props.magnetActive) {
           setMousePos(e.point);
         }
       }}
       onPointerDown={e => {
-        if (magnetActive && e.eventObject.parent != null) {
+        if (props.magnetActive && e.eventObject.parent != null) {
           e.eventObject.parent.remove(e.eventObject);
-          destroyCan(firebaseId);
+          props.destroyCan(props.firebaseId);
         }
       }}
       onPointerOver={e => {
-        if (magnetActive) {
+        if (props.magnetActive) {
           setActive(true);
         }
       }}
-      scale={scl}
       ref={ref}
       position={position}
     >
@@ -60,49 +60,39 @@ const SodaCan = ({ destroyCan, firebaseId, scl, magnetActive, pos }) => {
   );
 };
 
-const SodaCans = ({ destroyCan, name, cans, fetchCans }) => {
+const SodaCans = props => {
   useEffect(() => {
-    fetchCans();
-  }, [fetchCans]);
+    props.actions.fetchCans();
+  }, []);
 
-  const trail = useTrail(Object.keys(cans).length, {
-    scale: [0.1, 0.1, 0.1],
-    from: { scale: [0.01, 0.01, 0.01] },
-    config: { mass: 5, tension: 4000, friction: 200 }
-  });
-
-  const indexes = useMemo(() => {
-    let arr = [];
-    for (let i = 0; i < Object.keys(cans).length; i++) {
-      arr.push(Math.floor(Math.random() * oceanVectors.length));
-    }
-    return arr;
-  }, [cans]);
-
-  return trail.map(({ scale, ...rest }, i) => {
-    return (
-      <Suspense fallback={null} key={i}>
-        <SodaCan
-          pos={oceanVectors[indexes[i]]}
-          scl={scale}
-          magnetActive={name === "MAGNET" ? true : false}
-          key={i}
-          firebaseId={Object.keys(cans)[i]}
-          destroyCan={destroyCan}
-        />
-      </Suspense>
-    );
-  });
+  return (
+    props.state.cans &&
+    Object.values(props.state.cans).map((can, i) => {
+      return (
+        <Suspense fallback={null}>
+          <SodaCan
+            pos={can.pos}
+            magnetActive={props.state.name === "MAGNET" ? true : false}
+            key={i}
+            firebaseId={can.id}
+            destroyCan={props.actions.destroyCan}
+          />
+        </Suspense>
+      );
+    })
+  );
 };
 
-const mapStateToProps = ({ cans, state }) => {
+const mapStateToProps = ({ state }) => {
   return {
-    name: state.name,
-    cans
+    state
   };
 };
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators(Actions, dispatch)
+});
 
 export default connect(
   mapStateToProps,
-  { fetchCans, destroyCan }
+  mapDispatchToProps
 )(SodaCans);

@@ -1,11 +1,13 @@
-import { treesRef, cansRef } from "../database/firebase";
+import { treesRef, cansRef, planetRef } from "../database/firebase";
+import oceanVectors from "../database/oceanVectors.json";
 import {
   FETCH_TREES,
   FETCH_CANS,
+  FETCH_PLANET,
   SET_ZOOMED_OUT,
   SET_PLANTABLE,
   SET_HOVER,
-  SET_STATE
+  SET_TOOL
 } from "./types";
 
 export const addTree = newTree => async dispatch => {
@@ -22,17 +24,35 @@ export const fetchTrees = () => async dispatch => {
     });
   });
 };
+
+export const fetchPlanetEnd = () => async dispatch => {
+  planetRef.on("value", snapshot => {
+    dispatch({
+      type: FETCH_PLANET,
+      payload: snapshot.val()
+    });
+  });
+};
+
 export const fetchCans = () => async dispatch => {
   cansRef.on("value", snapshot => {
+    Object.keys(snapshot.val()).map(canId => {
+      if (!snapshot.val()[canId].pos) {
+        cansRef
+          .child(`${canId}/pos`)
+          .set(oceanVectors[Math.floor(Math.random() * oceanVectors.length)]);
+      }
+    });
     dispatch({
       type: FETCH_CANS,
       payload: snapshot.val()
     });
   });
 };
+
 export const setTool = name => async dispatch => {
   dispatch({
-    type: SET_STATE,
+    type: SET_TOOL,
     payload: name
   });
 };

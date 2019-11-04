@@ -19,4 +19,5 @@ firebase.analytics();
 const databaseRef = firebase.database().ref();
 
 export const treesRef = databaseRef.child("trees");
+export const planetRef = databaseRef.child("planet");
 export const cansRef = databaseRef.child("rest/saving-data/fireblog/cans");

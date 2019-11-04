@@ -36,12 +36,11 @@ const CanvasWrapper = styled.div`
 
 const App = () => {
   const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
-
   return (
-    <ThemeProvider theme={Theme}>
-      <GlobalStyles />
-      <CanvasWrapper>
-        <Provider store={store}>
+    <Provider store={store}>
+      <ThemeProvider theme={Theme}>
+        <GlobalStyles />
+        <CanvasWrapper>
           <InterfaceWrapper>
             <Hud />
             <Tools />
@@ -67,16 +66,16 @@ const App = () => {
                         <Trees />
                       </Suspense>
                       <Ocean />
-                      <SodaCans />
+                      {/* <SodaCans /> */}
                     </Suspense>
                   </Provider>
                 </Canvas>
               )}
             </ReactReduxContext.Consumer>
           </InterfaceWrapper>
-        </Provider>
-      </CanvasWrapper>
-    </ThemeProvider>
+        </CanvasWrapper>
+      </ThemeProvider>
+    </Provider>
   );
 };
 

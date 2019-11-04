@@ -50,28 +50,28 @@ const ToolIcon = styled.div`
   opacity: ${props => (props.active ? 1 : 0.7)};
 `;
 
-const Tools = ({ actions, ui, state }) => {
+const Tools = props => {
   return (
-    <StyledDiv inView={ui.zoomedOut ? "inView" : null}>
+    <StyledDiv inView={props.state.zoomedOut ? "inView" : null}>
       <ToolIcon
         icon={forest}
-        active={state.name === "TREE" ? true : false}
+        active={props.state.name === "TREE" ? true : false}
         onClick={() => {
-          if (state.name !== "TREE") {
-            actions.setTool("TREE");
-          } else if (state.name === "TREE") {
-            actions.setTool("NONE");
+          if (props.state.name !== "TREE") {
+            props.actions.setTool("TREE");
+          } else if (props.state.name === "TREE") {
+            props.actions.setTool("NONE");
           }
         }}
       />
       <ToolIcon
         icon={magnet}
-        active={state.name === "MAGNET" ? true : false}
+        active={props.state.name === "MAGNET" ? true : false}
         onClick={() => {
-          if (state.name !== "MAGNET") {
-            actions.setTool("MAGNET");
-          } else if (state.name === "MAGNET") {
-            actions.setTool("NONE");
+          if (props.state.name !== "MAGNET") {
+            props.actions.setTool("MAGNET");
+          } else if (props.state.name === "MAGNET") {
+            props.actions.setTool("NONE");
           }
         }}
       />
@@ -79,9 +79,8 @@ const Tools = ({ actions, ui, state }) => {
   );
 };
 
-const mapStateToProps = ({ ui, state }) => {
+const mapStateToProps = ({ state }) => {
   return {
-    ui,
     state
   };
 };

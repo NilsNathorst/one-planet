@@ -6,10 +6,10 @@ import { setZoomedOut } from "../actions";
 
 extend({ TrackballControls });
 
-const Controls = ({ ui, setZoomedOut }) => {
+const Controls = ({ zoomedOut, setZoomedOut }) => {
   const orbitRef = useRef();
   const { camera, gl } = useThree();
-  useEffect(() => {}, [ui]);
+  useEffect(() => {}, [zoomedOut]);
   useFrame(() => {
     orbitRef.current.update();
     if (
@@ -18,7 +18,7 @@ const Controls = ({ ui, setZoomedOut }) => {
         y: 0,
         z: 0
       }) > 420 &&
-      ui.zoomedOut === false
+      zoomedOut === false
     ) {
       setZoomedOut(true);
     } else if (
@@ -27,7 +27,7 @@ const Controls = ({ ui, setZoomedOut }) => {
         y: 0,
         z: 0
       }) < 420 &&
-      ui.zoomedOut === true
+      zoomedOut === true
     ) {
       setZoomedOut(false);
     }
@@ -44,9 +44,9 @@ const Controls = ({ ui, setZoomedOut }) => {
     />
   );
 };
-const mapStateToProps = ({ ui }) => {
+const mapStateToProps = ({ state }) => {
   return {
-    ui
+    zoomedOut: state.zoomedOut
   };
 };
 

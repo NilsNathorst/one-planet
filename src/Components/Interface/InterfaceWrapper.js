@@ -16,7 +16,7 @@ const Wrapper = styled.div`
   width: 100vw;
 `;
 
-const InterfaceWrapper = props => {
+const InterfaceWrapper = (props, state) => {
   return (
     <Wrapper
       className="wrapper"
@@ -28,9 +28,8 @@ const InterfaceWrapper = props => {
   );
 };
 
-const mapStateToProps = ({ data, state }) => {
+const mapStateToProps = ({ state }) => {
   return {
-    data,
     state
   };
 };

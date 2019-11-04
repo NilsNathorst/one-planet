@@ -8,7 +8,7 @@ const StyledDiv = styled.div`
   position: absolute;
   z-index: 100;
   transform: ${props =>
-    props.inView === "inView" ? "translate(0,0)" : "translate(0,-100px)"};
+    props.inView === "inView" ? "translate(0,0)" : "translate(0,-300px)"};
   transition: 0.55s;
   color: white;
 `;
@@ -33,13 +33,13 @@ const IconDiv = styled.div`
   }
 `;
 
-const Hud = ({ ui, data, cans }) => {
+const Hud = ({ zoomedOut, trees, cans }) => {
   return (
-    <StyledDiv inView={ui.zoomedOut ? "inView" : null}>
+    <StyledDiv inView={zoomedOut ? "inView" : null}>
       {/* <h1>Day the world ends: {new Date().toString()}</h1> */}
-      <IconDiv left={"5vw"} top={"5vh"}>
+      <IconDiv left={"5vw"} top={"20vh"}>
         <img src={treeImage} alt="" />
-        <h2>{data.length}</h2>
+        <h2>{trees.length}</h2>
       </IconDiv>
       <IconDiv left={"15vw"} top={"5vh"}>
         <img src={trashImage} alt="" />
@@ -49,11 +49,11 @@ const Hud = ({ ui, data, cans }) => {
   );
 };
 
-const mapStateToProps = ({ ui, data, cans }) => {
+const mapStateToProps = ({ state }) => {
   return {
-    ui,
-    data: Object.values(data),
-    cans: Object.values(cans)
+    zoomedOut: state.zoomedOut,
+    trees: Object.values(state.trees),
+    cans: Object.values(state.cans)
   };
 };
 
