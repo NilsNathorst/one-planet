@@ -45,6 +45,7 @@ const Trees = ({ trees, fetchTrees }) => {
   useEffect(() => {
     fetchTrees();
   }, []);
+  console.log(trees);
 
   return (
     <Suspense fallback={null}>
