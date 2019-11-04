@@ -1,12 +1,17 @@
 import { extend, useThree, useFrame } from "react-three-fiber";
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useCallback } from "react";
 import { TrackballControls } from "three/examples/jsm/controls/TrackballControls";
-import { connect } from "react-redux";
-import { setZoomedOut } from "../actions";
+import { connect, useDispatch } from "react-redux";
 
 extend({ TrackballControls });
 
-const Controls = ({ zoomedOut, setZoomedOut }) => {
+const Controls = ({ zoomedOut }) => {
+  const dispatch = useDispatch();
+  const setDispatch = useCallback(
+    (type, value) => dispatch({ type: type, payload: value }),
+    [dispatch]
+  );
+
   const orbitRef = useRef();
   const { camera, gl } = useThree();
   useEffect(() => {}, [zoomedOut]);
@@ -20,7 +25,7 @@ const Controls = ({ zoomedOut, setZoomedOut }) => {
       }) > 420 &&
       zoomedOut === false
     ) {
-      setZoomedOut(true);
+      setDispatch("SET_ZOOMED_OUT", true);
     } else if (
       orbitRef.current.object.position.distanceTo({
         x: 0,
@@ -29,7 +34,7 @@ const Controls = ({ zoomedOut, setZoomedOut }) => {
       }) < 420 &&
       zoomedOut === true
     ) {
-      setZoomedOut(false);
+      setDispatch("SET_ZOOMED_OUT", false);
     }
   });
 
@@ -50,7 +55,4 @@ const mapStateToProps = ({ state }) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  { setZoomedOut }
-)(Controls);
+export default connect(mapStateToProps)(Controls);
