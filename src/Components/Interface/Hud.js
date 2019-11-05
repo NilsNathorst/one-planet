@@ -38,19 +38,16 @@ const Hud = ({ zoomedOut, trees, cans, planet_end }) => {
   const getPlanetEnd = useCallback(() => dispatch({ type: "FETCH_PLANET" }), [
     dispatch
   ]);
-
   useEffect(() => {
     getPlanetEnd();
-  }, [getPlanetEnd]);
+  }, []);
 
   const date = new Date(planet_end);
-
   return (
     <StyledDiv inView={zoomedOut ? "inView" : null}>
-      {/* <h1>Day the world ends: {new Date().toString()}</h1> */}
       <IconDiv left={"5vw"} top={"20vh"}>
         <img src={treeImage} alt="" />
-        <h2>{trees.length}</h2>
+        <h2>{trees ? trees.length : 0}</h2>
       </IconDiv>
       <IconDiv left={"15vw"} top={"5vh"}>
         <img src={trashImage} alt="" />
@@ -63,12 +60,12 @@ const Hud = ({ zoomedOut, trees, cans, planet_end }) => {
   );
 };
 
-const mapStateToProps = ({ state }) => {
+const mapStateToProps = ({ state: { zoomedOut, trees, cans, planet_end } }) => {
   return {
-    zoomedOut: state.zoomedOut,
-    trees: Object.values(state.trees),
-    cans: Object.values(state.cans),
-    planet_end: state.planet_end
+    planet_end,
+    zoomedOut,
+    trees: trees ? Object.values(trees) : null,
+    cans: Object.values(cans)
   };
 };
 

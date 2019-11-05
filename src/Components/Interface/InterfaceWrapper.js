@@ -16,21 +16,24 @@ const Wrapper = styled.div`
   width: 100vw;
 `;
 
-const InterfaceWrapper = (props, state) => {
+const InterfaceWrapper = ({ name, hoverActive, plantable, children }) => {
   return (
     <Wrapper
       className="wrapper"
-      {...props}
-      activeTool={props.state.name}
-      hovering={props.state.hoverActive}
-      plantable={props.state.plantable}
-    />
+      activeTool={name}
+      hovering={hoverActive}
+      plantable={plantable}
+    >
+      {children}
+    </Wrapper>
   );
 };
 
-const mapStateToProps = ({ state }) => {
+const mapStateToProps = ({ state: { name, hoverActive, plantable } }) => {
   return {
-    state
+    name,
+    hoverActive,
+    plantable
   };
 };
 

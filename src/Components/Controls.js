@@ -49,9 +49,9 @@ const Controls = ({ zoomedOut }) => {
     />
   );
 };
-const mapStateToProps = ({ state }) => {
+const mapStateToProps = ({ state: { zoomedOut } }) => {
   return {
-    zoomedOut: state.zoomedOut
+    zoomedOut
   };
 };
 
