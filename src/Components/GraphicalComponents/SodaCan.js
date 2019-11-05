@@ -58,11 +58,11 @@ const SodaCans = ({ flushCansDatabase, destroyCan, name, cans, fetchCans }) => {
   useEffect(() => {
     flushCansDatabase();
     fetchCans();
-  }, [fetchCans]);
+  }, [fetchCans, flushCansDatabase]);
 
-  return Object.values(cans).map(can => {
+  return Object.values(cans).map((can, i) => {
     return (
-      <Suspense fallback={null}>
+      <Suspense fallback={null} key={i}>
         {can.id && can.pos && (
           <SodaCan
             pos={can.pos}

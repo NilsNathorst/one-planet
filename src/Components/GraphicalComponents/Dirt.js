@@ -12,9 +12,7 @@ const Dirt = props => {
   );
   useEffect(() => {
     props.actions.fetchPlanetEnd();
-  }, []);
-
-  var date = new Date(props.state.planet_end);
+  }, [props.actions]);
 
   const gltf = useLoader(GLTFLoader, "/models/planet/newplanet.gltf");
   return (
