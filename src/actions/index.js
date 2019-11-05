@@ -32,6 +32,7 @@ export const fetchTrees = () => async dispatch => {
           });
         }
       });
+      return null;
     });
     dispatch({
       type: FETCH_TREES,
@@ -48,7 +49,10 @@ export const fetchCans = () => async dispatch => {
   console.log("Fetched Cans");
   cansRef.on("value", snapshot => {
     Object.keys(snapshot.val()).map(canId => {
-      if (!snapshot.val()[canId].id && snapshot.val()[canId] != "was removed") {
+      if (
+        !snapshot.val()[canId].id &&
+        snapshot.val()[canId] !== "was removed"
+      ) {
         const color = `rgb(${Math.floor(Math.random() * 255)},${Math.floor(
           Math.random() * 255
         )},${Math.floor(Math.random() * 255)})`;
@@ -57,6 +61,7 @@ export const fetchCans = () => async dispatch => {
 
         cansRef.child(`${canId}`).set({ id: canId, pos: pos, color: color });
       }
+      return null;
     });
     dispatch({
       type: FETCH_CANS,
@@ -72,6 +77,7 @@ export const flushCansDatabase = id => async dispatch => {
       if (snapshot.val()[canId] === "was removed") {
         cansRef.child(`${canId}`).remove();
       }
+      return null;
     });
   });
 };

@@ -1,5 +1,5 @@
 // Dependencies
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense } from "react";
 import { ThemeProvider } from "styled-components";
 import { Canvas } from "react-three-fiber";
 import * as THREE from "three";

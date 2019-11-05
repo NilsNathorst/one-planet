@@ -41,7 +41,7 @@ const Hud = ({ zoomedOut, trees, cans, planet_end }) => {
 
   useEffect(() => {
     getPlanetEnd();
-  }, []);
+  }, [getPlanetEnd]);
 
   const date = new Date(planet_end);
 
