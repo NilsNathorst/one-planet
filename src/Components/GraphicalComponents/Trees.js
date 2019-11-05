@@ -5,13 +5,34 @@ import { useSpring, a, config } from "react-spring/three";
 import { connect } from "react-redux";
 import { fetchTrees } from "../../actions";
 
-const Tree = ({ variant, pos }) => {
+const Tree = ({ variant, pos, age }) => {
   const gltf = useLoader(GLTFLoader, "/models/trees/trees.gltf");
   const ref = useRef();
   const trunkRef = useRef();
+  let index = 0;
+  const colorsArray = [
+    {
+      color: "#9EFF00"
+    },
+    {
+      color: "#228B22"
+    },
+    {
+      color: "#CB7500"
+    }
+  ];
+
+  if (age === "young") index = 1;
+  if (age === "adult") index = 2;
+
+  const { color } = useSpring({
+    color: colorsArray[index].color,
+    from: { color: colorsArray[index - 1].color },
+    config: { duration: 6000 }
+  });
   const { scale } = useSpring({
-    scale: [0.5, 0.5, 0.5],
-    from: { scale: [0.1, 0.1, 0.1] },
+    scale: [0.4, 0.4, 0.4],
+    from: { scale: [0.01, 0.01, 0.01] },
     config: config.wobbly
   });
 
@@ -21,14 +42,14 @@ const Tree = ({ variant, pos }) => {
 
   return (
     <a.group position={pos} ref={ref} scale={scale}>
-      <mesh>
-        <bufferGeometry
+      <a.mesh>
+        <a.bufferGeometry
           name="leaves"
           attach="geometry"
           {...gltf.__$[variant].geometry}
         />
-        <meshStandardMaterial attach="material" color="forestgreen" />
-      </mesh>
+        <a.meshStandardMaterial attach="material" color={color} />
+      </a.mesh>
       <mesh ref={trunkRef}>
         <bufferGeometry
           name="trunk"
@@ -48,12 +69,13 @@ const Trees = ({ trees, fetchTrees }) => {
   return (
     <Suspense fallback={null}>
       {trees.length > 0 &&
-        trees.map((item, i) => {
+        trees.map((tree, i) => {
           return (
             <Tree
-              pos={[item.pos.x, item.pos.y, item.pos.z]}
+              pos={[tree.pos.x, tree.pos.y, tree.pos.z]}
               variant={2}
               key={i}
+              age={tree.age}
             />
           );
         })}
