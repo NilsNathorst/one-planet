@@ -14,10 +14,10 @@ export const fetchTrees = () => async dispatch => {
   treesRef.on("value", snapshot => {
     Object.keys(snapshot.val()).map(treeId => {
       const TreeAge = Date.now() - snapshot.val()[treeId].created_at;
-      if (TreeAge > 3600000 * 2 && TreeAge < 360000 * 3) {
+      if (TreeAge > 1000 * 60 * 60 * 2 && TreeAge < 1000 * 60 * 60 * 2 * 3) {
         treesRef.child(`${treeId}/age`).set("adult");
       }
-      if (TreeAge > 3600000 * 5) {
+      if (TreeAge > 1000 * 60 * 60 * 5) {
         treesRef.child(`${treeId}/age`).set("dead");
       }
       if (!snapshot.val()[treeId].id) {
@@ -27,7 +27,7 @@ export const fetchTrees = () => async dispatch => {
         if (snapshot.val() === "dead") {
           treesRef.child(`${treeId}`).remove();
           planetRef.once("value", snapshot => {
-            // Currently removes 12h to planet_end
+            // Currently removes 30min to planet_end
             planetRef.set(snapshot.val() - 1000 * 60 * 30);
           });
         }
