@@ -17,6 +17,7 @@ const Tree = ({ variant, pos, age }) => {
       (age === "dead" && "#CB7500"),
     config: { duration: 6000 }
   });
+  
   const { scale } = useSpring({
     scale: [0.4, 0.4, 0.4],
     from: { scale: [0.01, 0.01, 0.01] },
