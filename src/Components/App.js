@@ -1,5 +1,5 @@
 // Dependencies
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import { ThemeProvider } from "styled-components";
 import { Canvas } from "react-three-fiber";
 import * as THREE from "three";
@@ -38,10 +38,10 @@ const App = () => {
   const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
 
   return (
-    <ThemeProvider theme={Theme}>
-      <GlobalStyles />
-      <CanvasWrapper>
-        <Provider store={store}>
+    <Provider store={store}>
+      <ThemeProvider theme={Theme}>
+        <GlobalStyles />
+        <CanvasWrapper>
           <InterfaceWrapper>
             <Hud />
             <Tools />
@@ -54,29 +54,29 @@ const App = () => {
                     gl.shadowMap.type = THREE.PCFSoftShadowMap;
                   }}
                 >
-                  <Provider store={store}>
-                    <Suspense fallback={null}>
+                  <Suspense fallback={null}>
+                    <Clouds />
+                    <Provider store={store}>
                       <Controls />
                       <ambientLight intensity={0.5} />
                       <BirdScene />
                       <Background />
                       <Sun />
-                      <Clouds />
                       <Dirt />
                       <Suspense fallback={null}>
                         <Trees />
                       </Suspense>
                       <Ocean />
                       <SodaCans />
-                    </Suspense>
-                  </Provider>
+                    </Provider>
+                  </Suspense>
                 </Canvas>
               )}
             </ReactReduxContext.Consumer>
           </InterfaceWrapper>
-        </Provider>
-      </CanvasWrapper>
-    </ThemeProvider>
+        </CanvasWrapper>
+      </ThemeProvider>
+    </Provider>
   );
 };
 

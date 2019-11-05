@@ -1,35 +1,49 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useLoader } from "react-three-fiber";
+import { connect, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
 import * as Actions from "../../actions";
-
 const Dirt = props => {
+  const dispatch = useDispatch();
+  const setDispatch = useCallback(
+    (type, value) => dispatch({ type: type, payload: value }),
+    [dispatch]
+  );
+  useEffect(() => {
+    props.actions.fetchPlanetEnd();
+  }, []);
+
+  var date = new Date(props.state.planet_end);
+
   const gltf = useLoader(GLTFLoader, "/models/planet/newplanet.gltf");
   return (
     <mesh
       receiveShadow
       onPointerDown={e => {
         if (props.state.plantable && props.state.name === "TREE") {
-          props.actions.addTree({ pos: e.point, created_at: Date.now() });
+          props.actions.addTree({
+            pos: e.point,
+            created_at: Date.now(),
+            age: "young"
+          });
         }
       }}
       onPointerMove={e => {
         if (props.state.name === "TREE") {
           e.stopPropagation();
           if (e.point.length() > 80 && props.state.plantable === false) {
-            props.actions.setPlantable(true);
+            setDispatch("SET_PLANTABLE", true);
           } else if (e.point.length() < 80 && props.state.plantable === true) {
-            props.actions.setPlantable(false);
+            setDispatch("SET_PLANTABLE", false);
           }
         }
       }}
       onPointerOver={() =>
-        props.state.name === "TREE" && props.actions.setHover(true)
+        props.state.name === "TREE" && setDispatch("SET_HOVER", true)
       }
       onPointerOut={() =>
-        props.state.name === "TREE" && props.actions.setHover(false)
+        props.state.name === "TREE" && setDispatch("SET_HOVER", true)
       }
       scale={[29.3, 29.3, 29.3]}
       position={[0, 0, 0]}

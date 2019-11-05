@@ -1,6 +1,6 @@
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useLoader, useFrame } from "react-three-fiber";
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, Suspense } from "react";
 import { setFromSpherical } from "../../helpers/numberGenerators";
 import { a } from "react-spring/three";
 
@@ -41,14 +41,16 @@ const Cloud = ({ pos }) => {
 const Clouds = () => {
   return (
     <>
-      {[...Array(10)].map((item, i) => {
-        return (
-          <Cloud
-            pos={setFromSpherical(Math.floor(Math.random() * 15 + 105))}
-            key={i}
-          />
-        );
-      })}
+      <Suspense fallback={null}>
+        {[...Array(10)].map((item, i) => {
+          return (
+            <Cloud
+              pos={setFromSpherical(Math.floor(Math.random() * 15 + 105))}
+              key={i}
+            />
+          );
+        })}
+      </Suspense>
     </>
   );
 };

@@ -1,11 +1,8 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
 import magnet from "../../assets/icons/magnetIcon.png";
 import forest from "../../assets/icons/forestIcon.png";
-
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import * as Actions from "../../actions";
+import { connect, useDispatch } from "react-redux";
 
 const StyledDiv = styled.div`
   transition: 0.55s;
@@ -50,28 +47,35 @@ const ToolIcon = styled.div`
   opacity: ${props => (props.active ? 1 : 0.7)};
 `;
 
-const Tools = ({ actions, ui, state }) => {
+const Tools = props => {
+  const dispatch = useDispatch();
+
+  const setTool = useCallback(
+    value => dispatch({ type: "SET_TOOL", payload: value }),
+    [dispatch]
+  );
+
   return (
-    <StyledDiv inView={ui.zoomedOut ? "inView" : null}>
+    <StyledDiv inView={props.state.zoomedOut ? "inView" : null}>
       <ToolIcon
         icon={forest}
-        active={state.name === "TREE" ? true : false}
+        active={props.state.name === "TREE" ? true : false}
         onClick={() => {
-          if (state.name !== "TREE") {
-            actions.setTool("TREE");
-          } else if (state.name === "TREE") {
-            actions.setTool("NONE");
+          if (props.state.name !== "TREE") {
+            setTool("TREE");
+          } else if (props.state.name === "TREE") {
+            setTool("NONE");
           }
         }}
       />
       <ToolIcon
         icon={magnet}
-        active={state.name === "MAGNET" ? true : false}
+        active={props.state.name === "MAGNET" ? true : false}
         onClick={() => {
-          if (state.name !== "MAGNET") {
-            actions.setTool("MAGNET");
-          } else if (state.name === "MAGNET") {
-            actions.setTool("NONE");
+          if (props.state.name !== "MAGNET") {
+            setTool("MAGNET");
+          } else if (props.state.name === "MAGNET") {
+            setTool("NONE");
           }
         }}
       />
@@ -79,18 +83,10 @@ const Tools = ({ actions, ui, state }) => {
   );
 };
 
-const mapStateToProps = ({ ui, state }) => {
+const mapStateToProps = ({ state }) => {
   return {
-    ui,
     state
   };
 };
 
-const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators(Actions, dispatch)
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Tools);
+export default connect(mapStateToProps)(Tools);

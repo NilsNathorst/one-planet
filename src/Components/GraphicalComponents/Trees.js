@@ -1,6 +1,6 @@
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useLoader } from "react-three-fiber";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, Suspense } from "react";
 import { useSpring, a, config } from "react-spring/three";
 import { connect } from "react-redux";
 import { fetchTrees } from "../../actions";
@@ -41,15 +41,14 @@ const Tree = ({ variant, pos }) => {
   );
 };
 
-const Trees = ({ data, fetchTrees }) => {
+const Trees = ({ trees, fetchTrees }) => {
   useEffect(() => {
     fetchTrees();
-  }, [fetchTrees]);
-
+  }, []);
   return (
-    <>
-      {data &&
-        Object.values(data).map((item, i) => {
+    <Suspense fallback={null}>
+      {trees.length > 0 &&
+        trees.map((item, i) => {
           return (
             <Tree
               pos={[item.pos.x, item.pos.y, item.pos.z]}
@@ -58,13 +57,13 @@ const Trees = ({ data, fetchTrees }) => {
             />
           );
         })}
-    </>
+    </Suspense>
   );
 };
 
-const mapStateToProps = ({ data }) => {
+const mapStateToProps = ({ state }) => {
   return {
-    data: data
+    trees: Object.values(state.trees)
   };
 };
 
