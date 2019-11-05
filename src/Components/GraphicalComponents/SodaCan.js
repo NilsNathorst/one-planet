@@ -78,10 +78,10 @@ const SodaCans = ({ flushCansDatabase, destroyCan, name, cans, fetchCans }) => {
   });
 };
 
-const mapStateToProps = ({ state }) => {
+const mapStateToProps = ({ state: { name, cans } }) => {
   return {
-    name: state.name,
-    cans: state.cans
+    name,
+    cans
   };
 };
 

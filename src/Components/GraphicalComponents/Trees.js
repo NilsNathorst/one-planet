@@ -9,27 +9,15 @@ const Tree = ({ variant, pos, age }) => {
   const gltf = useLoader(GLTFLoader, "/models/trees/trees.gltf");
   const ref = useRef();
   const trunkRef = useRef();
-  let index = 0;
-  const colorsArray = [
-    {
-      color: "#9EFF00"
-    },
-    {
-      color: "#228B22"
-    },
-    {
-      color: "#CB7500"
-    }
-  ];
-
-  if (age === "young") index = 1;
-  if (age === "adult") index = 2;
 
   const { color } = useSpring({
-    color: colorsArray[index].color,
-    from: { color: colorsArray[index - 1].color },
+    color:
+      (age === "young" && "#9EFF00") ||
+      (age === "adult" && "#228B22") ||
+      (age === "dead" && "#CB7500"),
     config: { duration: 6000 }
   });
+  
   const { scale } = useSpring({
     scale: [0.4, 0.4, 0.4],
     from: { scale: [0.01, 0.01, 0.01] },
@@ -68,24 +56,22 @@ const Trees = ({ trees, fetchTrees }) => {
   }, [fetchTrees]);
   return (
     <Suspense fallback={null}>
-      {trees.length > 0 &&
-        trees.map((tree, i) => {
-          return (
-            <Tree
-              pos={[tree.pos.x, tree.pos.y, tree.pos.z]}
-              variant={2}
-              key={i}
-              age={tree.age}
-            />
-          );
-        })}
+      {trees &&
+        trees.map((tree, i) => (
+          <Tree
+            pos={[tree.pos.x, tree.pos.y, tree.pos.z]}
+            variant={2}
+            key={i}
+            age={tree.age}
+          />
+        ))}
     </Suspense>
   );
 };
 
 const mapStateToProps = ({ state }) => {
   return {
-    trees: Object.values(state.trees)
+    trees: state.trees ? Object.values(state.trees) : null
   };
 };
 

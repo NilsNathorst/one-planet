@@ -47,7 +47,7 @@ const ToolIcon = styled.div`
   opacity: ${props => (props.active ? 1 : 0.7)};
 `;
 
-const Tools = props => {
+const Tools = ({ name, zoomedOut }) => {
   const dispatch = useDispatch();
 
   const setTool = useCallback(
@@ -56,25 +56,25 @@ const Tools = props => {
   );
 
   return (
-    <StyledDiv inView={props.state.zoomedOut ? "inView" : null}>
+    <StyledDiv inView={zoomedOut ? "inView" : null}>
       <ToolIcon
         icon={forest}
-        active={props.state.name === "TREE" ? true : false}
+        active={name === "TREE" ? true : false}
         onClick={() => {
-          if (props.state.name !== "TREE") {
+          if (name !== "TREE") {
             setTool("TREE");
-          } else if (props.state.name === "TREE") {
+          } else if (name === "TREE") {
             setTool("NONE");
           }
         }}
       />
       <ToolIcon
         icon={magnet}
-        active={props.state.name === "MAGNET" ? true : false}
+        active={name === "MAGNET" ? true : false}
         onClick={() => {
-          if (props.state.name !== "MAGNET") {
+          if (name !== "MAGNET") {
             setTool("MAGNET");
-          } else if (props.state.name === "MAGNET") {
+          } else if (name === "MAGNET") {
             setTool("NONE");
           }
         }}
@@ -83,10 +83,10 @@ const Tools = props => {
   );
 };
 
-const mapStateToProps = ({ state }) => {
+const mapStateToProps = ({ state: { name, zoomedOut } }) => {
   return {
-    state
+    name,
+    zoomedOut
   };
 };
-
 export default connect(mapStateToProps)(Tools);

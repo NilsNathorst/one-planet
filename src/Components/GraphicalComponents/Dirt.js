@@ -2,25 +2,22 @@ import React, { useCallback, useEffect } from "react";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useLoader } from "react-three-fiber";
 import { connect, useDispatch } from "react-redux";
-import { bindActionCreators } from "redux";
-import * as Actions from "../../actions";
-const Dirt = props => {
+import { addTree } from "../../actions";
+
+const Dirt = ({ name, plantable, addTree }) => {
   const dispatch = useDispatch();
   const setDispatch = useCallback(
     (type, value) => dispatch({ type: type, payload: value }),
     [dispatch]
   );
-  useEffect(() => {
-    props.actions.fetchPlanetEnd();
-  }, [props.actions]);
 
   const gltf = useLoader(GLTFLoader, "/models/planet/newplanet.gltf");
   return (
     <mesh
       receiveShadow
       onPointerDown={e => {
-        if (props.state.plantable && props.state.name === "TREE") {
-          props.actions.addTree({
+        if (plantable && name === "TREE") {
+          addTree({
             pos: e.point,
             created_at: Date.now(),
             age: "young"
@@ -28,21 +25,17 @@ const Dirt = props => {
         }
       }}
       onPointerMove={e => {
-        if (props.state.name === "TREE") {
+        if (name === "TREE") {
           e.stopPropagation();
-          if (e.point.length() > 80 && props.state.plantable === false) {
+          if (e.point.length() > 80 && plantable === false) {
             setDispatch("SET_PLANTABLE", true);
-          } else if (e.point.length() < 80 && props.state.plantable === true) {
+          } else if (e.point.length() < 80 && plantable === true) {
             setDispatch("SET_PLANTABLE", false);
           }
         }
       }}
-      onPointerOver={() =>
-        props.state.name === "TREE" && setDispatch("SET_HOVER", true)
-      }
-      onPointerOut={() =>
-        props.state.name === "TREE" && setDispatch("SET_HOVER", true)
-      }
+      onPointerOver={() => name === "TREE" && setDispatch("SET_HOVER", true)}
+      onPointerOut={() => name === "TREE" && setDispatch("SET_HOVER", true)}
       scale={[29.3, 29.3, 29.3]}
       position={[0, 0, 0]}
     >
@@ -51,16 +44,14 @@ const Dirt = props => {
     </mesh>
   );
 };
-const mapStateToProps = ({ data, state }) => {
+const mapStateToProps = ({ state: { name, plantable } }) => {
   return {
-    data,
-    state
+    name,
+    plantable
   };
 };
-const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators(Actions, dispatch)
-});
+
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  { addTree }
 )(Dirt);
