@@ -4,6 +4,8 @@ import treeImage from "../../assets/icons/treeScore.png";
 import trashImage from "../../assets/icons/trashScore.png";
 import { connect, useDispatch } from "react-redux";
 
+import { fetchPlanetEnd } from "../../actions";
+
 const StyledDiv = styled.div`
   position: absolute;
   z-index: 100;
@@ -33,16 +35,13 @@ const IconDiv = styled.div`
   }
 `;
 
-const Hud = ({ zoomedOut, trees, cans, planet_end }) => {
-  const dispatch = useDispatch();
-  const getPlanetEnd = useCallback(() => dispatch({ type: "FETCH_PLANET" }), [
-    dispatch
-  ]);
+const Hud = ({ zoomedOut, trees, cans, planet_end, fetchPlanetEnd }) => {
   useEffect(() => {
-    getPlanetEnd();
+    fetchPlanetEnd();
   }, []);
 
   const date = new Date(planet_end);
+
   return (
     <StyledDiv inView={zoomedOut ? "inView" : null}>
       <IconDiv left={"5vw"} top={"20vh"}>
@@ -69,4 +68,7 @@ const mapStateToProps = ({ state: { zoomedOut, trees, cans, planet_end } }) => {
   };
 };
 
-export default connect(mapStateToProps)(Hud);
+export default connect(
+  mapStateToProps,
+  { fetchPlanetEnd }
+)(Hud);

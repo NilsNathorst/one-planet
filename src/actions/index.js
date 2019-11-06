@@ -18,7 +18,7 @@ export const fetchTrees = () => async dispatch => {
         if (TreeAge > 1000 * 60 * 60 * 2 && TreeAge < 1000 * 60 * 60 * 2 * 3) {
           treesRef.child(`${treeId}/age`).set("adult");
         }
-        if (TreeAge > 1000) {
+        if (TreeAge > 1000 * 60 * 60 * 5) {
           treesRef.child(`${treeId}/age`).set("dead");
         }
         if (TreeAge > 5000 * 10 * 10 * 10) {

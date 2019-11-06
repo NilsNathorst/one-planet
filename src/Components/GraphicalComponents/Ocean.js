@@ -16,7 +16,6 @@ const Ocean = ({ cans }) => {
     else if (cans.length < 10) {
       setColor("#2191FB");
     }
-    console.log(cans.length);
   }, [cans]);
   const { color } = useSpring({
     color: currentColor,
