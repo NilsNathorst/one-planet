@@ -7,7 +7,7 @@ import { addTree } from "../../actions";
 const Surface = props => {
   const ref = useRef();
   const gltf = useLoader(GLTFLoader, "/models/planet/continentsplanet.gltf");
-  console.log(gltf);
+
   return (
     <group>
       <mesh
