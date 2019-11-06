@@ -29,9 +29,6 @@ export const fetchTrees = () => async dispatch => {
             planetRef.set(snapshot.val() - 1000 * 60 * 30);
           });
         }
-        if (!snapshot.val()[treeId].id) {
-          treesRef.child(`${treeId}/id`).set({ treeId });
-        }
         return null;
       });
     dispatch({
