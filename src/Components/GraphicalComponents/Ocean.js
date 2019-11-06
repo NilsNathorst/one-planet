@@ -4,7 +4,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { useSpring, a } from "react-spring/three";
 const Ocean = ({ cans }) => {
-  const gltf = useLoader(GLTFLoader, "/models/planet/newplanet.gltf");
+  const gltf = useLoader(GLTFLoader, "/models/planet/continentsplanet.gltf");
   const [currentColor, setColor] = useState("blue");
 
   useEffect(() => {
@@ -16,20 +16,16 @@ const Ocean = ({ cans }) => {
       setColor("#2191FB");
     }
   }, [cans]);
+
   const { color } = useSpring({
     color: currentColor,
-
     config: { duration: 1000 }
   });
+
   const ref = useRef();
   return (
     <>
-      <a.mesh
-        ref={ref}
-        name="Ocean"
-        scale={[29.2, 29.2, 29.2]}
-        position={[0, 0, 0]}
-      >
+      <a.mesh ref={ref} name="Ocean" scale={[30, 30, 30]} position={[0, 0, 0]}>
         <bufferGeometry attach="geometry" {...gltf.__$[2].geometry} />
         <a.meshStandardMaterial
           transparent
