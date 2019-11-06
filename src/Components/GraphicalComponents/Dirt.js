@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useLoader } from "react-three-fiber";
 import { connect, useDispatch } from "react-redux";

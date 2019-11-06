@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import treeImage from "../../assets/icons/treeScore.png";
 import trashImage from "../../assets/icons/trashScore.png";
-import { connect, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 
 import { fetchPlanetEnd } from "../../actions";
 
@@ -38,7 +38,7 @@ const IconDiv = styled.div`
 const Hud = ({ zoomedOut, trees, cans, planet_end, fetchPlanetEnd }) => {
   useEffect(() => {
     fetchPlanetEnd();
-  }, []);
+  }, [fetchPlanetEnd]);
 
   const date = new Date(planet_end);
 

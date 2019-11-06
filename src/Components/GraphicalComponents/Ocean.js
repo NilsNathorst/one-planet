@@ -2,8 +2,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useLoader } from "react-three-fiber";
 import React, { useRef, useState, useEffect } from "react";
 import { connect } from "react-redux";
-import * as THREE from "three";
-import { useSpring, a, config } from "react-spring/three";
+import { useSpring, a } from "react-spring/three";
 const Ocean = ({ cans }) => {
   const gltf = useLoader(GLTFLoader, "/models/planet/newplanet.gltf");
   const [currentColor, setColor] = useState("blue");
