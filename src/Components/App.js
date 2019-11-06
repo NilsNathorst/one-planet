@@ -21,6 +21,7 @@ import BirdScene from "./BirdScene";
 import Hud from "./Interface/Hud";
 import Clouds from "./GraphicalComponents/Clouds";
 
+import Surface from "./GraphicalComponents/Surface";
 // Redux
 import { Provider, ReactReduxContext } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
@@ -67,6 +68,7 @@ const App = () => {
                       <Background />
                       <Sun />
                       <Dirt />
+                      <Surface />
                       <Suspense fallback={null}>
                         <Trees />
                       </Suspense>
