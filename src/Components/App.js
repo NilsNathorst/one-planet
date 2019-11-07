@@ -20,7 +20,7 @@ import Tools from "./Interface/Tools";
 import BirdScene from "./BirdScene";
 import Hud from "./Interface/Hud";
 import Clouds from "./GraphicalComponents/Clouds";
-
+import Fx from "./PostProcessing/Fx";
 import Surface from "./GraphicalComponents/Surface";
 // Redux
 import { Provider, ReactReduxContext } from "react-redux";
@@ -59,6 +59,7 @@ const App = () => {
                     gl.shadowMap.type = THREE.PCFSoftShadowMap;
                   }}
                 >
+                  <Fx />
                   <Suspense fallback={null}>
                     <Clouds />
                     <Provider store={store}>

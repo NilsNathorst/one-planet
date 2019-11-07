@@ -31,7 +31,7 @@ const Cloud = ({ pos }) => {
         <bufferGeometry attach="geometry" {...gltf.__$[1].geometry} />
         <meshBasicMaterial
           attach="material"
-          opacity={0.85}
+          opacity={0.45}
           transparent
         ></meshBasicMaterial>
       </a.mesh>

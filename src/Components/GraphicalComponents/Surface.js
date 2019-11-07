@@ -13,7 +13,7 @@ const Surface = props => {
       <mesh
         ref={ref}
         receiveShadow
-        scale={[29.32, 29.32, 29.32]}
+        scale={[30.4, 30.4, 30.4]}
         position={[0, 0, 0]}
         name="africa"
       >
@@ -23,7 +23,7 @@ const Surface = props => {
       <mesh
         ref={ref}
         receiveShadow
-        scale={[29.32, 29.32, 29.32]}
+        scale={[30.4, 30.4, 30.4]}
         position={[0, 0, 0]}
         name="america"
       >
@@ -33,7 +33,7 @@ const Surface = props => {
       <mesh
         ref={ref}
         receiveShadow
-        scale={[29.32, 29.32, 29.32]}
+        scale={[30.4, 30.4, 30.4]}
         position={[0, 0, 0]}
         name="america"
       >
@@ -47,7 +47,7 @@ const Surface = props => {
       <mesh
         ref={ref}
         receiveShadow
-        scale={[29.32, 29.32, 29.32]}
+        scale={[30.4, 30.4, 30.4]}
         position={[0, 0, 0]}
         name="america"
       >

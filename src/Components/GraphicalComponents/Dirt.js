@@ -39,7 +39,7 @@ const Dirt = ({ name, plantable, addTree }) => {
       }}
       onPointerOver={() => name === "TREE" && setDispatch("SET_HOVER", true)}
       onPointerOut={() => name === "TREE" && setDispatch("SET_HOVER", true)}
-      scale={[29.3, 29.3, 29.3]}
+      scale={[30.3, 30.3, 30.3]}
       position={[0, 0, 0]}
     >
       <bufferGeometry attach="geometry" {...gltf.__$[1].geometry} />
