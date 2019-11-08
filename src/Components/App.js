@@ -1,5 +1,5 @@
 // Dependencies
-import React, { Suspense } from "react";
+import React, { Suspense, useState, useEffect } from "react";
 import { ThemeProvider } from "styled-components";
 import { Canvas } from "react-three-fiber";
 import * as THREE from "three";
@@ -27,13 +27,9 @@ import { Provider, ReactReduxContext } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
 import reduxThunk from "redux-thunk";
 import reducers from "../reducers";
+import InfoBubble from "./Interface/InfoBubble";
 
-const CanvasWrapper = styled.div`
-  position: absolute;
-  height: 100vh;
-  width: 100vw;
-  top: 0;
-`;
+import CanvasWrapper from "./Interface/CanvasWrapper";
 const App = () => {
   const composeEnhancers =
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -42,6 +38,7 @@ const App = () => {
     {},
     composeEnhancers(applyMiddleware(reduxThunk))
   );
+
   return (
     <Provider store={store}>
       <ThemeProvider theme={Theme}>
@@ -50,6 +47,7 @@ const App = () => {
           <InterfaceWrapper>
             <Hud />
             <Tools />
+            <InfoBubble />
             <ReactReduxContext.Consumer>
               {({ store }) => (
                 <Canvas
@@ -59,7 +57,6 @@ const App = () => {
                     gl.shadowMap.type = THREE.PCFSoftShadowMap;
                   }}
                 >
-                  <Fx />
                   <Suspense fallback={null}>
                     <Clouds />
                     <Provider store={store}>
@@ -70,11 +67,10 @@ const App = () => {
                       <Sun />
                       <Dirt />
                       <Surface />
-                      <Suspense fallback={null}>
-                        <Trees />
-                      </Suspense>
+                      <Suspense fallback={null}>{/* <Trees /> */}</Suspense>
                       <Ocean />
                       <SodaCans />
+                      <Fx />
                     </Provider>
                   </Suspense>
                 </Canvas>
