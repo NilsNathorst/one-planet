@@ -1,0 +1,94 @@
+{
+    "asset" : {
+        "generator" : "Khronos glTF Blender I/O v0.9.36",
+        "version" : "2.0"
+    },
+    "scene" : 0,
+    "scenes" : [
+        {
+            "name" : "Scene",
+            "nodes" : [
+                0
+            ]
+        }
+    ],
+    "nodes" : [
+        {
+            "mesh" : 0,
+            "name" : "Object_3",
+            "rotation" : [
+                0,
+                0,
+                0,
+                0
+            ]
+        }
+    ],
+    "meshes" : [
+        {
+            "name" : "Mesh_0",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 0,
+                        "NORMAL" : 1
+                    },
+                    "indices" : 2
+                }
+            ]
+        }
+    ],
+    "accessors" : [
+        {
+            "bufferView" : 0,
+            "componentType" : 5126,
+            "count" : 817,
+            "max" : [
+                0.41468870639801025,
+                1.273374080657959,
+                0.7001659274101257
+            ],
+            "min" : [
+                -0.408056378364563,
+                0.451761931180954,
+                -0.8629782199859619
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 1,
+            "componentType" : 5126,
+            "count" : 817,
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 2,
+            "componentType" : 5123,
+            "count" : 4854,
+            "type" : "SCALAR"
+        }
+    ],
+    "bufferViews" : [
+        {
+            "buffer" : 0,
+            "byteLength" : 9804,
+            "byteOffset" : 0
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 9804,
+            "byteOffset" : 9804
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 9708,
+            "byteOffset" : 19608
+        }
+    ],
+    "buffers" : [
+        {
+            "byteLength" : 29316,
+            "uri" : "raindrop2.bin"
+        }
+    ]
+}
