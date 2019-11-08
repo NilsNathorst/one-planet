@@ -2,6 +2,7 @@ import React, { useCallback } from "react";
 import styled from "styled-components";
 import magnet from "../../assets/icons/magnetIcon.png";
 import forest from "../../assets/icons/forestIcon.png";
+import query from "../../assets/icons/queryIcon.png";
 import { connect, useDispatch } from "react-redux";
 
 const StyledDiv = styled.div`
@@ -75,6 +76,17 @@ const Tools = ({ name, zoomedOut }) => {
           if (name !== "MAGNET") {
             setTool("MAGNET");
           } else if (name === "MAGNET") {
+            setTool("NONE");
+          }
+        }}
+      />
+      <ToolIcon
+        icon={query}
+        active={name === "QUERY" ? true : false}
+        onClick={() => {
+          if (name !== "QUERY") {
+            setTool("QUERY");
+          } else if (name === "QUERY") {
             setTool("NONE");
           }
         }}

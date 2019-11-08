@@ -1,22 +1,48 @@
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useLoader, useFrame } from "react-three-fiber";
 import React, { useRef, useState, useEffect, Suspense } from "react";
-import { fetchCans, destroyCan, flushCansDatabase } from "../../actions";
+import {
+  fetchCans,
+  destroyCan,
+  flushCansDatabase,
+  setShowInfo
+} from "../../actions";
 import { useSpring, a, config } from "react-spring/three";
 import { connect } from "react-redux";
 
-const SodaCan = ({ destroyCan, firebaseId, magnetActive, pos, url, color }) => {
+const SodaCan = ({
+  setShowInfo,
+  destroyCan,
+  firebaseId,
+  magnetActive,
+  pos,
+  url,
+  color,
+  infoActive
+}) => {
   const gltf = useLoader(GLTFLoader, url);
   const ref = useRef();
+
   useFrame(() => {
     if (ref.current.position.length() >= 77) {
       ref.current.position.setLength(77);
     }
     ref.current.lookAt(0, 0, 0);
   });
+
   const [hovered, set] = useState(false);
-  const hover = e => e.stopPropagation() && set(true);
-  const unhover = () => set(false);
+  const hover = e => {
+    e.stopPropagation() && set(true);
+    infoActive &&
+      setShowInfo({
+        active: true,
+        object: e.eventObject
+      });
+  };
+  const unhover = e => {
+    set(false);
+    setShowInfo({ active: false, object: null });
+  };
   const handleClick = (id, event) => {
     event.eventObject.parent != null &&
       event.eventObject.parent.remove(event.eventObject) &&
@@ -31,11 +57,13 @@ const SodaCan = ({ destroyCan, firebaseId, magnetActive, pos, url, color }) => {
   });
   return (
     <a.mesh
-      onPointerOver={hover}
-      onPointerOut={unhover}
-      onPointerDown={e =>
-        magnetActive && handleClick(e.eventObject.firebaseId, e)
-      }
+      ref={ref}
+      position={animatedPos.position}
+      onPointerOver={e => hover(e)}
+      onPointerOut={e => unhover(e)}
+      onPointerDown={e => {
+        magnetActive && handleClick(e.eventObject.firebaseId, e);
+      }}
       onPointerMove={e =>
         magnetActive &&
         hover &&
@@ -46,7 +74,6 @@ const SodaCan = ({ destroyCan, firebaseId, magnetActive, pos, url, color }) => {
       castShadow
       name="can"
       ref={ref}
-      position={animatedPos.position}
     >
       <bufferGeometry attach="geometry" {...gltf.__$[1].geometry} />
       <meshStandardMaterial attach="material" color={color} />
@@ -54,7 +81,14 @@ const SodaCan = ({ destroyCan, firebaseId, magnetActive, pos, url, color }) => {
   );
 };
 
-const SodaCans = ({ flushCansDatabase, destroyCan, name, cans, fetchCans }) => {
+const SodaCans = ({
+  setShowInfo,
+  flushCansDatabase,
+  destroyCan,
+  name,
+  cans,
+  fetchCans
+}) => {
   useEffect(() => {
     flushCansDatabase();
     fetchCans();
@@ -67,8 +101,10 @@ const SodaCans = ({ flushCansDatabase, destroyCan, name, cans, fetchCans }) => {
           <SodaCan
             pos={can.pos}
             magnetActive={name === "MAGNET" ? true : false}
+            infoActive={name === "QUERY" ? true : false}
             firebaseId={can.id}
             destroyCan={destroyCan}
+            setShowInfo={setShowInfo}
             color={can.color}
             url={"/models/sodacan/untitled.gltf"}
           />
@@ -87,5 +123,5 @@ const mapStateToProps = ({ state: { name, cans } }) => {
 
 export default connect(
   mapStateToProps,
-  { flushCansDatabase, fetchCans, destroyCan }
+  { flushCansDatabase, fetchCans, destroyCan, setShowInfo }
 )(SodaCans);

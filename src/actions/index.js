@@ -1,6 +1,6 @@
 import { treesRef, cansRef, planetRef } from "../database/firebase";
 import oceanVectors from "../database/oceanVectors.json";
-import { FETCH_TREES, FETCH_CANS, FETCH_PLANET } from "./types";
+import { FETCH_TREES, FETCH_CANS, FETCH_PLANET, SET_SHOWINFO } from "./types";
 
 export const addTree = newTree => async dispatch => {
   treesRef.push().set(newTree);
@@ -95,5 +95,11 @@ export const fetchPlanetEnd = () => async dispatch => {
       type: FETCH_PLANET,
       payload: snapshot.val()
     });
+  });
+};
+export const setShowInfo = payload => async dispatch => {
+  dispatch({
+    type: SET_SHOWINFO,
+    payload: payload
   });
 };

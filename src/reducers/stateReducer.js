@@ -3,6 +3,7 @@ import {
   SET_HOVER,
   SET_PLANTABLE,
   SET_ZOOMED_OUT,
+  SET_SHOWINFO,
   FETCH_CANS,
   FETCH_TREES,
   FETCH_PLANET
@@ -10,6 +11,7 @@ import {
 
 const initState = {
   name: "",
+  showInfo: { active: false, object: {}, pos: { x: 0, y: 0 } },
   hoverActive: false,
   plantable: false,
   zoomedOut: false,
@@ -24,6 +26,11 @@ const stateReducer = (state = initState, action) => {
       return {
         ...state,
         name: action.payload
+      };
+    case SET_SHOWINFO:
+      return {
+        ...state,
+        showInfo: action.payload
       };
     case SET_HOVER:
       return {

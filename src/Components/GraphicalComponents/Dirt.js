@@ -29,8 +29,8 @@ const Dirt = ({ name, plantable, addTree }) => {
         }
       }}
       onPointerMove={e => {
+        e.stopPropagation();
         if (name === "TREE") {
-          e.stopPropagation();
           if (e.point.length() > 80 && plantable === false) {
             setDispatch("SET_PLANTABLE", true);
           } else if (e.point.length() < 80 && plantable === true) {

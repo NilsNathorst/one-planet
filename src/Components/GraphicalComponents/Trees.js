@@ -45,8 +45,8 @@ const Tree = ({
   }, []);
 
   return (
-    <>
       <a.group
+        name="tree"
         position={pos}
         ref={ref}
         scale={scale}
@@ -90,7 +90,6 @@ const Tree = ({
           />
         </mesh>
       </a.group>
-    </>
   );
 };
 
