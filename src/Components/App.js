@@ -49,7 +49,6 @@ const App = () => {
         <CanvasWrapper>
           <InterfaceWrapper>
             <Hud />
-            <ThoughtBubble />
             <Tools />
             <ReactReduxContext.Consumer>
               {({ store }) => (
