@@ -11,6 +11,9 @@ export const fetchTrees = () => async dispatch => {
     snapshot.val() &&
       Object.keys(snapshot.val()).map(treeId => {
         const TreeAge = Date.now() - snapshot.val()[treeId].created_at;
+        if (TreeAge > 1000 * 60 && snapshot.val()[treeId].age === "newborn") {
+          treesRef.child(`${treeId}/needsWater`).set("true");
+        }
         treesRef.child(`${treeId}/id`).set(treeId);
         if (snapshot.val()[treeId].age !== "newborn") {
           if (TreeAge > 1000 * 60 * 60 * 6 && TreeAge < 1000 * 60 * 60 * 12) {

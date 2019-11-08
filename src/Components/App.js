@@ -49,6 +49,7 @@ const App = () => {
         <CanvasWrapper>
           <InterfaceWrapper>
             <Hud />
+            <ThoughtBubble />
             <Tools />
             <ReactReduxContext.Consumer>
               {({ store }) => (
@@ -70,9 +71,7 @@ const App = () => {
                       <Sun />
                       <Dirt />
                       <Surface />
-                      <Suspense fallback={null}>
-                        <Trees />
-                      </Suspense>
+                      <Trees />
                       <Ocean />
                       <SodaCans />
                     </Provider>

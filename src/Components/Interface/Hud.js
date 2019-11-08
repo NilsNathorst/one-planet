@@ -39,7 +39,6 @@ const Hud = ({ zoomedOut, trees, cans, planet_end, fetchPlanetEnd }) => {
   useEffect(() => {
     fetchPlanetEnd();
   }, [fetchPlanetEnd]);
-
   const date = new Date(planet_end);
 
   return (
@@ -50,7 +49,7 @@ const Hud = ({ zoomedOut, trees, cans, planet_end, fetchPlanetEnd }) => {
       </IconDiv>
       <IconDiv left={"15vw"} top={"5vh"}>
         <img src={trashImage} alt="" />
-        <h2>{cans.length}</h2>
+        <h2>{cans.filter(can => can !== "was removed").length}</h2>
       </IconDiv>
       <IconDiv left={"80vw"} top={"5vh"}>
         <h2>{date.toDateString()}</h2>

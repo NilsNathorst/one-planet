@@ -23,7 +23,8 @@ const Dirt = ({ name, plantable, addTree }) => {
             pos: e.point,
             created_at: Date.now(),
             age: "newborn",
-            id: ""
+            id: "",
+            needsWater: "false"
           });
         }
       }}
