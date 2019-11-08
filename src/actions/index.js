@@ -4,10 +4,6 @@ import { FETCH_TREES, FETCH_CANS, FETCH_PLANET, SET_SHOWINFO } from "./types";
 
 export const addTree = newTree => async dispatch => {
   treesRef.push().set(newTree);
-  planetRef.once("value", snapshot => {
-    // Currently adds 1h to planet_end
-    planetRef.set(snapshot.val() + 1000 * 60 * 60);
-  });
 };
 
 export const fetchTrees = () => async dispatch => {
@@ -15,19 +11,28 @@ export const fetchTrees = () => async dispatch => {
     snapshot.val() &&
       Object.keys(snapshot.val()).map(treeId => {
         const TreeAge = Date.now() - snapshot.val()[treeId].created_at;
-        if (TreeAge > 1000 * 60 * 60 * 2 && TreeAge < 1000 * 60 * 60 * 2 * 3) {
-          treesRef.child(`${treeId}/age`).set("adult");
+        if (TreeAge > 1000 * 60 && snapshot.val()[treeId].age === "newborn") {
+          treesRef.child(`${treeId}/needsWater`).set("true");
         }
-        if (TreeAge > 1000 * 60 * 60 * 5) {
-          treesRef.child(`${treeId}/age`).set("dead");
-        }
-        if (TreeAge > 5000 * 10 * 10 * 10) {
-          treesRef.child(`${treeId}`).once("value", snapshot => {
-            treesRef.child(`${treeId}`).remove();
-          });
-          planetRef.once("value", snapshot => {
-            planetRef.set(snapshot.val() - 1000 * 60 * 30);
-          });
+        treesRef.child(`${treeId}/id`).set(treeId);
+        if (snapshot.val()[treeId].age !== "newborn") {
+          if (TreeAge > 1000 * 60 * 60 * 6 && TreeAge < 1000 * 60 * 60 * 12) {
+            treesRef.child(`${treeId}/age`).set("adult");
+          }
+          if (TreeAge > 1000 * 60 * 60 * 12 && TreeAge < 1000 * 60 * 60 * 18) {
+            treesRef.child(`${treeId}/age`).set("senior");
+          }
+          if (TreeAge > 1000 * 60 * 60 * 18 && TreeAge < 1000 * 60 * 60 * 24) {
+            treesRef.child(`${treeId}/age`).set("dead");
+          }
+          if (TreeAge > 5000 * 10 * 10 * 24) {
+            treesRef.child(`${treeId}`).once("value", snapshot => {
+              treesRef.child(`${treeId}`).remove();
+            });
+            planetRef.once("value", snapshot => {
+              planetRef.set(snapshot.val() - 1000 * 60 * 30);
+            });
+          }
         }
         return null;
       });
@@ -35,6 +40,13 @@ export const fetchTrees = () => async dispatch => {
       type: FETCH_TREES,
       payload: snapshot.val()
     });
+  });
+};
+export const setTreeActive = id => async dispatch => {
+  treesRef.child(`${id}/age`).set("young");
+  treesRef.child(`${id}/created_at`).set(Date.now());
+  planetRef.once("value", snapshot => {
+    planetRef.set(snapshot.val() + 1000 * 60 * 60);
   });
 };
 

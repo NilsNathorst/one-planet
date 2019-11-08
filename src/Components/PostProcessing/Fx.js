@@ -12,9 +12,11 @@ extend({ EffectComposer, RenderPass, UnrealBloomPass, OutlinePass });
 function Fx({ showInfo, name }) {
   const { gl, scene, camera, size } = useThree();
 
+
   const outlineP = useRef();
   const composer = useRef();
   const res = new THREE.Vector2(1024, 1024);
+
   useEffect(() => void composer.current.setSize(size.width, size.height), [
     size
   ]);
@@ -22,6 +24,7 @@ function Fx({ showInfo, name }) {
   useFrame(() => composer.current.render(), 1);
   useEffect(() => {}, [showInfo]);
   return (
+
     <Suspense fallback={null}>
       <effectComposer ref={composer} args={[gl]}>
         <renderPass attachArray="passes" args={[scene, camera]} />
@@ -42,6 +45,7 @@ function Fx({ showInfo, name }) {
         )}
       </effectComposer>
     </Suspense>
+
   );
 }
 const mapStateToProps = ({ state: { showInfo, name } }) => {

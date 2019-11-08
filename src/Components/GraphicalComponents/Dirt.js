@@ -1,9 +1,8 @@
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useRef } from "react";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { useLoader, useUpdate } from "react-three-fiber";
+import { useLoader } from "react-three-fiber";
 import { connect, useDispatch } from "react-redux";
 import { addTree } from "../../actions";
-import * as THREE from "three";
 
 const Dirt = ({ name, plantable, addTree }) => {
   const dispatch = useDispatch();
@@ -23,7 +22,9 @@ const Dirt = ({ name, plantable, addTree }) => {
           addTree({
             pos: e.point,
             created_at: Date.now(),
-            age: "young"
+            age: "newborn",
+            id: "",
+            needsWater: "false"
           });
         }
       }}

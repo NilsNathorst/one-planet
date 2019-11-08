@@ -67,7 +67,7 @@ const App = () => {
                       <Sun />
                       <Dirt />
                       <Surface />
-                      <Suspense fallback={null}>{/* <Trees /> */}</Suspense>
+                      <Trees />
                       <Ocean />
                       <SodaCans />
                       <Fx />

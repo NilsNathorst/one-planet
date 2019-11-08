@@ -4,22 +4,38 @@ import React, { useEffect, useRef, Suspense } from "react";
 import { useSpring, a, config } from "react-spring/three";
 import { connect } from "react-redux";
 import { fetchTrees } from "../../actions";
+import { setTreeActive } from "../../actions";
 
-const Tree = ({ variant, pos, age }) => {
+const Tree = ({
+  variant,
+  pos,
+  age,
+  id,
+  setTreeActive,
+  fetchTrees,
+  needsWater
+}) => {
   const gltf = useLoader(GLTFLoader, "/models/trees/trees.gltf");
+  const raindrop = useLoader(GLTFLoader, "/models/raindrop/raindrop2.gltf");
   const ref = useRef();
-  const trunkRef = useRef();
+  const raindropRef = useRef();
 
   const { color } = useSpring({
     color:
-      (age === "young" && "#9EFF00") ||
-      (age === "adult" && "#228B22") ||
+      (age === "newborn" && "#9EFF00") ||
+      (age === "young" && "#82D100") ||
+      (age === "adult" && "#228b22") ||
+      (age === "seinor" && "#CB7500") ||
       (age === "dead" && "#CB7500"),
-    config: { duration: 6000 }
+    config: { duration: 8000 }
   });
 
   const { scale } = useSpring({
-    scale: [0.4, 0.4, 0.4],
+    scale:
+      (age === "newborn" && [0.2, 0.2, 0.2]) ||
+      (age === "young" && [0.4, 0.4, 0.4]) ||
+      (age === "adult" && [0.6, 0.6, 0.6]) ||
+      (age === "dead" && [0.6, 0.6, 0.6]),
     from: { scale: [0.01, 0.01, 0.01] },
     config: config.wobbly
   });
@@ -29,53 +45,83 @@ const Tree = ({ variant, pos, age }) => {
   }, []);
 
   return (
-    <a.group position={pos} ref={ref} scale={scale} name="tree">
-      <a.mesh>
-        <a.bufferGeometry
-          name="leaves"
-          attach="geometry"
-          {...gltf.__$[variant].geometry}
-        />
-        <a.meshStandardMaterial attach="material" color={color} />
-      </a.mesh>
-      <mesh ref={trunkRef}>
-        <bufferGeometry
-          name="trunk"
-          attach="geometry"
-          {...gltf.__$[variant + 4].geometry}
-        />
-        <meshStandardMaterial attach="material" color="saddlebrown" />
-      </mesh>
-    </a.group>
+      <a.group
+        name="tree"
+        position={pos}
+        ref={ref}
+        scale={scale}
+        onPointerDown={() => {
+          if (id === "") {
+            fetchTrees();
+          } else if (age === "newborn" && needsWater === "true") {
+            setTreeActive(id);
+          }
+        }}
+      >
+        {age === "newborn" && needsWater === "true" && (
+          <a.mesh ref={raindropRef} scale={[8, 8, 8]} position={[0, -8, -25]}>
+            <a.bufferGeometry
+              rotation={[Math.PI / 2, 0, 0]}
+              attach="geometry"
+              {...raindrop.__$[1].geometry}
+            />
+            <a.meshStandardMaterial attach="material" color="blue" />
+          </a.mesh>
+        )}
+        {age !== "dead" && (
+          <a.mesh>
+            <a.bufferGeometry
+              name="leaves"
+              attach="geometry"
+              {...gltf.__$[variant].geometry}
+            />
+            <a.meshStandardMaterial attach="material" color={color} />
+          </a.mesh>
+        )}
+        <mesh>
+          <bufferGeometry
+            name="trunk"
+            attach="geometry"
+            {...gltf.__$[variant + 4].geometry}
+          />
+          <meshStandardMaterial
+            attach="material"
+            color={age === "dead" ? "#402009" : "saddlebrown"}
+          />
+        </mesh>
+      </a.group>
   );
 };
 
-const Trees = ({ trees, fetchTrees }) => {
+const Trees = ({ trees, fetchTrees, setTreeActive }) => {
   useEffect(() => {
     fetchTrees();
   }, [fetchTrees]);
-  return (
-    <Suspense fallback={null}>
-      {trees &&
-        trees.map((tree, i) => (
-          <Tree
-            pos={[tree.pos.x, tree.pos.y, tree.pos.z]}
-            variant={2}
-            key={i}
-            age={tree.age}
-          />
-        ))}
-    </Suspense>
-  );
+  return trees.map((tree, i) => {
+    return (
+      <Suspense fallback={null}>
+        <Tree
+          pos={[tree.pos.x, tree.pos.y, tree.pos.z]}
+          variant={2}
+          key={i}
+          age={tree.age}
+          id={tree.id}
+          setTreeActive={setTreeActive}
+          fetchTrees={fetchTrees}
+          needsWater={tree.needsWater}
+        />
+      </Suspense>
+    );
+  });
 };
 
-const mapStateToProps = ({ state }) => {
+const mapStateToProps = ({ state: { trees } }) => {
   return {
-    trees: state.trees ? Object.values(state.trees) : null
+    trees: trees ? Object.values(trees) : null
   };
 };
 
 export default connect(
   mapStateToProps,
-  { fetchTrees }
+  { fetchTrees, setTreeActive }
 )(Trees);

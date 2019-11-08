@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { useLoader, useUpdate } from "react-three-fiber";
-import { connect, useDispatch } from "react-redux";
+import { useLoader } from "react-three-fiber";
+import { connect } from "react-redux";
 import { addTree } from "../../actions";
 import { setShowInfo } from "../../actions";
 const Surface = ({ setShowInfo, name }) => {
