@@ -10,7 +10,7 @@ const Background = () => {
   return (
     <>
       <fog attach="fog" args={[0x87cefa, 350, 800]} />
-      <mesh>
+      <mesh name="bg">
         <sphereBufferGeometry attach="geometry" args={[300, 40, 40]} />
         <meshBasicMaterial side={1} ref={matRef} attach="material">
           <primitive attach="map" object={texture} />
