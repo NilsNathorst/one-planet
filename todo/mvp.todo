@@ -1,39 +1,24 @@
-Functional Requirements: 
-	Planet dies:
-		Trash accumulates in the ocean:
-			☐ Planet adds trash over time
-			☐ User can clean up using a Garbage Magnet
-				fail:
-				☐ Ocean dies
-		Glaciers melt raising the water level:
-			☐ If the temperature reaches X trigger melt
-				fail: 
-				☐ Waterlevel high
-		There isn't enough vegetation:
-			☐ Users have not planted
-				fail:
-				☐ vegetaion low
+Todo: 
 
-	☐ User can access site via qr-code.
+	DEATH SCREEN:
+		☐ Meteors
+		☐ Wobbly FX
+		☐ Message
+		☐ Ocean Color is wack
+		☐ Dry earth
+		☐ Dead trees
+
+	UI:
+		☐ Planet expresses needs in a thought bubble
+		☐ Each object has associated msg
+		☐ Tools have description
+		☐ Planet health in thermometer
+		☐ Status of no. trees as a smiley or smthng
+		☐ Status of no. trash as a smiley or smthng
 		
-Interface:
-	Main Menu:
-		☐ Users are greeted with a menu screen explaining our idea
-	Toolbar:
-		☐ User can select tool
-			☐ Seed Planter
-			☐ Garbage Magnet
-	General: 
-		☐ Planet death animation
-		☐ Planet death message
-		☐ Planet death stats
+	GFX:
+		☐ add models for trash, bag and bottle
+	
+	GENERAL:
+		☐ Add colors to theme
 
-death conditions:
-	☐ waterlevel high
-	☐ ocean dies
-	☐ vegetation low
-
-☐ User can plant trees on grass
-☐ User can not plant trees on dirt
-☐ Grass areas shrink over time
-☐ Grass area grow when planted on
