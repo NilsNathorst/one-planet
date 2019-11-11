@@ -48,10 +48,11 @@ const Dirt = ({ name, plantable, addTree }) => {
     </mesh>
   );
 };
-const mapStateToProps = ({ state: { name, plantable } }) => {
+const mapStateToProps = ({ state: { name, plantable, last_planted } }) => {
   return {
     name,
-    plantable
+    plantable,
+    last_planted
   };
 };
 

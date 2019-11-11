@@ -1,9 +1,8 @@
 // Dependencies
-import React, { Suspense, useState, useEffect } from "react";
+import React, { Suspense } from "react";
 import { ThemeProvider } from "styled-components";
 import { Canvas } from "react-three-fiber";
 import * as THREE from "three";
-import styled from "styled-components";
 
 // Components
 import GlobalStyles from "../Styles/GlobalStyle";

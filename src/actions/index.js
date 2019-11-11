@@ -1,6 +1,12 @@
 import { treesRef, cansRef, planetRef } from "../database/firebase";
 import oceanVectors from "../database/oceanVectors.json";
-import { FETCH_TREES, FETCH_CANS, FETCH_PLANET, SET_SHOWINFO } from "./types";
+import {
+  FETCH_TREES,
+  FETCH_CANS,
+  FETCH_PLANET,
+  SET_SHOWINFO,
+  FETCH_LAST_PLANTED
+} from "./types";
 
 export const addTree = newTree => async dispatch => {
   treesRef.push().set(newTree);
@@ -11,10 +17,14 @@ export const fetchTrees = () => async dispatch => {
     snapshot.val() &&
       Object.keys(snapshot.val()).map(treeId => {
         const TreeAge = Date.now() - snapshot.val()[treeId].created_at;
+        
+        if(snapshot.val()[treeId].age === "newborn"){
+          treesRef.child(`${treeId}/id`).set(treeId);
+        }
+        
         if (TreeAge > 1000 * 60 && snapshot.val()[treeId].age === "newborn") {
           treesRef.child(`${treeId}/needsWater`).set("true");
         }
-        treesRef.child(`${treeId}/id`).set(treeId);
         if (snapshot.val()[treeId].age !== "newborn") {
           if (TreeAge > 1000 * 60 * 60 * 6 && TreeAge < 1000 * 60 * 60 * 12) {
             treesRef.child(`${treeId}/age`).set("adult");
@@ -25,7 +35,7 @@ export const fetchTrees = () => async dispatch => {
           if (TreeAge > 1000 * 60 * 60 * 18 && TreeAge < 1000 * 60 * 60 * 24) {
             treesRef.child(`${treeId}/age`).set("dead");
           }
-          if (TreeAge > 5000 * 10 * 10 * 24) {
+          if (TreeAge > 1000 * 60 * 60 * 24) {
             treesRef.child(`${treeId}`).once("value", snapshot => {
               treesRef.child(`${treeId}`).remove();
             });
@@ -42,7 +52,7 @@ export const fetchTrees = () => async dispatch => {
     });
   });
 };
-export const setTreeActive = id => async dispatch => {
+export const setTreeActive = id => async dipsatch => {
   treesRef.child(`${id}/age`).set("young");
   treesRef.child(`${id}/created_at`).set(Date.now());
   planetRef.once("value", snapshot => {
@@ -50,7 +60,7 @@ export const setTreeActive = id => async dispatch => {
   });
 };
 
-export const destroyCan = id => async dispatch => {
+export const destroyCan = id => {
   cansRef.child(id).set("was removed");
 };
 
@@ -99,6 +109,16 @@ export const fetchPlanetEnd = () => async dispatch => {
     });
   });
 };
+
+export const fetchLastPlanted = () => async dispatch => {
+  treesRef.limitToLast(1).once("child_added", snapshot => {
+    dispatch({
+      type: FETCH_LAST_PLANTED,
+      payload: snapshot.val()
+    });
+  });
+};
+
 export const setShowInfo = payload => async dispatch => {
   dispatch({
     type: SET_SHOWINFO,

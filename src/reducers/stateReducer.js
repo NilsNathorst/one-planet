@@ -6,7 +6,8 @@ import {
   SET_SHOWINFO,
   FETCH_CANS,
   FETCH_TREES,
-  FETCH_PLANET
+  FETCH_PLANET,
+  FETCH_LAST_PLANTED
 } from "../actions/types";
 
 const initState = {
@@ -17,7 +18,8 @@ const initState = {
   zoomedOut: false,
   cans: [],
   trees: [],
-  planet_end: null
+  planet_end: null,
+  last_planted: {}
 };
 
 const stateReducer = (state = initState, action) => {
@@ -61,6 +63,11 @@ const stateReducer = (state = initState, action) => {
       return {
         ...state,
         planet_end: action.payload
+      };
+    case FETCH_LAST_PLANTED:
+      return {
+        ...state,
+        last_planted: action.payload
       };
     default:
       return state;

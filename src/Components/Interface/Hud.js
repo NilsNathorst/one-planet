@@ -3,8 +3,48 @@ import styled from "styled-components";
 import treeImage from "../../assets/icons/treeScore.png";
 import trashImage from "../../assets/icons/trashScore.png";
 import { connect } from "react-redux";
-
 import { fetchPlanetEnd } from "../../actions";
+
+import { ReactComponent as HappyIcon } from "../../assets/icons/happy.svg";
+import { ReactComponent as HappierIcon } from "../../assets/icons/happier.svg";
+import { ReactComponent as AngryIcon } from "../../assets/icons/angry.svg";
+import { ReactComponent as IndifferentIcon } from "../../assets/icons/indifferent.svg";
+import { ReactComponent as ThermometerIcon } from "../../assets/icons/thermometer.svg";
+
+const HappySvg = styled(HappyIcon)`
+  width: 100%;
+  height: 100%;
+  fill: white;
+  padding-left: 10px;
+`;
+
+const ThermometerSvg = styled(ThermometerIcon)`
+  width: 100px;
+  height: 100px;
+  padding-left: 10px;
+  .fillPath {
+    fill: ${props => props.color};
+  }
+`;
+
+const HappierSvg = styled(HappierIcon)`
+  width: 100%;
+  height: 100%;
+  fill: white;
+  padding-left: 10px;
+`;
+const IndifferentSvg = styled(IndifferentIcon)`
+  width: 100%;
+  height: 100%;
+  fill: white;
+  padding-left: 10px;
+`;
+const AngrySvg = styled(AngryIcon)`
+  width: 100%;
+  height: 100%;
+  fill: white;
+  padding-left: 10px;
+`;
 
 const StyledDiv = styled.div`
   position: absolute;
@@ -18,15 +58,16 @@ const StyledDiv = styled.div`
 const IconDiv = styled.div`
   position: absolute;
   display: flex;
+  width: 115px;
+  height: 80px;
   flex-direction: row;
-  width: 80px;
   align-items: center;
   left: ${props => props.left};
   top: ${props => props.top};
 
   img {
-    height: 50px;
-    width: 50px;
+    height: 60px;
+    width: 60px;
     background-color: hotpink;
     border-radius: 50px;
   }
@@ -39,20 +80,50 @@ const Hud = ({ zoomedOut, trees, cans, planet_end, fetchPlanetEnd }) => {
   useEffect(() => {
     fetchPlanetEnd();
   }, [fetchPlanetEnd]);
-  const date = new Date(planet_end);
+
+  const returnTreeSvg = () => {
+    switch (true) {
+      case trees === null:
+        return <AngrySvg />;
+      case trees.length < 5:
+        return <IndifferentSvg />;
+      case trees.length < 15:
+        return <HappySvg />;
+      case trees.length < 1000:
+        return <HappierSvg />;
+      default:
+        return null;
+    }
+  };
+
+  const returnTrashSvg = () => {
+    const canslength = cans.filter(can => can !== "was removed").length;
+    switch (true) {
+      case cans === null:
+        return <HappierSvg />;
+      case canslength < 5:
+        return <HappySvg />;
+      case canslength < 15:
+        return <IndifferentSvg />;
+      case canslength < 1000:
+        return <AngrySvg />;
+      default:
+        return null;
+    }
+  };
 
   return (
     <StyledDiv inview={zoomedOut ? "inView" : null}>
       <IconDiv left={"5vw"} top={"20vh"}>
         <img src={treeImage} alt="" />
-        <h2>{trees ? trees.length : 0}</h2>
+        {returnTreeSvg()}
       </IconDiv>
       <IconDiv left={"15vw"} top={"5vh"}>
         <img src={trashImage} alt="" />
-        <h2>{cans ? cans.filter(can => can !== "was removed").length : 0}</h2>
+        {returnTrashSvg()}
       </IconDiv>
       <IconDiv left={"80vw"} top={"5vh"}>
-        <h2>{date.toDateString()}</h2>
+        <ThermometerSvg color="hotpink" />
       </IconDiv>
     </StyledDiv>
   );
