@@ -49,7 +49,7 @@ const Hud = ({ zoomedOut, trees, cans, planet_end, fetchPlanetEnd }) => {
       </IconDiv>
       <IconDiv left={"15vw"} top={"5vh"}>
         <img src={trashImage} alt="" />
-        <h2>{cans.filter(can => can !== "was removed").length}</h2>
+        <h2>{cans ? cans.filter(can => can !== "was removed").length : 0}</h2>
       </IconDiv>
       <IconDiv left={"80vw"} top={"5vh"}>
         <h2>{date.toDateString()}</h2>
@@ -63,7 +63,7 @@ const mapStateToProps = ({ state: { zoomedOut, trees, cans, planet_end } }) => {
     planet_end,
     zoomedOut,
     trees: trees ? Object.values(trees) : null,
-    cans: Object.values(cans)
+    cans: cans ? Object.values(cans) : null
   };
 };
 

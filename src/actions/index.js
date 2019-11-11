@@ -56,21 +56,22 @@ export const destroyCan = id => async dispatch => {
 
 export const fetchCans = () => async dispatch => {
   cansRef.on("value", snapshot => {
-    Object.keys(snapshot.val()).map(canId => {
-      if (
-        !snapshot.val()[canId].id &&
-        snapshot.val()[canId] !== "was removed"
-      ) {
-        const color = `rgb(${Math.floor(Math.random() * 255)},${Math.floor(
-          Math.random() * 255
-        )},${Math.floor(Math.random() * 255)})`;
-        const pos =
-          oceanVectors[Math.floor(Math.random() * oceanVectors.length)];
+    snapshot.val() &&
+      Object.keys(snapshot.val()).map(canId => {
+        if (
+          !snapshot.val()[canId].id &&
+          snapshot.val()[canId] !== "was removed"
+        ) {
+          const color = `rgb(${Math.floor(Math.random() * 255)},${Math.floor(
+            Math.random() * 255
+          )},${Math.floor(Math.random() * 255)})`;
+          const pos =
+            oceanVectors[Math.floor(Math.random() * oceanVectors.length)];
 
-        cansRef.child(`${canId}`).set({ id: canId, pos: pos, color: color });
-      }
-      return null;
-    });
+          cansRef.child(`${canId}`).set({ id: canId, pos: pos, color: color });
+        }
+        return null;
+      });
     dispatch({
       type: FETCH_CANS,
       payload: snapshot.val()
@@ -80,12 +81,13 @@ export const fetchCans = () => async dispatch => {
 
 export const flushCansDatabase = id => async dispatch => {
   cansRef.once("value", snapshot => {
-    Object.keys(snapshot.val()).map(canId => {
-      if (snapshot.val()[canId] === "was removed") {
-        cansRef.child(`${canId}`).remove();
-      }
-      return null;
-    });
+    snapshot.val() &&
+      Object.keys(snapshot.val()).map(canId => {
+        if (snapshot.val()[canId] === "was removed") {
+          cansRef.child(`${canId}`).remove();
+        }
+        return null;
+      });
   });
 };
 
