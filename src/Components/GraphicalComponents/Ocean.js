@@ -39,9 +39,9 @@ const Ocean = ({ cans }) => {
   );
 };
 
-const mapStateToProps = ({ state }) => {
+const mapStateToProps = ({ state: { cans } }) => {
   return {
-    cans: Object.values(state.cans).filter(can => can !== "was removed")
+    cans: cans ? Object.values(cans).filter(can => can !== "was removed") : []
   };
 };
 

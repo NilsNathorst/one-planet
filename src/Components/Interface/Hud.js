@@ -50,7 +50,7 @@ const StyledDiv = styled.div`
   position: absolute;
   z-index: 100;
   transform: ${props =>
-    props.inView === "inView" ? "translate(0,0)" : "translate(0,-300px)"};
+    props.inview === "inView" ? "translate(0,0)" : "translate(0,-300px)"};
   transition: 0.55s;
   color: white;
 `;
@@ -113,7 +113,7 @@ const Hud = ({ zoomedOut, trees, cans, planet_end, fetchPlanetEnd }) => {
   };
 
   return (
-    <StyledDiv inView={zoomedOut ? "inView" : null}>
+    <StyledDiv inview={zoomedOut ? "inView" : null}>
       <IconDiv left={"5vw"} top={"20vh"}>
         <img src={treeImage} alt="" />
         {returnTreeSvg()}
@@ -134,7 +134,7 @@ const mapStateToProps = ({ state: { zoomedOut, trees, cans, planet_end } }) => {
     planet_end,
     zoomedOut,
     trees: trees ? Object.values(trees) : null,
-    cans: Object.values(cans)
+    cans: cans ? Object.values(cans) : null
   };
 };
 

@@ -46,51 +46,51 @@ const Tree = ({
   }, []);
 
   return (
-      <a.group
-        name="tree"
-        position={pos}
-        ref={ref}
-        scale={scale}
-        onPointerDown={() => {
-          if (id === "") {
-            fetchTrees();
-          } else if (age === "newborn" && needsWater === "true") {
-            setTreeActive(id);
-          }
-        }}
-      >
-        {age === "newborn" && needsWater === "true" && (
-          <a.mesh ref={raindropRef} scale={[8, 8, 8]} position={[0, -8, -25]}>
-            <a.bufferGeometry
-              rotation={[Math.PI / 2, 0, 0]}
-              attach="geometry"
-              {...raindrop.__$[1].geometry}
-            />
-            <a.meshStandardMaterial attach="material" color="blue" />
-          </a.mesh>
-        )}
-        {age !== "dead" && (
-          <a.mesh>
-            <a.bufferGeometry
-              name="leaves"
-              attach="geometry"
-              {...gltf.__$[variant].geometry}
-            />
-            <a.meshStandardMaterial attach="material" color={color} />
-          </a.mesh>
-        )}
-        <mesh>
-          <bufferGeometry
-            name="trunk"
+    <a.group
+      name="tree"
+      position={pos}
+      ref={ref}
+      scale={scale}
+      onPointerDown={() => {
+        if (id === "") {
+          fetchTrees();
+        } else if (age === "newborn" && needsWater === "true") {
+          setTreeActive(id);
+        }
+      }}
+    >
+      {age === "newborn" && needsWater === "true" && (
+        <a.mesh ref={raindropRef} scale={[8, 8, 8]} position={[0, -8, -25]}>
+          <a.bufferGeometry
+            rotation={[Math.PI / 2, 0, 0]}
             attach="geometry"
-            {...gltf.__$[variant + 4].geometry}
+            {...raindrop.__$[1].geometry}
           />
-          <meshStandardMaterial
-            attach="material"
-            color={age === "dead" ? "#402009" : "saddlebrown"}
+          <a.meshStandardMaterial attach="material" color="blue" />
+        </a.mesh>
+      )}
+      {age !== "dead" && (
+        <a.mesh>
+          <a.bufferGeometry
+            name="leaves"
+            attach="geometry"
+            {...gltf.__$[variant].geometry}
           />
-        </mesh>
-      </a.group>
+          <a.meshStandardMaterial attach="material" color={color} />
+        </a.mesh>
+      )}
+      <mesh>
+        <bufferGeometry
+          name="trunk"
+          attach="geometry"
+          {...gltf.__$[variant + 4].geometry}
+        />
+        <meshStandardMaterial
+          attach="material"
+          color={age === "dead" ? "#402009" : "saddlebrown"}
+        />
+      </mesh>
+    </a.group>
   );
 };
 
@@ -101,16 +101,18 @@ const Trees = ({ trees, fetchTrees, setTreeActive }) => {
   return trees.map((tree, i) => {
     return (
       <Suspense fallback={null}>
-        <Tree
-          pos={[tree.pos.x, tree.pos.y, tree.pos.z]}
-          variant={2}
-          key={i}
-          age={tree.age}
-          id={tree.id}
-          setTreeActive={setTreeActive}
-          fetchTrees={fetchTrees}
-          needsWater={tree.needsWater}
-        />
+        {tree.id && tree.pos && (
+          <Tree
+            pos={[tree.pos.x, tree.pos.y, tree.pos.z]}
+            variant={2}
+            key={i}
+            age={tree.age}
+            id={tree.id}
+            setTreeActive={setTreeActive}
+            fetchTrees={fetchTrees}
+            needsWater={tree.needsWater}
+          />
+        )}
       </Suspense>
     );
   });

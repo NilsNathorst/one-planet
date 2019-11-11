@@ -41,7 +41,7 @@ const SodaCan = ({
   };
   const unhover = e => {
     set(false);
-    setShowInfo({ active: false, object: null });
+    infoActive && setShowInfo({ active: false, object: null });
   };
   const handleClick = (id, event) => {
     event.eventObject.parent != null &&
@@ -94,24 +94,27 @@ const SodaCans = ({
     fetchCans();
   }, [fetchCans, flushCansDatabase]);
 
-  return Object.values(cans).map((can, i) => {
-    return (
-      <Suspense fallback={null} key={i}>
-        {can.id && can.pos && (
-          <SodaCan
-            pos={can.pos}
-            magnetActive={name === "MAGNET" ? true : false}
-            infoActive={name === "QUERY" ? true : false}
-            firebaseId={can.id}
-            destroyCan={destroyCan}
-            setShowInfo={setShowInfo}
-            color={can.color}
-            url={"/models/sodacan/untitled.gltf"}
-          />
-        )}
-      </Suspense>
-    );
-  });
+  return (
+    cans &&
+    Object.values(cans).map((can, i) => {
+      return (
+        <Suspense fallback={null} key={i}>
+          {can.id && can.pos && (
+            <SodaCan
+              pos={can.pos}
+              magnetActive={name === "MAGNET" ? true : false}
+              infoActive={name === "QUERY" ? true : false}
+              firebaseId={can.id}
+              destroyCan={destroyCan}
+              setShowInfo={setShowInfo}
+              color={can.color}
+              url={"/models/sodacan/untitled.gltf"}
+            />
+          )}
+        </Suspense>
+      );
+    })
+  );
 };
 
 const mapStateToProps = ({ state: { name, cans } }) => {
