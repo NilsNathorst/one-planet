@@ -25,7 +25,7 @@ const Tree = ({
       (age === "newborn" && "#9EFF00") ||
       (age === "young" && "#82D100") ||
       (age === "adult" && "#228b22") ||
-      (age === "seinor" && "#CB7500") ||
+      (age === "senior" && "#CB7500") ||
       (age === "dead" && "#CB7500"),
     config: { duration: 8000 }
   });
@@ -35,6 +35,7 @@ const Tree = ({
       (age === "newborn" && [0.2, 0.2, 0.2]) ||
       (age === "young" && [0.4, 0.4, 0.4]) ||
       (age === "adult" && [0.6, 0.6, 0.6]) ||
+      (age === "senior" && [0.6, 0.6, 0.6]) ||
       (age === "dead" && [0.6, 0.6, 0.6]),
     from: { scale: [0.01, 0.01, 0.01] },
     config: config.wobbly
