@@ -19,15 +19,9 @@ const Cloud = ({ pos }) => {
     grpRef.current.rotation.z += zR;
     grpRef.current.rotation.y += yR;
   });
-  const randomFloat = Math.random() * 0.4 + 0.1;
   return (
     <a.group ref={grpRef}>
-      <a.mesh
-        position={pos}
-        ref={ref}
-        castShadow
-        scale={[randomFloat, randomFloat, randomFloat]}
-      >
+      <a.mesh position={pos} ref={ref} castShadow scale={[0.5, 0.5, 0.5]}>
         <bufferGeometry attach="geometry" {...gltf.__$[1].geometry} />
         <meshBasicMaterial
           attach="material"

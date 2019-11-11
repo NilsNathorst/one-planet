@@ -41,7 +41,7 @@ const SodaCan = ({
   };
   const unhover = e => {
     set(false);
-    setShowInfo({ active: false, object: null });
+    infoActive && setShowInfo({ active: false, object: null });
   };
   const handleClick = (id, event) => {
     event.eventObject.parent != null &&

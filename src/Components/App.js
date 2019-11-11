@@ -28,6 +28,7 @@ import { createStore, applyMiddleware, compose } from "redux";
 import reduxThunk from "redux-thunk";
 import reducers from "../reducers";
 import InfoBubble from "./Interface/InfoBubble";
+import ThoughtBubble from "./Interface/ThoughtBubble";
 
 import CanvasWrapper from "./Interface/CanvasWrapper";
 const App = () => {
@@ -48,6 +49,7 @@ const App = () => {
             <Hud />
             <Tools />
             <InfoBubble />
+            <ThoughtBubble />
             <ReactReduxContext.Consumer>
               {({ store }) => (
                 <Canvas

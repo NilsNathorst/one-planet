@@ -16,7 +16,7 @@ const Surface = ({ setShowInfo, name }) => {
       });
   };
   const unhover = e => {
-    setShowInfo({ active: false, object: null });
+    name === "QUERY" && setShowInfo({ active: false, object: null });
   };
   return (
     <group>
@@ -30,7 +30,11 @@ const Surface = ({ setShowInfo, name }) => {
         name="africa"
       >
         <bufferGeometry attach="geometry" {...gltf.__$[3].geometry} />
-        <meshStandardMaterial attach="material" color="green" roughness={1} />
+        <meshStandardMaterial
+          attach="material"
+          color="green"
+          roughness={1}
+        ></meshStandardMaterial>
       </mesh>
       <mesh
         onPointerOver={e => hover(e)}

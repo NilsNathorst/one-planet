@@ -10,7 +10,7 @@ const StyledDiv = styled.div`
   position: absolute;
   z-index: 100;
   transform: ${props =>
-    props.inView === "inView" ? "translate(0,0)" : "translate(0,-300px)"};
+    props.inview === "inView" ? "translate(0,0)" : "translate(0,-300px)"};
   transition: 0.55s;
   color: white;
 `;
@@ -42,7 +42,7 @@ const Hud = ({ zoomedOut, trees, cans, planet_end, fetchPlanetEnd }) => {
   const date = new Date(planet_end);
 
   return (
-    <StyledDiv inView={zoomedOut ? "inView" : null}>
+    <StyledDiv inview={zoomedOut ? "inView" : null}>
       <IconDiv left={"5vw"} top={"20vh"}>
         <img src={treeImage} alt="" />
         <h2>{trees ? trees.length : 0}</h2>

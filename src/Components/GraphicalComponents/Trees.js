@@ -25,7 +25,7 @@ const Tree = ({
       (age === "newborn" && "#9EFF00") ||
       (age === "young" && "#82D100") ||
       (age === "adult" && "#228b22") ||
-      (age === "seinor" && "#CB7500") ||
+      (age === "senior" && "#CB7500") ||
       (age === "dead" && "#CB7500"),
     config: { duration: 8000 }
   });
@@ -35,6 +35,7 @@ const Tree = ({
       (age === "newborn" && [0.2, 0.2, 0.2]) ||
       (age === "young" && [0.4, 0.4, 0.4]) ||
       (age === "adult" && [0.6, 0.6, 0.6]) ||
+      (age === "senior" && [0.6, 0.6, 0.6]) ||
       (age === "dead" && [0.6, 0.6, 0.6]),
     from: { scale: [0.01, 0.01, 0.01] },
     config: config.wobbly
@@ -100,16 +101,18 @@ const Trees = ({ trees, fetchTrees, setTreeActive }) => {
   return trees.map((tree, i) => {
     return (
       <Suspense fallback={null}>
-        <Tree
-          pos={[tree.pos.x, tree.pos.y, tree.pos.z]}
-          variant={2}
-          key={i}
-          age={tree.age}
-          id={tree.id}
-          setTreeActive={setTreeActive}
-          fetchTrees={fetchTrees}
-          needsWater={tree.needsWater}
-        />
+        {tree.id && tree.pos && (
+          <Tree
+            pos={[tree.pos.x, tree.pos.y, tree.pos.z]}
+            variant={2}
+            key={i}
+            age={tree.age}
+            id={tree.id}
+            setTreeActive={setTreeActive}
+            fetchTrees={fetchTrees}
+            needsWater={tree.needsWater}
+          />
+        )}
       </Suspense>
     );
   });
