@@ -9,26 +9,40 @@ import { ReactComponent as HappyIcon } from "../../assets/icons/happy.svg";
 import { ReactComponent as HappierIcon } from "../../assets/icons/happier.svg";
 import { ReactComponent as AngryIcon } from "../../assets/icons/angry.svg";
 import { ReactComponent as IndifferentIcon } from "../../assets/icons/indifferent.svg";
+import { ReactComponent as ThermometerIcon } from "../../assets/icons/thermometer.svg";
 
 const HappySvg = styled(HappyIcon)`
   width: 100%;
   height: 100%;
+  fill: white;
   padding-left: 10px;
+`;
+
+const ThermometerSvg = styled(ThermometerIcon)`
+  width: 100px;
+  height: 100px;
+  padding-left: 10px;
+  .fillPath {
+    fill: ${props => props.color};
+  }
 `;
 
 const HappierSvg = styled(HappierIcon)`
   width: 100%;
   height: 100%;
+  fill: white;
   padding-left: 10px;
 `;
 const IndifferentSvg = styled(IndifferentIcon)`
   width: 100%;
   height: 100%;
+  fill: white;
   padding-left: 10px;
 `;
 const AngrySvg = styled(AngryIcon)`
   width: 100%;
   height: 100%;
+  fill: white;
   padding-left: 10px;
 `;
 
@@ -44,8 +58,8 @@ const StyledDiv = styled.div`
 const IconDiv = styled.div`
   position: absolute;
   display: flex;
-  width: 125px;
-  height: 90px;
+  width: 115px;
+  height: 80px;
   flex-direction: row;
   align-items: center;
   left: ${props => props.left};
@@ -66,7 +80,6 @@ const Hud = ({ zoomedOut, trees, cans, planet_end, fetchPlanetEnd }) => {
   useEffect(() => {
     fetchPlanetEnd();
   }, [fetchPlanetEnd]);
-  const date = new Date(planet_end);
 
   const returnTreeSvg = () => {
     switch (true) {
@@ -99,7 +112,6 @@ const Hud = ({ zoomedOut, trees, cans, planet_end, fetchPlanetEnd }) => {
     }
   };
 
-  console.log("Hej");
   return (
     <StyledDiv inView={zoomedOut ? "inView" : null}>
       <IconDiv left={"5vw"} top={"20vh"}>
@@ -111,7 +123,7 @@ const Hud = ({ zoomedOut, trees, cans, planet_end, fetchPlanetEnd }) => {
         {returnTrashSvg()}
       </IconDiv>
       <IconDiv left={"80vw"} top={"5vh"}>
-        <h2>{date.toDateString()}</h2>
+        <ThermometerSvg color="hotpink" />
       </IconDiv>
     </StyledDiv>
   );
