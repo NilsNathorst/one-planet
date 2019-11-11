@@ -1,10 +1,10 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useRef, useEffect } from "react";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useLoader } from "react-three-fiber";
 import { connect, useDispatch } from "react-redux";
-import { addTree } from "../../actions";
+import { addTree, fetchLastPlanted } from "../../actions";
 
-const Dirt = ({ name, plantable, addTree }) => {
+const Dirt = ({ name, plantable, addTree, fetchLastPlanted, last_planted }) => {
   const dispatch = useDispatch();
   const setDispatch = useCallback(
     (type, value) => dispatch({ type: type, payload: value }),
@@ -12,6 +12,12 @@ const Dirt = ({ name, plantable, addTree }) => {
   );
   const ref = useRef();
   const gltf = useLoader(GLTFLoader, "/models/planet/continentsplanet.gltf");
+  useEffect(() => {
+    fetchLastPlanted();
+  }, [fetchLastPlanted]);
+
+  const TimeSinceLastPlanted = Date.now() - last_planted.created_at;
+
 
   return (
     <mesh
@@ -26,6 +32,7 @@ const Dirt = ({ name, plantable, addTree }) => {
             id: "",
             needsWater: "false"
           });
+          fetchLastPlanted();
         }
       }}
       onPointerMove={e => {
@@ -48,14 +55,15 @@ const Dirt = ({ name, plantable, addTree }) => {
     </mesh>
   );
 };
-const mapStateToProps = ({ state: { name, plantable } }) => {
+const mapStateToProps = ({ state: { name, plantable, last_planted } }) => {
   return {
     name,
-    plantable
+    plantable,
+    last_planted
   };
 };
 
 export default connect(
   mapStateToProps,
-  { addTree }
+  { addTree, fetchLastPlanted }
 )(Dirt);
