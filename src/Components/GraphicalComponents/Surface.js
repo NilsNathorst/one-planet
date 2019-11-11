@@ -16,6 +16,7 @@ const Surface = ({ setShowInfo, name }) => {
       });
   };
   const unhover = e => {
+    name === "QUERY" &&
     setShowInfo({ active: false, object: null });
   };
   return (
