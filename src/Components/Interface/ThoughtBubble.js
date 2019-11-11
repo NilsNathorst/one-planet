@@ -44,7 +44,6 @@ const ToolIcon = styled.div`
 const ThoughtBubble = ({ cans, trees, zoomedOut }) => {
   const [currentNeed, setCurrentNeed] = useState(null);
   useEffect(() => {
-    console.log(trees);
     if (cans < 10 && trees > 10) {
       setCurrentNeed(heart);
     }
