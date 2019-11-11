@@ -117,7 +117,7 @@ const Trees = ({ trees, fetchTrees, setTreeActive }) => {
 
 const mapStateToProps = ({ state: { trees } }) => {
   return {
-    trees: trees ? Object.values(trees) : null
+    trees: trees ? Object.values(trees) : []
   };
 };
 
