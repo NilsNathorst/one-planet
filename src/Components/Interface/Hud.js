@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import treeImage from "../../assets/icons/treeScore.png";
 import trashImage from "../../assets/icons/trashScore.png";
 import { connect } from "react-redux";
 import { fetchPlanetEnd } from "../../actions";
-
 import { ReactComponent as HappyIcon } from "../../assets/icons/happy.svg";
 import { ReactComponent as HappierIcon } from "../../assets/icons/happier.svg";
 import { ReactComponent as AngryIcon } from "../../assets/icons/angry.svg";
@@ -48,7 +47,6 @@ const StyledDiv = styled.div`
   width: 100%;
   padding: 2vw 4vw;
   position: absolute;
-  display: flex;
   justify-content: space-between;
   flex-direction: row;
   z-index: 100;
@@ -59,15 +57,21 @@ const StyledDiv = styled.div`
   .flexbox {
     display: flex;
     justify-content: space-between;
+    .icon-container {
+      display: flex;
+    }
     @media screen and (max-width: 700px) {
       svg {
         height: 40px;
         width: 40px;
       }
+      .thermometer {
+        height: 80px;
+        width: 80px;
+      }
     }
   }
 `;
-
 const IconDiv = styled.div`
   display: flex;
   width: 115px;
@@ -75,6 +79,34 @@ const IconDiv = styled.div`
   flex-direction: row;
   align-items: center;
   margin: 10px;
+
+  .toolTip {
+    display: ${props => (props.visible ? "block" : "none")};
+    width: 120px;
+    background-color: white;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    position: absolute;
+    color: black;
+    z-index: 1;
+    top: 100%;
+    left: ${props => props.left};
+    margin-left: -60px;
+    ::before {
+      content: "";
+      display: block;
+      width: 0;
+      height: 0;
+      position: absolute;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-bottom: 8px solid white;
+      z-index: 33;
+      left: 15px;
+      top: -7px;
+    }
+  }
 
   img {
     height: 60px;
@@ -90,14 +122,13 @@ const IconDiv = styled.div`
       height: 40px;
       width: 40px;
     }
-    .thermometer {
-      height: 80px;
-      width: 80px;
-    }
   }
 `;
 
 const Hud = ({ zoomedOut, trees, cans, planet_end, fetchPlanetEnd }) => {
+  const [treeToolTip, setTreeToolTip] = useState(false);
+  const [trashToolTip, setTrashToolTip] = useState(false);
+  const [planetToolTip, setPlanetToolTip] = useState(false);
   useEffect(() => {
     fetchPlanetEnd();
   }, [fetchPlanetEnd]);
@@ -134,21 +165,65 @@ const Hud = ({ zoomedOut, trees, cans, planet_end, fetchPlanetEnd }) => {
   };
 
   return (
-    <StyledDiv inview={zoomedOut ? "inView" : null}>
-      <div className="flexbox">
-        <IconDiv>
-          <img src={treeImage} alt="" />
-          {returnTreeSvg()}
-        </IconDiv>
-        <IconDiv>
-          <img src={trashImage} alt="" />
-          {returnTrashSvg()}
-        </IconDiv>
-      </div>
-      <IconDiv>
-        <ThermometerSvg color="hotpink" className="thermometer" />
-      </IconDiv>
-    </StyledDiv>
+    <>
+      <StyledDiv inview={zoomedOut ? "inView" : null}>
+        <div className="flexbox">
+          <div className="icon-container">
+            <IconDiv visible={treeToolTip} left={"60%"}>
+              <img
+                src={treeImage}
+                alt=""
+                onMouseOver={() => {
+                  setTreeToolTip(!treeToolTip);
+                }}
+                onMouseOut={() => {
+                  setTreeToolTip(!treeToolTip);
+                }}
+              />
+
+              {returnTreeSvg()}
+              <span className="toolTip">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                Tempore, quisquam?
+              </span>
+            </IconDiv>
+            <IconDiv visible={trashToolTip} left={"65%"}>
+              <img
+                src={trashImage}
+                alt=""
+                onMouseOver={() => {
+                  setTrashToolTip(!trashToolTip);
+                }}
+                onMouseOut={() => {
+                  setTrashToolTip(!trashToolTip);
+                }}
+              />
+              {returnTrashSvg()}
+              <span className="toolTip">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                Tempore, quisquam?
+              </span>
+            </IconDiv>
+          </div>
+          <IconDiv visible={planetToolTip} left={"100%"}>
+            <ThermometerSvg
+              color="hotpink"
+              className="thermometer"
+              onMouseOver={() => {
+                setPlanetToolTip(!planetToolTip);
+              }}
+              onMouseOut={() => {
+                setPlanetToolTip(!planetToolTip);
+              }}
+            />
+            <span className="toolTip">
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempore,
+              quisquam?
+            </span>
+          </IconDiv>
+        </div>
+      </StyledDiv>
+    </>
   );
 };
 
