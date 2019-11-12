@@ -52,7 +52,9 @@ export const fetchTrees = () => async dispatch => {
               treesRef.child(`${tree}`).set("was removed");
             });
             planetRef.once("value", snapshot => {
-              planetRef.set(snapshot.val() - 1000 * 60 * 30);
+              planetRef
+                .child(`/planet_end`)
+                .set(snapshot.val().planet_end - 1000 * 60 * 30);
             });
           }
         }
@@ -70,7 +72,9 @@ export const setTreeActive = id => async dispatch => {
   treesRef.child(`${id}/needsWater`).set("false");
   treesRef.child(`${id}/created_at`).set(Date.now());
   planetRef.once("value", snapshot => {
-    planetRef.set(snapshot.val() + 1000 * 60 * 60);
+    planetRef
+      .child(`/planet_end`)
+      .set(snapshot.val().planet_end + 1000 * 60 * 60);
   });
 };
 
