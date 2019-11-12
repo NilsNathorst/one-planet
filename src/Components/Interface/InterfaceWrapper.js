@@ -5,15 +5,18 @@ import noPlantIcon from "../../assets/icons/s-notPlantable.png";
 import { connect } from "react-redux";
 
 const Wrapper = styled.div`
+  position: fixed !important;
   position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   cursor: ${props =>
     props.activeTool === "TREE"
       ? props.plantable
         ? `url(${plantIcon}), grab`
         : `url(${noPlantIcon}), pointer`
       : "default"};
-  height: 100vh;
-  width: 100vw;
 `;
 
 const InterfaceWrapper = ({ name, plantable, children }) => {
