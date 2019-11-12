@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, Suspense } from "react";
+import React, { useEffect, useRef, Suspense, useState } from "react";
 import { extend, useFrame, useThree } from "react-three-fiber";
 import { connect } from "react-redux";
 
@@ -7,12 +7,12 @@ import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass";
 import { OutlinePass } from "three/examples/jsm/postprocessing/OutlinePass";
 import * as THREE from "three";
-extend({ EffectComposer, RenderPass, UnrealBloomPass, OutlinePass });
+import { WaterPass } from "../../resources/postprocessing/WaterPass";
+extend({ EffectComposer, RenderPass, UnrealBloomPass, OutlinePass, WaterPass });
 
 function Fx({ showInfo, name }) {
   const { gl, scene, camera, size } = useThree();
-
-
+  const [planetIsDead] = useState(true);
   const outlineP = useRef();
   const composer = useRef();
   const res = new THREE.Vector2(1024, 1024);
@@ -24,11 +24,10 @@ function Fx({ showInfo, name }) {
   useFrame(() => composer.current.render(), 1);
   useEffect(() => {}, [showInfo]);
   return (
-
     <Suspense fallback={null}>
       <effectComposer ref={composer} args={[gl]}>
         <renderPass attachArray="passes" args={[scene, camera]} />
-        {/* <unrealBloomPass attachArray="passes" /> */}
+        {planetIsDead && <waterPass attachArray="passes" factor={1.4} />}
         {name === "QUERY" && (
           <outlinePass
             ref={outlineP}
@@ -45,7 +44,6 @@ function Fx({ showInfo, name }) {
         )}
       </effectComposer>
     </Suspense>
-
   );
 }
 const mapStateToProps = ({ state: { showInfo, name } }) => {
