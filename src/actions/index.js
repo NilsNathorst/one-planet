@@ -5,47 +5,14 @@ import {
   FETCH_CANS,
   FETCH_PLANET,
   SET_SHOWINFO,
-  SET_PLANTABLE
+  SET_PLANTABLE,
+  FETCH_LAST_PLANTED
 } from "./types";
 
 export const addTree = newTree => async dispatch => {
   treesRef.push().set(newTree);
 };
-const updateTrees = trees => async dispatch => {
-  console.log("updated");
-  treesRef.on("value", snapshot => {
-    trees.map(tree => {
-      const TreeAge = Date.now() - snapshot.val()[tree.id].created_at;
 
-      if (TreeAge > 1000 * 60 && snapshot.val()[tree.id].age === "newborn") {
-        treesRef.child(`${tree.id}/needsWater`).set("true");
-      }
-
-      if (
-        snapshot.val()[tree.id].age !== "newborn" &&
-        snapshot.val()[tree.id].needsWater === "false"
-      ) {
-        if (TreeAge > 1000 * 60 * 60 * 6 && TreeAge < 1000 * 60 * 60 * 12) {
-          treesRef.child(`${tree.id}/age`).set("adult");
-        }
-        if (TreeAge > 1000 * 60 * 60 * 12 && TreeAge < 1000 * 60 * 60 * 18) {
-          treesRef.child(`${tree.id}/age`).set("senior");
-        }
-        if (TreeAge > 1000 * 60 * 60 * 18 && TreeAge < 1000 * 60 * 60 * 24) {
-          treesRef.child(`${tree.id}/age`).set("dead");
-        }
-        if (TreeAge > 5000 * 10 * 10 * 24) {
-          treesRef.child(`${tree.id}`).once("value", snapshot => {
-            treesRef.child(`${tree.id}`).remove();
-          });
-          planetRef.once("value", snapshot => {
-            planetRef.set(snapshot.val() - 1000 * 60 * 30);
-          });
-        }
-      }
-    });
-  });
-};
 export const fetchTrees = () => async dispatch => {
   let trees = [];
   treesRef.on("value", snapshot => {
@@ -107,7 +74,7 @@ export const setTreeActive = id => async dispatch => {
   });
 };
 
-export const destroyCan = id => async dispatch => {
+export const destroyCan = id => {
   cansRef.child(id).set("was removed");
 };
 
@@ -167,6 +134,16 @@ export const fetchPlanetEnd = () => async dispatch => {
     });
   });
 };
+
+export const fetchLastPlanted = () => async dispatch => {
+  treesRef.limitToLast(1).once("child_added", snapshot => {
+    dispatch({
+      type: FETCH_LAST_PLANTED,
+      payload: snapshot.val()
+    });
+  });
+};
+
 export const setShowInfo = payload => async dispatch => {
   dispatch({
     type: SET_SHOWINFO,
