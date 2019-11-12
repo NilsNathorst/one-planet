@@ -4,7 +4,14 @@ import { useLoader } from "react-three-fiber";
 import { connect } from "react-redux";
 import { addTree, setShowInfo, setPlantable } from "../../actions";
 
-const Surface = ({ plantable, addTree, setShowInfo, name, setPlantable }) => {
+const Surface = ({
+  plantable,
+  addTree,
+  setShowInfo,
+  name,
+  setPlantable,
+  isDead
+}) => {
   const ref = useRef();
   const gltf = useLoader(GLTFLoader, "/models/planet/continentsplanet.gltf");
   const hover = e => {
@@ -47,7 +54,7 @@ const Surface = ({ plantable, addTree, setShowInfo, name, setPlantable }) => {
         <bufferGeometry attach="geometry" {...gltf.__$[3].geometry} />
         <meshStandardMaterial
           attach="material"
-          color="green"
+          color={isDead ? "gray" : "green"}
           roughness={1}
         ></meshStandardMaterial>
       </mesh>
@@ -62,7 +69,11 @@ const Surface = ({ plantable, addTree, setShowInfo, name, setPlantable }) => {
         name="scandinavia"
       >
         <bufferGeometry attach="geometry" {...gltf.__$[6].geometry} />
-        <meshStandardMaterial attach="material" color="#FFC857" roughness={1} />
+        <meshStandardMaterial
+          attach="material"
+          color={isDead ? "gray" : "#FFC857"}
+          roughness={1}
+        />
       </mesh>
       <mesh
         onPointerOver={e => hover(e)}
@@ -77,7 +88,7 @@ const Surface = ({ plantable, addTree, setShowInfo, name, setPlantable }) => {
         <bufferGeometry attach="geometry" {...gltf.__$[4].geometry} />
         <meshStandardMaterial
           attach="material"
-          color="whitesmoke"
+          color={isDead ? "gray" : "whitesmoke"}
           roughness={1}
         />
       </mesh>
@@ -92,19 +103,23 @@ const Surface = ({ plantable, addTree, setShowInfo, name, setPlantable }) => {
         name="america"
       >
         <bufferGeometry attach="geometry" {...gltf.__$[5].geometry} />
-        <meshStandardMaterial attach="material" color="hotpink" roughness={1} />
+        <meshStandardMaterial
+          attach="material"
+          color={isDead ? "gray" : "hotpink"}
+          roughness={1}
+        />
       </mesh>
     </group>
   );
 };
-const mapStateToProps = ({ state: { name, plantable } }) => {
+const mapStateToProps = ({ state: { name, plantable, isDead } }) => {
   return {
     name,
-    plantable
+    plantable,
+    isDead
   };
 };
 
-export default connect(
-  mapStateToProps,
-  { addTree, setShowInfo, setPlantable }
-)(Surface);
+export default connect(mapStateToProps, { addTree, setShowInfo, setPlantable })(
+  Surface
+);

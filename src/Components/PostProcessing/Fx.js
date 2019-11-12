@@ -10,9 +10,9 @@ import * as THREE from "three";
 import { WaterPass } from "../../resources/postprocessing/WaterPass";
 extend({ EffectComposer, RenderPass, UnrealBloomPass, OutlinePass, WaterPass });
 
-function Fx({ showInfo, name }) {
+function Fx({ showInfo, name, isDead }) {
   const { gl, scene, camera, size } = useThree();
-  const [planetIsDead] = useState(true);
+
   const outlineP = useRef();
   const composer = useRef();
   const res = new THREE.Vector2(1024, 1024);
@@ -27,7 +27,7 @@ function Fx({ showInfo, name }) {
     <Suspense fallback={null}>
       <effectComposer ref={composer} args={[gl]}>
         <renderPass attachArray="passes" args={[scene, camera]} />
-        {planetIsDead && <waterPass attachArray="passes" factor={1.4} />}
+        {isDead && <waterPass attachArray="passes" factor={1.4} />}
         {name === "QUERY" && (
           <outlinePass
             ref={outlineP}
@@ -46,10 +46,11 @@ function Fx({ showInfo, name }) {
     </Suspense>
   );
 }
-const mapStateToProps = ({ state: { showInfo, name } }) => {
+const mapStateToProps = ({ state: { showInfo, name, isDead } }) => {
   return {
     showInfo,
-    name
+    name,
+    isDead
   };
 };
 

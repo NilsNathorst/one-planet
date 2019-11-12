@@ -3,7 +3,7 @@ import { useLoader, useFrame } from "react-three-fiber";
 import React, { useRef, useEffect, Suspense } from "react";
 import { setFromSpherical } from "../../helpers/numberGenerators";
 import { a } from "react-spring/three";
-
+import { connect } from "react-redux";
 const Cloud = ({ pos }) => {
   const gltf = useLoader(GLTFLoader, "/models/cloud/cloudcube.gltf");
   const ref = useRef();
@@ -32,20 +32,30 @@ const Cloud = ({ pos }) => {
     </a.group>
   );
 };
-const Clouds = () => {
-  return (
-    <>
-      <Suspense fallback={null}>
-        {[...Array(10)].map((item, i) => {
-          return (
-            <Cloud
-              pos={setFromSpherical(Math.floor(Math.random() * 15 + 105))}
-              key={i}
-            />
-          );
-        })}
-      </Suspense>
-    </>
-  );
+const Clouds = ({ isDead }) => {
+  console.log(isDead);
+  if (!isDead) {
+    return (
+      <>
+        <Suspense fallback={null}>
+          {[...Array(10)].map((item, i) => {
+            return (
+              <Cloud
+                pos={setFromSpherical(Math.floor(Math.random() * 15 + 105))}
+                key={i}
+              />
+            );
+          })}
+        </Suspense>
+      </>
+    );
+  }
+  return null;
 };
-export default Clouds;
+const mapStateToProps = ({ state: { isDead } }) => {
+  return {
+    isDead
+  };
+};
+
+export default connect(mapStateToProps)(Clouds);

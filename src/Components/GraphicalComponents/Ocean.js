@@ -3,7 +3,7 @@ import { useLoader } from "react-three-fiber";
 import React, { useRef, useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { useSpring, a } from "react-spring/three";
-const Ocean = ({ cans }) => {
+const Ocean = ({ cans, isDead }) => {
   const gltf = useLoader(GLTFLoader, "/models/planet/continentsplanet.gltf");
   const [currentColor, setColor] = useState("blue");
 
@@ -31,7 +31,7 @@ const Ocean = ({ cans }) => {
           transparent
           attach="material"
           opacity={0.8}
-          color={color}
+          color={isDead ? "#6B5552" : color}
           roughness={0}
         ></a.meshStandardMaterial>
       </a.mesh>
@@ -39,9 +39,10 @@ const Ocean = ({ cans }) => {
   );
 };
 
-const mapStateToProps = ({ state: { cans } }) => {
+const mapStateToProps = ({ state: { cans, isDead } }) => {
   return {
-    cans: cans ? Object.values(cans).filter(can => can !== "was removed") : []
+    cans: cans ? Object.values(cans).filter(can => can !== "was removed") : [],
+    isDead
   };
 };
 
