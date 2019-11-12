@@ -1,49 +1,106 @@
 import { treesRef, cansRef, planetRef } from "../database/firebase";
 import oceanVectors from "../database/oceanVectors.json";
-import { FETCH_TREES, FETCH_CANS, FETCH_PLANET, SET_SHOWINFO } from "./types";
+import {
+  FETCH_TREES,
+  FETCH_CANS,
+  FETCH_PLANET,
+  SET_SHOWINFO,
+  SET_PLANTABLE
+} from "./types";
 
 export const addTree = newTree => async dispatch => {
   treesRef.push().set(newTree);
 };
-
-export const fetchTrees = () => async dispatch => {
+const updateTrees = trees => async dispatch => {
+  console.log("updated");
   treesRef.on("value", snapshot => {
-    snapshot.val() &&
-      Object.keys(snapshot.val()).map(treeId => {
-        const TreeAge = Date.now() - snapshot.val()[treeId].created_at;
-        if (TreeAge > 1000 * 60 && snapshot.val()[treeId].age === "newborn") {
-          treesRef.child(`${treeId}/needsWater`).set("true");
+    trees.map(tree => {
+      const TreeAge = Date.now() - snapshot.val()[tree.id].created_at;
+
+      if (TreeAge > 1000 * 60 && snapshot.val()[tree.id].age === "newborn") {
+        treesRef.child(`${tree.id}/needsWater`).set("true");
+      }
+
+      if (
+        snapshot.val()[tree.id].age !== "newborn" &&
+        snapshot.val()[tree.id].needsWater === "false"
+      ) {
+        if (TreeAge > 1000 * 60 * 60 * 6 && TreeAge < 1000 * 60 * 60 * 12) {
+          treesRef.child(`${tree.id}/age`).set("adult");
         }
-        treesRef.child(`${treeId}/id`).set(treeId);
-        if (snapshot.val()[treeId].age !== "newborn") {
+        if (TreeAge > 1000 * 60 * 60 * 12 && TreeAge < 1000 * 60 * 60 * 18) {
+          treesRef.child(`${tree.id}/age`).set("senior");
+        }
+        if (TreeAge > 1000 * 60 * 60 * 18 && TreeAge < 1000 * 60 * 60 * 24) {
+          treesRef.child(`${tree.id}/age`).set("dead");
+        }
+        if (TreeAge > 5000 * 10 * 10 * 24) {
+          treesRef.child(`${tree.id}`).once("value", snapshot => {
+            treesRef.child(`${tree.id}`).remove();
+          });
+          planetRef.once("value", snapshot => {
+            planetRef.set(snapshot.val() - 1000 * 60 * 30);
+          });
+        }
+      }
+    });
+  });
+};
+export const fetchTrees = () => async dispatch => {
+  let trees = [];
+  treesRef.on("value", snapshot => {
+    if (snapshot.val()) {
+      trees = snapshot.val();
+      Object.keys(trees).map(treeId => {
+        if (trees[treeId] !== "was removed") {
+          treesRef.child(`${treeId}/id`).set(treeId);
+        }
+      });
+    }
+    if (Object.values(trees).length >= 1) {
+      Object.keys(trees).map(tree => {
+        const TreeAge = Date.now() - snapshot.val()[tree].created_at;
+
+        if (TreeAge > 1000 * 60 && snapshot.val()[tree].age === "newborn") {
+          treesRef.child(`${tree}/needsWater`).set("true");
+        }
+        if (
+          snapshot.val()[tree].age !== "newborn" &&
+          snapshot.val()[tree].needsWater === "false"
+        ) {
           if (TreeAge > 1000 * 60 * 60 * 6 && TreeAge < 1000 * 60 * 60 * 12) {
-            treesRef.child(`${treeId}/age`).set("adult");
+            console.log("adult");
+            treesRef.child(`${tree}/age`).set("adult");
           }
           if (TreeAge > 1000 * 60 * 60 * 12 && TreeAge < 1000 * 60 * 60 * 18) {
-            treesRef.child(`${treeId}/age`).set("senior");
+            console.log("senior");
+            treesRef.child(`${tree}/age`).set("senior");
           }
           if (TreeAge > 1000 * 60 * 60 * 18 && TreeAge < 1000 * 60 * 60 * 24) {
-            treesRef.child(`${treeId}/age`).set("dead");
+            console.log("dead");
+            treesRef.child(`${tree}/age`).set("dead");
           }
-          if (TreeAge > 5000 * 10 * 10 * 24) {
-            treesRef.child(`${treeId}`).once("value", snapshot => {
-              treesRef.child(`${treeId}`).remove();
+          if (TreeAge > 1000 * 60 * 60 * 24) {
+            treesRef.child(`${tree}`).once("value", snapshot => {
+              treesRef.child(`${tree}`).set("was removed");
             });
             planetRef.once("value", snapshot => {
               planetRef.set(snapshot.val() - 1000 * 60 * 30);
             });
           }
         }
-        return null;
       });
+    }
     dispatch({
       type: FETCH_TREES,
-      payload: snapshot.val()
+      payload: trees
     });
   });
 };
+
 export const setTreeActive = id => async dispatch => {
   treesRef.child(`${id}/age`).set("young");
+  treesRef.child(`${id}/needsWater`).set("false");
   treesRef.child(`${id}/created_at`).set(Date.now());
   planetRef.once("value", snapshot => {
     planetRef.set(snapshot.val() + 1000 * 60 * 60);
@@ -90,6 +147,17 @@ export const flushCansDatabase = id => async dispatch => {
       });
   });
 };
+export const flushTreesDatabase = id => async dispatch => {
+  treesRef.once("value", snapshot => {
+    snapshot.val() &&
+      Object.keys(snapshot.val()).map(treeId => {
+        if (snapshot.val()[treeId] === "was removed") {
+          treesRef.child(`${treeId}`).remove();
+        }
+        return null;
+      });
+  });
+};
 
 export const fetchPlanetEnd = () => async dispatch => {
   planetRef.on("value", snapshot => {
@@ -102,6 +170,12 @@ export const fetchPlanetEnd = () => async dispatch => {
 export const setShowInfo = payload => async dispatch => {
   dispatch({
     type: SET_SHOWINFO,
+    payload: payload
+  });
+};
+export const setPlantable = payload => async dispatch => {
+  dispatch({
+    type: SET_PLANTABLE,
     payload: payload
   });
 };

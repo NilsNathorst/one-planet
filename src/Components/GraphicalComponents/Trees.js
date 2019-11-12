@@ -1,9 +1,9 @@
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useLoader } from "react-three-fiber";
-import React, { useEffect, useRef, Suspense } from "react";
+import React, { useEffect, useRef, Suspense, useMemo } from "react";
 import { useSpring, a, config } from "react-spring/three";
 import { connect } from "react-redux";
-import { fetchTrees } from "../../actions";
+import { fetchTrees, flushTreesDatabase } from "../../actions";
 import { setTreeActive } from "../../actions";
 
 const Tree = ({
@@ -52,9 +52,7 @@ const Tree = ({
       ref={ref}
       scale={scale}
       onPointerDown={() => {
-        if (id === "") {
-          fetchTrees();
-        } else if (age === "newborn" && needsWater === "true") {
+        if (age === "newborn" && needsWater === "true") {
           setTreeActive(id);
         }
       }}
@@ -94,10 +92,12 @@ const Tree = ({
   );
 };
 
-const Trees = ({ trees, fetchTrees, setTreeActive }) => {
+const Trees = ({ trees, fetchTrees, setTreeActive, flushTreesDatabase }) => {
   useEffect(() => {
+    flushTreesDatabase();
     fetchTrees();
-  }, [fetchTrees]);
+  }, [fetchTrees, flushTreesDatabase]);
+
   return trees.map((tree, i) => {
     return (
       <Suspense fallback={null}>
@@ -126,5 +126,5 @@ const mapStateToProps = ({ state: { trees } }) => {
 
 export default connect(
   mapStateToProps,
-  { fetchTrees, setTreeActive }
+  { fetchTrees, setTreeActive, flushTreesDatabase }
 )(Trees);

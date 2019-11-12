@@ -2,9 +2,9 @@ import React, { useRef } from "react";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useLoader } from "react-three-fiber";
 import { connect } from "react-redux";
-import { addTree } from "../../actions";
-import { setShowInfo } from "../../actions";
-const Surface = ({ setShowInfo, name }) => {
+import { addTree, setShowInfo, setPlantable } from "../../actions";
+
+const Surface = ({ plantable, addTree, setShowInfo, name, setPlantable }) => {
   const ref = useRef();
   const gltf = useLoader(GLTFLoader, "/models/planet/continentsplanet.gltf");
   const hover = e => {
@@ -14,15 +14,30 @@ const Surface = ({ setShowInfo, name }) => {
         active: true,
         object: e.eventObject
       });
+    name === "TREE" && setPlantable(true);
   };
   const unhover = e => {
     name === "QUERY" && setShowInfo({ active: false, object: null });
+    name === "TREE" && setPlantable(false);
   };
+  const handleClick = e => {
+    if (plantable && name === "TREE") {
+      addTree({
+        pos: e.point,
+        created_at: Date.now(),
+        age: "newborn",
+        id: "",
+        needsWater: "false"
+      });
+    }
+  };
+
   return (
     <group>
       <mesh
         onPointerOver={e => hover(e)}
         onPointerOut={e => unhover(e)}
+        onPointerDown={e => handleClick(e)}
         ref={ref}
         receiveShadow
         scale={[30.4, 30.4, 30.4]}
@@ -39,6 +54,7 @@ const Surface = ({ setShowInfo, name }) => {
       <mesh
         onPointerOver={e => hover(e)}
         onPointerOut={e => unhover(e)}
+        onPointerDown={e => handleClick(e)}
         ref={ref}
         receiveShadow
         scale={[30.4, 30.4, 30.4]}
@@ -51,6 +67,7 @@ const Surface = ({ setShowInfo, name }) => {
       <mesh
         onPointerOver={e => hover(e)}
         onPointerOut={e => unhover(e)}
+        onPointerDown={e => handleClick(e)}
         ref={ref}
         receiveShadow
         scale={[30.4, 30.4, 30.4]}
@@ -67,6 +84,7 @@ const Surface = ({ setShowInfo, name }) => {
       <mesh
         onPointerOver={e => hover(e)}
         onPointerOut={e => unhover(e)}
+        onPointerDown={e => handleClick(e)}
         ref={ref}
         receiveShadow
         scale={[30.4, 30.4, 30.4]}
@@ -79,13 +97,14 @@ const Surface = ({ setShowInfo, name }) => {
     </group>
   );
 };
-const mapStateToProps = ({ state: { name } }) => {
+const mapStateToProps = ({ state: { name, plantable } }) => {
   return {
-    name
+    name,
+    plantable
   };
 };
 
 export default connect(
   mapStateToProps,
-  { setShowInfo }
+  { addTree, setShowInfo, setPlantable }
 )(Surface);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import plantIcon from "../../assets/icons/s-plantable.png";
 import noPlantIcon from "../../assets/icons/s-notPlantable.png";
@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 const Wrapper = styled.div`
   position: absolute;
   cursor: ${props =>
-    props.activeTool === "TREE" && props.hovering
+    props.activeTool === "TREE"
       ? props.plantable
         ? `url(${plantIcon}), grab`
         : `url(${noPlantIcon}), pointer`
@@ -16,23 +16,18 @@ const Wrapper = styled.div`
   width: 100vw;
 `;
 
-const InterfaceWrapper = ({ name, hoverActive, plantable, children }) => {
+const InterfaceWrapper = ({ name, plantable, children }) => {
   return (
-    <Wrapper
-      className="wrapper"
-      activeTool={name}
-      hovering={hoverActive}
-      plantable={plantable}
-    >
+    <Wrapper className="wrapper" activeTool={name} plantable={plantable}>
       {children}
     </Wrapper>
   );
 };
 
-const mapStateToProps = ({ state: { name, hoverActive, plantable } }) => {
+const mapStateToProps = ({ state: { name, plantable } }) => {
   return {
     name,
-    hoverActive,
+
     plantable
   };
 };
