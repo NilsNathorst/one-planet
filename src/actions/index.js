@@ -6,7 +6,8 @@ import {
   FETCH_PLANET,
   SET_SHOWINFO,
   SET_PLANTABLE,
-  FETCH_LAST_PLANTED
+  FETCH_LAST_PLANTED,
+  SET_PLANET_DEAD
 } from "./types";
 
 export const addTree = newTree => async dispatch => {
@@ -75,6 +76,7 @@ export const setTreeActive = id => async dispatch => {
     planetRef
       .child(`/planet_end`)
       .set(snapshot.val().planet_end + 1000 * 60 * 60);
+    planetRef.child(`/treesAdded`).set(snapshot.val().treesAdded + 1);
   });
 };
 
@@ -113,6 +115,9 @@ export const flushCansDatabase = id => async dispatch => {
       Object.keys(snapshot.val()).map(canId => {
         if (snapshot.val()[canId] === "was removed") {
           cansRef.child(`${canId}`).remove();
+          planetRef.once("value", snapshot => {
+            planetRef.child(`/cansRemoved`).set(snapshot.val().cansRemoved + 1);
+          });
         }
         return null;
       });
@@ -130,11 +135,23 @@ export const flushTreesDatabase = id => async dispatch => {
   });
 };
 
+export const setPlanetDead = () => async dispatch => {
+  planetRef.once("value", snapshot => {
+    if (snapshot.val().planet_end < Date.now()) {
+      planetRef.child(`/isDead`).set(true);
+    }
+    dispatch({
+      type: SET_PLANET_DEAD,
+      payload: snapshot.val().isDead
+    });
+  });
+};
+
 export const fetchPlanetEnd = () => async dispatch => {
   planetRef.on("value", snapshot => {
     dispatch({
       type: FETCH_PLANET,
-      payload: snapshot.val()
+      payload: snapshot.val().planet_end
     });
   });
 };

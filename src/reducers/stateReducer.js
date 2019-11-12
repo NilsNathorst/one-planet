@@ -7,7 +7,8 @@ import {
   FETCH_CANS,
   FETCH_TREES,
   FETCH_PLANET,
-  FETCH_LAST_PLANTED
+  FETCH_LAST_PLANTED,
+  SET_PLANET_DEAD
 } from "../actions/types";
 
 const initState = {
@@ -19,6 +20,7 @@ const initState = {
   cans: [],
   trees: [],
   planet_end: null,
+  isDead: false,
   last_planted: {}
 };
 
@@ -68,6 +70,11 @@ const stateReducer = (state = initState, action) => {
       return {
         ...state,
         last_planted: action.payload
+      };
+    case SET_PLANET_DEAD:
+      return {
+        ...state,
+        isDead: action.payload
       };
     default:
       return state;

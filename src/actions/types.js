@@ -7,3 +7,4 @@ export const SET_PLANTABLE = "SET_PLANTABLE";
 export const SET_ZOOMED_OUT = "SET_ZOOMED_OUT";
 export const FETCH_PLANET = "FETCH_PLANET";
 export const FETCH_LAST_PLANTED = "FETCH_LAST_PLANTED";
+export const SET_PLANET_DEAD = "SET_PLANET_DEAD";
