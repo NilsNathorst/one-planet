@@ -17,7 +17,6 @@ const HappySvg = styled(HappyIcon)`
   fill: white;
   padding-left: 10px;
 `;
-
 const ThermometerSvg = styled(ThermometerIcon)`
   width: 100px;
   height: 100px;
@@ -26,7 +25,6 @@ const ThermometerSvg = styled(ThermometerIcon)`
     fill: ${props => props.color};
   }
 `;
-
 const HappierSvg = styled(HappierIcon)`
   width: 100%;
   height: 100%;
@@ -47,23 +45,36 @@ const AngrySvg = styled(AngryIcon)`
 `;
 
 const StyledDiv = styled.div`
+  width: 100%;
+  padding: 2vw 4vw;
   position: absolute;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
   z-index: 100;
   transform: ${props =>
     props.inview === "inView" ? "translate(0,0)" : "translate(0,-300px)"};
   transition: 0.55s;
   color: white;
+  .flexbox {
+    display: flex;
+    justify-content: space-between;
+    @media screen and (max-width: 700px) {
+      svg {
+        height: 40px;
+        width: 40px;
+      }
+    }
+  }
 `;
 
 const IconDiv = styled.div`
-  position: absolute;
   display: flex;
   width: 115px;
   height: 80px;
   flex-direction: row;
   align-items: center;
-  left: ${props => props.left};
-  top: ${props => props.top};
+  margin: 10px;
 
   img {
     height: 60px;
@@ -73,6 +84,16 @@ const IconDiv = styled.div`
   }
   h2 {
     margin-left: 5px;
+  }
+  @media screen and (max-width: 700px) {
+    img {
+      height: 40px;
+      width: 40px;
+    }
+    .thermometer {
+      height: 80px;
+      width: 80px;
+    }
   }
 `;
 
@@ -99,9 +120,9 @@ const Hud = ({ zoomedOut, trees, cans, planet_end, fetchPlanetEnd }) => {
   const returnTrashSvg = () => {
     const canslength = cans.filter(can => can !== "was removed").length;
     switch (true) {
-      case cans === null:
-        return <HappierSvg />;
       case canslength < 5:
+        return <HappierSvg />;
+      case canslength < 10:
         return <HappySvg />;
       case canslength < 15:
         return <IndifferentSvg />;
@@ -114,16 +135,18 @@ const Hud = ({ zoomedOut, trees, cans, planet_end, fetchPlanetEnd }) => {
 
   return (
     <StyledDiv inview={zoomedOut ? "inView" : null}>
-      <IconDiv left={"5vw"} top={"20vh"}>
-        <img src={treeImage} alt="" />
-        {returnTreeSvg()}
-      </IconDiv>
-      <IconDiv left={"15vw"} top={"5vh"}>
-        <img src={trashImage} alt="" />
-        {returnTrashSvg()}
-      </IconDiv>
-      <IconDiv left={"80vw"} top={"5vh"}>
-        <ThermometerSvg color="hotpink" />
+      <div className="flexbox">
+        <IconDiv>
+          <img src={treeImage} alt="" />
+          {returnTreeSvg()}
+        </IconDiv>
+        <IconDiv>
+          <img src={trashImage} alt="" />
+          {returnTrashSvg()}
+        </IconDiv>
+      </div>
+      <IconDiv>
+        <ThermometerSvg color="hotpink" className="thermometer" />
       </IconDiv>
     </StyledDiv>
   );
