@@ -28,8 +28,9 @@ import reduxThunk from "redux-thunk";
 import reducers from "../reducers";
 import InfoBubble from "./Interface/InfoBubble";
 import ThoughtBubble from "./Interface/ThoughtBubble";
-
 import CanvasWrapper from "./Interface/CanvasWrapper";
+import { setPlanetDead } from "../actions/index";
+
 const App = () => {
   const composeEnhancers =
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -38,6 +39,8 @@ const App = () => {
     {},
     composeEnhancers(applyMiddleware(reduxThunk))
   );
+
+  store.dispatch(setPlanetDead());
 
   return (
     <Provider store={store}>

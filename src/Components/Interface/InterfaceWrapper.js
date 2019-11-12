@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import plantIcon from "../../assets/icons/s-plantable.png";
 import noPlantIcon from "../../assets/icons/s-notPlantable.png";

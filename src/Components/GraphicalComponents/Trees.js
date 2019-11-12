@@ -1,6 +1,6 @@
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useLoader } from "react-three-fiber";
-import React, { useEffect, useRef, Suspense, useMemo } from "react";
+import React, { useEffect, useRef, Suspense } from "react";
 import { useSpring, a, config } from "react-spring/three";
 import { connect } from "react-redux";
 import { fetchTrees, flushTreesDatabase } from "../../actions";
