@@ -74,7 +74,7 @@ export const setTreeActive = id => async dispatch => {
   });
 };
 
-export const destroyCan = id => {
+export const destroyCan = id => async dispatch => {
   cansRef.child(id).set("was removed");
 };
 
