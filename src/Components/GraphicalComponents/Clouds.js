@@ -33,7 +33,6 @@ const Cloud = ({ pos }) => {
   );
 };
 const Clouds = ({ isDead }) => {
-  console.log(isDead);
   if (!isDead) {
     return (
       <>
