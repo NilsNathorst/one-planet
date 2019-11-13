@@ -5,7 +5,7 @@ import { useSpring, a, config } from "react-spring/three";
 import { connect } from "react-redux";
 import { fetchTrees, flushTreesDatabase } from "../../actions";
 import { setTreeActive } from "../../actions";
-
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 const Tree = ({
   variant,
   pos,
@@ -15,7 +15,11 @@ const Tree = ({
   fetchTrees,
   needsWater
 }) => {
-  const gltf = useLoader(GLTFLoader, "/models/trees/trees.gltf");
+  const gltf = useLoader(GLTFLoader, "/models/trees/trees.gltf", loader => {
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath("/draco-gltf/");
+    loader.setDRACOLoader(dracoLoader);
+  });
   const raindrop = useLoader(GLTFLoader, "/models/raindrop/raindrop2.gltf");
   const ref = useRef();
   const raindropRef = useRef();
