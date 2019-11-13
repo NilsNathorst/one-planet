@@ -19,9 +19,9 @@ const initState = {
   zoomedOut: false,
   cans: [],
   trees: [],
-  planet_end: null,
+  planetEnd: null,
   isDead: false,
-  last_planted: null
+  lastPlanted: null
 };
 
 const stateReducer = (state = initState, action) => {
@@ -64,12 +64,12 @@ const stateReducer = (state = initState, action) => {
     case FETCH_PLANET:
       return {
         ...state,
-        planet_end: action.payload
+        planetEnd: action.payload
       };
     case FETCH_LAST_PLANTED:
       return {
         ...state,
-        last_planted: action.payload
+        lastPlanted: action.payload
       };
     case SET_PLANET_DEAD:
       return {
