@@ -1,9 +1,10 @@
 import React, { useRef } from "react";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { TextureLoader } from "three/src/loaders/TextureLoader";
 import { useLoader } from "react-three-fiber";
 import { connect } from "react-redux";
 import { addTree, setShowInfo, setPlantable } from "../../actions";
-
+import * as THREE from "three";
 const Surface = ({
   plantable,
   addTree,
@@ -13,7 +14,13 @@ const Surface = ({
   isDead
 }) => {
   const ref = useRef();
-  const gltf = useLoader(GLTFLoader, "/models/planet/continentsplanet.gltf");
+  const gltf = useLoader(GLTFLoader, "/models/planet/new.glb");
+  const [colorMap, bumpMap, normalMap, aoMap] = useLoader(TextureLoader, [
+    "/assets/textures/Grass/Vol_42_1_Base_Color.png",
+    "/assets/textures/Grass/Vol_42_1_Height.png",
+    "/assets/textures/Grass/Vol_42_1_Normal.png",
+    "/assets/textures/Grass/Vol_42_1_Ambient_Occlusion.png"
+  ]);
   const hover = e => {
     e.stopPropagation();
     name === "QUERY" &&
@@ -40,76 +47,47 @@ const Surface = ({
   };
 
   return (
-    <group>
-      <mesh
-        onPointerOver={e => hover(e)}
-        onPointerOut={e => unhover(e)}
-        onPointerDown={e => handleClick(e)}
-        ref={ref}
-        receiveShadow
-        scale={[30.4, 30.4, 30.4]}
-        position={[0, 0, 0]}
-        name="africa"
-      >
-        <bufferGeometry attach="geometry" {...gltf.__$[3].geometry} />
-        <meshStandardMaterial
-          attach="material"
-          color={isDead ? "gray" : "green"}
-          roughness={1}
-        ></meshStandardMaterial>
-      </mesh>
-      <mesh
-        onPointerOver={e => hover(e)}
-        onPointerOut={e => unhover(e)}
-        onPointerDown={e => handleClick(e)}
-        ref={ref}
-        receiveShadow
-        scale={[30.4, 30.4, 30.4]}
-        position={[0, 0, 0]}
-        name="scandinavia"
-      >
-        <bufferGeometry attach="geometry" {...gltf.__$[6].geometry} />
-        <meshStandardMaterial
-          attach="material"
-          color={isDead ? "gray" : "#FFC857"}
-          roughness={1}
+    <mesh
+      onPointerOver={e => hover(e)}
+      onPointerOut={e => unhover(e)}
+      onPointerDown={e => handleClick(e)}
+      ref={ref}
+      receiveShadow
+      scale={[12.14, 12.14, 12.14]}
+      position={[0, 0, 0]}
+    >
+      <bufferGeometry attach="geometry" {...gltf.__$[8].geometry} />
+      <meshStandardMaterial attach="material" roughness={1}>
+        <primitive
+          attach="map"
+          object={colorMap}
+          wrapT={THREE.RepeatWrapping}
+          wrapS={THREE.RepeatWrapping}
+          repeat={[10, 10]}
         />
-      </mesh>
-      <mesh
-        onPointerOver={e => hover(e)}
-        onPointerOut={e => unhover(e)}
-        onPointerDown={e => handleClick(e)}
-        ref={ref}
-        receiveShadow
-        scale={[30.4, 30.4, 30.4]}
-        position={[0, 0, 0]}
-        name="oceania"
-      >
-        <bufferGeometry attach="geometry" {...gltf.__$[4].geometry} />
-        <meshStandardMaterial
-          attach="material"
-          color={isDead ? "gray" : "whitesmoke"}
-          roughness={1}
+        <primitive
+          attach="bumpMap"
+          object={bumpMap}
+          wrapT={THREE.RepeatWrapping}
+          wrapS={THREE.RepeatWrapping}
+          repeat={[10, 10]}
         />
-      </mesh>
-      <mesh
-        onPointerOver={e => hover(e)}
-        onPointerOut={e => unhover(e)}
-        onPointerDown={e => handleClick(e)}
-        ref={ref}
-        receiveShadow
-        scale={[30.4, 30.4, 30.4]}
-        position={[0, 0, 0]}
-        name="america"
-      >
-        <bufferGeometry attach="geometry" {...gltf.__$[5].geometry} />
-        <meshStandardMaterial
-          attach="material"
-          color={isDead ? "gray" : "hotpink"}
-          roughness={1}
+        <primitive
+          attach="normalMap"
+          object={normalMap}
+          wrapT={THREE.RepeatWrapping}
+          wrapS={THREE.RepeatWrapping}
+          repeat={[10, 10]}
         />
-      </mesh>
-    </group>
+        <primitive
+          attach="lightMap"
+          object={aoMap}
+          wrapT={THREE.RepeatWrapping}
+          wrapS={THREE.RepeatWrapping}
+          repeat={[10, 10]}
+        />
+      </meshStandardMaterial>
+    </mesh>
   );
 };
 const mapStateToProps = ({ state: { name, plantable, isDead } }) => {
