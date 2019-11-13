@@ -37,15 +37,12 @@ export const fetchTrees = () => async dispatch => {
           snapshot.val()[tree].needsWater === "false"
         ) {
           if (TreeAge > 1000 * 60 * 60 * 6 && TreeAge < 1000 * 60 * 60 * 12) {
-            console.log("adult");
             treesRef.child(`${tree}/age`).set("adult");
           }
           if (TreeAge > 1000 * 60 * 60 * 12 && TreeAge < 1000 * 60 * 60 * 18) {
-            console.log("senior");
             treesRef.child(`${tree}/age`).set("senior");
           }
           if (TreeAge > 1000 * 60 * 60 * 18 && TreeAge < 1000 * 60 * 60 * 24) {
-            console.log("dead");
             treesRef.child(`${tree}/age`).set("dead");
           }
           if (TreeAge > 1000 * 60 * 60 * 24) {
