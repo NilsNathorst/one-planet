@@ -61,7 +61,7 @@ const InfoBubble = ({ object, infoActive }) => {
 
 const mapStateToProps = ({
   state: {
-    showInfo: { active: infoActive, object: object }
+    showInfo: { active: infoActive, object }
   }
 }) => {
   return {
