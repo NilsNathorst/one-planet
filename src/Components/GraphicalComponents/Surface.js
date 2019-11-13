@@ -19,9 +19,9 @@ const Surface = ({
   setShowInfo,
   name,
   setPlantable,
-  isDead,   
+  isDead,
   fetchLastPlanted,
-  last_planted
+  lastPlanted
 }) => {
   const ref = useRef();
   const gltf = useLoader(GLTFLoader, "/models/planet/new.glb");
@@ -31,7 +31,7 @@ const Surface = ({
     "/assets/textures/Grass/Vol_42_1_Normal.png",
     "/assets/textures/Grass/Vol_42_1_Ambient_Occlusion.png"
   ]);
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const setTool = useCallback(
     value => dispatch({ type: "SET_TOOL", payload: value }),
     [dispatch]
@@ -53,7 +53,7 @@ const Surface = ({
   const handleClick = e => {
     if (plantable && name === "TREE") {
       fetchLastPlanted();
-      if (Date.now() - last_planted > 1000 * 60 || last_planted === null) {
+      if (Date.now() - lastPlanted > 1000 * 2 || lastPlanted === null) {
         addTree({
           pos: e.point,
           created_at: Date.now(),
@@ -111,16 +111,20 @@ const Surface = ({
   );
 };
 
-const mapStateToProps = ({ state: { name, plantable, isDead, last_planted } }) => {
+const mapStateToProps = ({
+  state: { name, plantable, isDead, lastPlanted }
+}) => {
   return {
     name,
     plantable,
-    isDead, 
-    last_planted
+    isDead,
+    lastPlanted
   };
 };
 
-export default connect(mapStateToProps, { addTree, setShowInfo, setPlantable, fetchLastPlanted })(
-  Surface
-);
-
+export default connect(mapStateToProps, {
+  addTree,
+  setShowInfo,
+  setPlantable,
+  fetchLastPlanted
+})(Surface);
