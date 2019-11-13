@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, Suspense } from "react";
+import React, { useEffect, useRef, Suspense, useState } from "react";
 import { extend, useFrame, useThree } from "react-three-fiber";
 import { connect } from "react-redux";
 
@@ -7,14 +7,15 @@ import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass";
 import { OutlinePass } from "three/examples/jsm/postprocessing/OutlinePass";
 import * as THREE from "three";
-extend({ EffectComposer, RenderPass, UnrealBloomPass, OutlinePass });
+import { WaterPass } from "../../resources/postprocessing/WaterPass";
+extend({ EffectComposer, RenderPass, UnrealBloomPass, OutlinePass, WaterPass });
 
-function Fx({ showInfo, name }) {
+function Fx({ showInfo, name, isDead }) {
   const { gl, scene, camera, size } = useThree();
-
 
   const outlineP = useRef();
   const composer = useRef();
+  const unrealRef = useRef();
   const res = new THREE.Vector2(1024, 1024);
 
   useEffect(() => void composer.current.setSize(size.width, size.height), [
@@ -22,13 +23,13 @@ function Fx({ showInfo, name }) {
   ]);
 
   useFrame(() => composer.current.render(), 1);
-  useEffect(() => {}, [showInfo]);
-  return (
 
+  return (
     <Suspense fallback={null}>
       <effectComposer ref={composer} args={[gl]}>
         <renderPass attachArray="passes" args={[scene, camera]} />
-        {/* <unrealBloomPass attachArray="passes" /> */}
+        {isDead && <waterPass attachArray="passes" factor={1.4} />}
+        <unrealBloomPass ref={unrealRef} attachArray="passes" strength={0.2} />
         {name === "QUERY" && (
           <outlinePass
             ref={outlineP}
@@ -45,13 +46,13 @@ function Fx({ showInfo, name }) {
         )}
       </effectComposer>
     </Suspense>
-
   );
 }
-const mapStateToProps = ({ state: { showInfo, name } }) => {
+const mapStateToProps = ({ state: { showInfo, name, isDead } }) => {
   return {
     showInfo,
-    name
+    name,
+    isDead
   };
 };
 

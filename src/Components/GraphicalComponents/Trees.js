@@ -7,6 +7,7 @@ import { fetchTrees, flushTreesDatabase } from "../../actions";
 import { setTreeActive } from "../../actions";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 const Tree = ({
+  isDead,
   variant,
   pos,
   age,
@@ -61,7 +62,7 @@ const Tree = ({
         }
       }}
     >
-      {age === "newborn" && needsWater === "true" && (
+      {!isDead && age === "newborn" && needsWater === "true" && (
         <a.mesh ref={raindropRef} scale={[8, 8, 8]} position={[0, -8, -25]}>
           <a.bufferGeometry
             rotation={[Math.PI / 2, 0, 0]}
@@ -71,7 +72,7 @@ const Tree = ({
           <a.meshStandardMaterial attach="material" color="blue" />
         </a.mesh>
       )}
-      {age !== "dead" && (
+      {!isDead && age !== "dead" && (
         <a.mesh>
           <a.bufferGeometry
             name="leaves"
@@ -96,7 +97,13 @@ const Tree = ({
   );
 };
 
-const Trees = ({ trees, fetchTrees, setTreeActive, flushTreesDatabase }) => {
+const Trees = ({
+  isDead,
+  trees,
+  fetchTrees,
+  setTreeActive,
+  flushTreesDatabase
+}) => {
   useEffect(() => {
     flushTreesDatabase();
     fetchTrees();
@@ -107,6 +114,7 @@ const Trees = ({ trees, fetchTrees, setTreeActive, flushTreesDatabase }) => {
       <Suspense fallback={null}>
         {tree.id && tree.pos && (
           <Tree
+            isDead={isDead}
             pos={[tree.pos.x, tree.pos.y, tree.pos.z]}
             variant={2}
             key={i}
@@ -122,13 +130,15 @@ const Trees = ({ trees, fetchTrees, setTreeActive, flushTreesDatabase }) => {
   });
 };
 
-const mapStateToProps = ({ state: { trees } }) => {
+const mapStateToProps = ({ state: { trees, isDead } }) => {
   return {
-    trees: trees ? Object.values(trees) : []
+    trees: trees ? Object.values(trees) : [],
+    isDead
   };
 };
 
-export default connect(
-  mapStateToProps,
-  { fetchTrees, setTreeActive, flushTreesDatabase }
-)(Trees);
+export default connect(mapStateToProps, {
+  fetchTrees,
+  setTreeActive,
+  flushTreesDatabase
+})(Trees);

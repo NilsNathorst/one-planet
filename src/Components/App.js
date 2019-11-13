@@ -1,5 +1,5 @@
 // Dependencies
-import React, { Suspense } from "react";
+import React, { Suspense, useState } from "react";
 import { ThemeProvider } from "styled-components";
 import { Canvas } from "react-three-fiber";
 import * as THREE from "three";
@@ -63,8 +63,8 @@ const App = () => {
                   }}
                 >
                   <Suspense fallback={null}>
-                    <Clouds />
                     <Provider store={store}>
+                      <Clouds />
                       <Controls />
                       <ambientLight intensity={0.5} />
                       <BirdScene />

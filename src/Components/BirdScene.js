@@ -2,7 +2,7 @@ import * as THREE from "three";
 import React, { Suspense, useEffect, useRef, useState } from "react";
 import { useFrame } from "react-three-fiber";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-
+import { connect } from "react-redux";
 function Bird() {
   const [model, setModel] = useState(null);
   const [mixer] = useState(() => new THREE.AnimationMixer());
@@ -72,12 +72,19 @@ function Bird() {
   } else return null;
 }
 
-function BirdScene() {
-  return (
-    <Suspense fallback={null}>
-      <Bird />
-    </Suspense>
-  );
+function BirdScene({ isDead }) {
+  if (!isDead) {
+    return (
+      <Suspense fallback={null}>
+        <Bird />
+      </Suspense>
+    );
+  } else return null;
 }
+const mapStateToProps = ({ state: { isDead } }) => {
+  return {
+    isDead
+  };
+};
 
-export default BirdScene;
+export default connect(mapStateToProps)(BirdScene);

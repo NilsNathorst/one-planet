@@ -1,23 +1,31 @@
-import React, { useRef, useMemo } from "react";
-
-import * as THREE from "three";
-
-const Background = () => {
+import React, { useRef } from "react";
+import { TextureLoader } from "three/src/loaders/TextureLoader";
+import { useLoader } from "react-three-fiber";
+import { connect } from "react-redux";
+const Background = ({ isDead }) => {
   const matRef = useRef();
-  const texture = useMemo(() => {
-    return new THREE.TextureLoader().load("/assets/starmap-milkyway.jpg");
-  }, []);
+
+  const [starMap, fireMap] = useLoader(TextureLoader, [
+    "/assets/starmap-milkyway.jpg",
+    "/assets/sun.jpg"
+  ]);
   return (
     <>
-      <fog attach="fog" args={[0x87cefa, 350, 800]} />
+      <fog attach="fog" args={[0x87cefa, 550, 800]} />
       <mesh name="bg">
-        <sphereBufferGeometry attach="geometry" args={[300, 40, 40]} />
-        <meshBasicMaterial side={1} ref={matRef} attach="material">
-          <primitive attach="map" object={texture} />
-        </meshBasicMaterial>
+        <sphereBufferGeometry attach="geometry" args={[400, 40, 40]} />
+        <meshStandardMaterial side={1} ref={matRef} attach="material">
+          <primitive attach="map" object={isDead ? fireMap : starMap} />
+        </meshStandardMaterial>
       </mesh>
     </>
   );
 };
 
-export default Background;
+const mapStateToProps = ({ state: { isDead } }) => {
+  return {
+    isDead
+  };
+};
+
+export default connect(mapStateToProps)(Background);

@@ -1,10 +1,13 @@
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useLoader } from "react-three-fiber";
-import React, { useRef, useState, useEffect } from "react";
+
+import React, { useState, useEffect, Suspense, useRef } from "react";
 import { connect } from "react-redux";
 import { useSpring, a } from "react-spring/three";
-const Ocean = ({ cans }) => {
-  const gltf = useLoader(GLTFLoader, "/models/planet/continentsplanet.gltf");
+
+const Ocean = ({ cans, isDead }) => {
+  const gltf = useLoader(GLTFLoader, "/models/planet/new.glb");
+  const ref = useRef();
   const [currentColor, setColor] = useState("blue");
 
   useEffect(() => {
@@ -16,32 +19,46 @@ const Ocean = ({ cans }) => {
       setColor("#2191FB");
     }
   }, [cans]);
-
   const { color } = useSpring({
     color: currentColor,
     config: { duration: 1000 }
   });
 
-  const ref = useRef();
   return (
-    <>
-      <a.mesh ref={ref} name="Ocean" scale={[30, 30, 30]} position={[0, 0, 0]}>
+    <Suspense fallback={null}>
+      <a.mesh name="Ocean" scale={[11.9, 11.9, 11.9]} position={[0, 0, 0]}>
         <bufferGeometry attach="geometry" {...gltf.__$[2].geometry} />
         <a.meshStandardMaterial
-          transparent
           attach="material"
+          transparent
           opacity={0.8}
-          color={color}
+          color={isDead ? "#6B5552" : color}
           roughness={0}
-        ></a.meshStandardMaterial>
+        />
       </a.mesh>
-    </>
+      <a.mesh
+        ref={ref}
+        name="Ocean"
+        scale={[11.9, 11.9, 11.9]}
+        position={[0, 0, 0]}
+      >
+        <bufferGeometry attach="geometry" {...gltf.__$[3].geometry} />
+        <a.meshStandardMaterial
+          attach="material"
+          transparent
+          opacity={0.8}
+          color={isDead ? "#6B5552" : color}
+          roughness={0}
+        />
+      </a.mesh>
+    </Suspense>
   );
 };
 
-const mapStateToProps = ({ state: { cans } }) => {
+const mapStateToProps = ({ state: { cans, isDead } }) => {
   return {
-    cans: cans ? Object.values(cans).filter(can => can !== "was removed") : []
+    cans: cans ? Object.values(cans).filter(can => can !== "was removed") : [],
+    isDead
   };
 };
 
