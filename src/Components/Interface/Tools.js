@@ -4,6 +4,7 @@ import magnet from "../../assets/icons/magnetIcon.png";
 import forest from "../../assets/icons/forestIcon.png";
 import query from "../../assets/icons/queryIcon.png";
 import { connect, useDispatch } from "react-redux";
+import { fetchLastPlanted } from "../../actions/index";
 
 const StyledDiv = styled.div`
   transition: 0.55s;
@@ -27,7 +28,6 @@ const StyledDiv = styled.div`
       props.inView === "inView" ? "translate(0,100px)" : "translate(0,0)"};
   }
 `;
-
 const ToolIcon = styled.div`
   transition: 0.25s;
   background-image: url(${props => props.icon});
@@ -48,9 +48,8 @@ const ToolIcon = styled.div`
   opacity: ${props => (props.active ? 1 : 0.7)};
 `;
 
-const Tools = ({ name, zoomedOut }) => {
+const Tools = ({ name, zoomedOut, last_planted }) => {
   const dispatch = useDispatch();
-
   const setTool = useCallback(
     value => dispatch({ type: "SET_TOOL", payload: value }),
     [dispatch]
@@ -62,13 +61,18 @@ const Tools = ({ name, zoomedOut }) => {
         icon={forest}
         active={name === "TREE" ? true : false}
         onClick={() => {
-          if (name !== "TREE") {
+          fetchLastPlanted();
+          if (
+            (name !== "TREE" && Date.now() - last_planted > 1000 * 60) ||
+            (name !== "TREE" && last_planted === null)
+          ) {
             setTool("TREE");
           } else if (name === "TREE") {
             setTool("NONE");
           }
         }}
       />
+
       <ToolIcon
         icon={magnet}
         active={name === "MAGNET" ? true : false}
@@ -95,10 +99,14 @@ const Tools = ({ name, zoomedOut }) => {
   );
 };
 
-const mapStateToProps = ({ state: { name, zoomedOut } }) => {
+const mapStateToProps = ({ state: { name, zoomedOut, last_planted } }) => {
   return {
     name,
-    zoomedOut
+    zoomedOut,
+    last_planted
   };
 };
-export default connect(mapStateToProps)(Tools);
+export default connect(
+  mapStateToProps,
+  { fetchLastPlanted }
+)(Tools);
