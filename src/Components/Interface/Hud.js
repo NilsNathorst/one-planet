@@ -79,13 +79,12 @@ const IconDiv = styled.div`
   flex-direction: row;
   align-items: center;
   margin: 10px;
-
   .toolTip {
-    display: ${props => (props.visible ? "block" : "none")};
-    width: 120px;
+    visibility: ${props => (props.visible ? "visible" : "hidden")};
+    width: 140px;
     background-color: white;
     text-align: center;
-    padding: 5px 0;
+    padding: 10px;
     border-radius: 6px;
     position: absolute;
     color: black;
@@ -102,9 +101,20 @@ const IconDiv = styled.div`
       border-left: 8px solid transparent;
       border-right: 8px solid transparent;
       border-bottom: 8px solid white;
-      z-index: 33;
       left: 15px;
       top: -7px;
+    }
+  }
+  .planet-tooltip {
+    top: 0;
+    left: -45px;
+    ::before {
+      border-top: 8px solid transparent;
+      border-bottom: 8px solid transparent;
+      border-left: 8px solid white;
+      border-right: none;
+      left: 139px;
+      top: 8px;
     }
   }
 
@@ -113,9 +123,6 @@ const IconDiv = styled.div`
     width: 60px;
     background-color: hotpink;
     border-radius: 50px;
-  }
-  h2 {
-    margin-left: 5px;
   }
   @media screen and (max-width: 700px) {
     img {
@@ -131,7 +138,7 @@ const Hud = ({ zoomedOut, trees, cans, planet_end, fetchPlanetEnd }) => {
   const [planetToolTip, setPlanetToolTip] = useState(false);
   useEffect(() => {
     fetchPlanetEnd();
-  }, [fetchPlanetEnd]);
+  }, []);
 
   const returnTreeSvg = () => {
     switch (true) {
@@ -180,11 +187,11 @@ const Hud = ({ zoomedOut, trees, cans, planet_end, fetchPlanetEnd }) => {
                   setTreeToolTip(!treeToolTip);
                 }}
               />
-
               {returnTreeSvg()}
               <span className="toolTip">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Tempore, quisquam?
+                There are currently {trees.length} trees on the planet.{" "}
+                {trees.length < 15 &&
+                  `Plant  ${15 - trees.length} more trees to make me happy`}
               </span>
             </IconDiv>
             <IconDiv visible={trashToolTip} left={"65%"}>
@@ -200,8 +207,7 @@ const Hud = ({ zoomedOut, trees, cans, planet_end, fetchPlanetEnd }) => {
               />
               {returnTrashSvg()}
               <span className="toolTip">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Tempore, quisquam?
+                There are currently {cans.length} cans in the ocean.
               </span>
             </IconDiv>
           </div>
@@ -216,9 +222,8 @@ const Hud = ({ zoomedOut, trees, cans, planet_end, fetchPlanetEnd }) => {
                 setPlanetToolTip(!planetToolTip);
               }}
             />
-            <span className="toolTip">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempore,
-              quisquam?
+            <span className="toolTip planet-tooltip">
+              The planet ends on {new Date(planet_end).toDateString()}
             </span>
           </IconDiv>
         </div>
