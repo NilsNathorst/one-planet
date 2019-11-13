@@ -15,6 +15,7 @@ function Fx({ showInfo, name, isDead }) {
 
   const outlineP = useRef();
   const composer = useRef();
+  const unrealRef = useRef();
   const res = new THREE.Vector2(1024, 1024);
 
   useEffect(() => void composer.current.setSize(size.width, size.height), [
@@ -22,12 +23,13 @@ function Fx({ showInfo, name, isDead }) {
   ]);
 
   useFrame(() => composer.current.render(), 1);
-  useEffect(() => {}, [showInfo]);
+
   return (
     <Suspense fallback={null}>
       <effectComposer ref={composer} args={[gl]}>
         <renderPass attachArray="passes" args={[scene, camera]} />
         {isDead && <waterPass attachArray="passes" factor={1.4} />}
+        <unrealBloomPass ref={unrealRef} attachArray="passes" strength={0.2} />
         {name === "QUERY" && (
           <outlinePass
             ref={outlineP}
