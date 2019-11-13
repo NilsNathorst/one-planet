@@ -1,12 +1,31 @@
-import React, { useRef } from "react";
+import React, { useRef, useCallback } from "react";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useLoader } from "react-three-fiber";
 import { connect } from "react-redux";
-import { addTree, setShowInfo, setPlantable } from "../../actions";
-
-const Surface = ({ plantable, addTree, setShowInfo, name, setPlantable }) => {
+import {
+  addTree,
+  setShowInfo,
+  setPlantable,
+  fetchLastPlanted
+} from "../../actions";
+import { useDispatch } from "react-redux";
+const Surface = ({
+  plantable,
+  addTree,
+  setShowInfo,
+  name,
+  setPlantable,
+  fetchLastPlanted,
+  last_planted
+}) => {
   const ref = useRef();
   const gltf = useLoader(GLTFLoader, "/models/planet/continentsplanet.gltf");
+  const dispatch = useDispatch();
+  const setTool = useCallback(
+    value => dispatch({ type: "SET_TOOL", payload: value }),
+    [dispatch]
+  );
+
   const hover = e => {
     e.stopPropagation();
     name === "QUERY" &&
@@ -22,13 +41,17 @@ const Surface = ({ plantable, addTree, setShowInfo, name, setPlantable }) => {
   };
   const handleClick = e => {
     if (plantable && name === "TREE") {
-      addTree({
-        pos: e.point,
-        created_at: Date.now(),
-        age: "newborn",
-        id: "",
-        needsWater: "false"
-      });
+      fetchLastPlanted();
+      if (Date.now() - last_planted > 1000 * 60 || last_planted === null) {
+        addTree({
+          pos: e.point,
+          created_at: Date.now(),
+          age: "newborn",
+          id: "",
+          needsWater: "false"
+        });
+        setTool("NONE");
+      }
     }
   };
 
@@ -97,14 +120,15 @@ const Surface = ({ plantable, addTree, setShowInfo, name, setPlantable }) => {
     </group>
   );
 };
-const mapStateToProps = ({ state: { name, plantable } }) => {
+const mapStateToProps = ({ state: { name, plantable, last_planted } }) => {
   return {
     name,
-    plantable
+    plantable,
+    last_planted
   };
 };
 
 export default connect(
   mapStateToProps,
-  { addTree, setShowInfo, setPlantable }
+  { addTree, setShowInfo, setPlantable, fetchLastPlanted }
 )(Surface);

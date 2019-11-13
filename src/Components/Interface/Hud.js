@@ -138,7 +138,7 @@ const Hud = ({ zoomedOut, trees, cans, planet_end, fetchPlanetEnd }) => {
   const [planetToolTip, setPlanetToolTip] = useState(false);
   useEffect(() => {
     fetchPlanetEnd();
-  }, []);
+  }, [fetchPlanetEnd]);
 
   const returnTreeSvg = () => {
     switch (true) {

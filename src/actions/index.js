@@ -155,10 +155,10 @@ export const fetchPlanetEnd = () => async dispatch => {
 };
 
 export const fetchLastPlanted = () => async dispatch => {
-  treesRef.limitToLast(1).once("child_added", snapshot => {
+  treesRef.limitToLast(1).on("child_added", snapshot => {
     dispatch({
       type: FETCH_LAST_PLANTED,
-      payload: snapshot.val()
+      payload: snapshot.val().created_at
     });
   });
 };
