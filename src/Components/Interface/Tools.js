@@ -48,7 +48,7 @@ const ToolIcon = styled.div`
   opacity: ${props => (props.active ? 1 : 0.7)};
 `;
 
-const Tools = ({ name, zoomedOut, last_planted }) => {
+const Tools = ({ name, zoomedOut, lastPlanted }) => {
   const dispatch = useDispatch();
   const setTool = useCallback(
     value => dispatch({ type: "SET_TOOL", payload: value }),
@@ -63,8 +63,8 @@ const Tools = ({ name, zoomedOut, last_planted }) => {
         onClick={() => {
           fetchLastPlanted();
           if (
-            (name !== "TREE" && Date.now() - last_planted > 1000 * 60) ||
-            (name !== "TREE" && last_planted === null)
+            (name !== "TREE" && Date.now() - lastPlanted > 1000 * 2) ||
+            (name !== "TREE" && lastPlanted === null)
           ) {
             setTool("TREE");
           } else if (name === "TREE") {
@@ -99,14 +99,11 @@ const Tools = ({ name, zoomedOut, last_planted }) => {
   );
 };
 
-const mapStateToProps = ({ state: { name, zoomedOut, last_planted } }) => {
+const mapStateToProps = ({ state: { name, zoomedOut, lastPlanted } }) => {
   return {
     name,
     zoomedOut,
-    last_planted
+    lastPlanted
   };
 };
-export default connect(
-  mapStateToProps,
-  { fetchLastPlanted }
-)(Tools);
+export default connect(mapStateToProps, { fetchLastPlanted })(Tools);
