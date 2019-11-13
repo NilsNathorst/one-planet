@@ -22,7 +22,7 @@ const Container = styled.div`
   opacity: ${props => (props.inview === "inView" ? 1 : 0)};
 `;
 const ThoughBubbleSvg = styled(ThoughtBubbleIcon)`
-  opacity: 0.6;
+  opacity: 0.8;
   width: 15vw;
   fill: white;
   min-width: 150px;
