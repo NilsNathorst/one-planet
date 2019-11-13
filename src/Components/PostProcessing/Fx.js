@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, Suspense, useState } from "react";
+import React, { useEffect, useRef, Suspense } from "react";
 import { extend, useFrame, useThree } from "react-three-fiber";
 import { connect } from "react-redux";
 
@@ -29,7 +29,7 @@ function Fx({ showInfo, name, isDead }) {
       <effectComposer ref={composer} args={[gl]}>
         <renderPass attachArray="passes" args={[scene, camera]} />
         {isDead && <waterPass attachArray="passes" factor={1.4} />}
-        <unrealBloomPass ref={unrealRef} attachArray="passes" strength={0.2} />
+        <unrealBloomPass ref={unrealRef} attachArray="passes" strength={0.25} />
         {name === "QUERY" && (
           <outlinePass
             ref={outlineP}
