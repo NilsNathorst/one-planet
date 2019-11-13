@@ -11,9 +11,9 @@ const Background = ({ isDead }) => {
   ]);
   return (
     <>
-      <fog attach="fog" args={[0x87cefa, 550, 800]} />
+      <fog attach="fog" args={[0x87cefa, 550, 1224]} />
       <mesh name="bg">
-        <sphereBufferGeometry attach="geometry" args={[400, 40, 40]} />
+        <sphereBufferGeometry attach="geometry" args={[450, 40, 40]} />
         <meshStandardMaterial side={1} ref={matRef} attach="material">
           <primitive attach="map" object={isDead ? fireMap : starMap} />
         </meshStandardMaterial>
