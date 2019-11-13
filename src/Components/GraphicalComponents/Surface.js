@@ -1,17 +1,27 @@
-import React, { useRef } from "react";
+import React, { useRef, useCallback } from "react";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { TextureLoader } from "three/src/loaders/TextureLoader";
 import { useLoader } from "react-three-fiber";
 import { connect } from "react-redux";
-import { addTree, setShowInfo, setPlantable } from "../../actions";
 import * as THREE from "three";
+
+import {
+  addTree,
+  setShowInfo,
+  setPlantable,
+  fetchLastPlanted
+} from "../../actions";
+import { useDispatch } from "react-redux";
+
 const Surface = ({
   plantable,
   addTree,
   setShowInfo,
   name,
   setPlantable,
-  isDead
+  isDead,   
+  fetchLastPlanted,
+  last_planted
 }) => {
   const ref = useRef();
   const gltf = useLoader(GLTFLoader, "/models/planet/new.glb");
@@ -21,6 +31,12 @@ const Surface = ({
     "/assets/textures/Grass/Vol_42_1_Normal.png",
     "/assets/textures/Grass/Vol_42_1_Ambient_Occlusion.png"
   ]);
+    const dispatch = useDispatch();
+  const setTool = useCallback(
+    value => dispatch({ type: "SET_TOOL", payload: value }),
+    [dispatch]
+  );
+
   const hover = e => {
     e.stopPropagation();
     name === "QUERY" &&
@@ -36,13 +52,17 @@ const Surface = ({
   };
   const handleClick = e => {
     if (plantable && name === "TREE") {
-      addTree({
-        pos: e.point,
-        created_at: Date.now(),
-        age: "newborn",
-        id: "",
-        needsWater: "false"
-      });
+      fetchLastPlanted();
+      if (Date.now() - last_planted > 1000 * 60 || last_planted === null) {
+        addTree({
+          pos: e.point,
+          created_at: Date.now(),
+          age: "newborn",
+          id: "",
+          needsWater: "false"
+        });
+        setTool("NONE");
+      }
     }
   };
 
@@ -90,14 +110,17 @@ const Surface = ({
     </mesh>
   );
 };
-const mapStateToProps = ({ state: { name, plantable, isDead } }) => {
+
+const mapStateToProps = ({ state: { name, plantable, isDead, last_planted } }) => {
   return {
     name,
     plantable,
-    isDead
+    isDead, 
+    last_planted
   };
 };
 
-export default connect(mapStateToProps, { addTree, setShowInfo, setPlantable })(
+export default connect(mapStateToProps, { addTree, setShowInfo, setPlantable, fetchLastPlanted })(
   Surface
 );
+

@@ -29,7 +29,7 @@ import reducers from "../reducers";
 import InfoBubble from "./Interface/InfoBubble";
 import ThoughtBubble from "./Interface/ThoughtBubble";
 import CanvasWrapper from "./Interface/CanvasWrapper";
-import { setPlanetDead } from "../actions/index";
+import { setPlanetDead, fetchLastPlanted } from "../actions/index";
 
 const App = () => {
   const composeEnhancers =
@@ -41,6 +41,7 @@ const App = () => {
   );
 
   store.dispatch(setPlanetDead());
+  store.dispatch(fetchLastPlanted());
 
   return (
     <Provider store={store}>

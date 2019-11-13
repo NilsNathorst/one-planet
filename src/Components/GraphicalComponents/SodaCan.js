@@ -9,7 +9,7 @@ import {
 } from "../../actions";
 import { useSpring, a, config } from "react-spring/three";
 import { connect } from "react-redux";
-
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 const SodaCan = ({
   setShowInfo,
   destroyCan,
@@ -20,9 +20,12 @@ const SodaCan = ({
   color,
   infoActive
 }) => {
-  const gltf = useLoader(GLTFLoader, url);
   const ref = useRef();
-
+  const gltf = useLoader(GLTFLoader, url, loader => {
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath("/draco-gltf/");
+    loader.setDRACOLoader(dracoLoader);
+  });
   useFrame(() => {
     if (ref.current.position.length() >= 77) {
       ref.current.position.setLength(77);
