@@ -132,10 +132,13 @@ const IconDiv = styled.div`
   }
 `;
 
-const Hud = ({ zoomedOut, trees, cans, planet_end, fetchPlanetEnd }) => {
+const Hud = ({ zoomedOut, trees, cans, planetEnd, fetchPlanetEnd }) => {
   const [treeToolTip, setTreeToolTip] = useState(false);
   const [trashToolTip, setTrashToolTip] = useState(false);
   const [planetToolTip, setPlanetToolTip] = useState(false);
+  const cansLength = cans
+    ? cans.filter(can => can !== "was removed").length
+    : 0;
   useEffect(() => {
     fetchPlanetEnd();
   }, [fetchPlanetEnd]);
@@ -156,15 +159,14 @@ const Hud = ({ zoomedOut, trees, cans, planet_end, fetchPlanetEnd }) => {
   };
 
   const returnTrashSvg = () => {
-    const canslength = cans.filter(can => can !== "was removed").length;
     switch (true) {
-      case canslength < 5:
+      case cansLength < 5:
         return <HappierSvg />;
-      case canslength < 10:
+      case cansLength < 10:
         return <HappySvg />;
-      case canslength < 15:
+      case cansLength < 15:
         return <IndifferentSvg />;
-      case canslength < 1000:
+      case cansLength < 1000:
         return <AngrySvg />;
       default:
         return null;
@@ -189,7 +191,8 @@ const Hud = ({ zoomedOut, trees, cans, planet_end, fetchPlanetEnd }) => {
               />
               {returnTreeSvg()}
               <span className="toolTip">
-                There are currently {trees.length} trees on the planet.{" "}
+                There are currently {trees ? trees.length : "no"}{" "}
+                {trees.length === 1 ? "tree" : "trees"} on the planet.{" "}
                 {trees.length < 15 &&
                   `Plant  ${15 - trees.length} more trees to make me happy`}
               </span>
@@ -207,13 +210,17 @@ const Hud = ({ zoomedOut, trees, cans, planet_end, fetchPlanetEnd }) => {
               />
               {returnTrashSvg()}
               <span className="toolTip">
-                There are currently {cans.length} cans in the ocean.
+                There are currently {cans ? cans.length : "no"} cans in the
+                ocean.
               </span>
             </IconDiv>
           </div>
           <IconDiv visible={planetToolTip} left={"100%"}>
             <ThermometerSvg
-              color="hotpink"
+              color={
+                (cans && cansLength > 10) ||
+                (trees && trees.length < 10 ? "red" : "green")
+              }
               className="thermometer"
               onMouseOver={() => {
                 setPlanetToolTip(!planetToolTip);
@@ -223,7 +230,7 @@ const Hud = ({ zoomedOut, trees, cans, planet_end, fetchPlanetEnd }) => {
               }}
             />
             <span className="toolTip planet-tooltip">
-              The planet ends on {new Date(planet_end).toDateString()}
+              The planet ends on {new Date(planetEnd).toDateString()}
             </span>
           </IconDiv>
         </div>
@@ -232,16 +239,13 @@ const Hud = ({ zoomedOut, trees, cans, planet_end, fetchPlanetEnd }) => {
   );
 };
 
-const mapStateToProps = ({ state: { zoomedOut, trees, cans, planet_end } }) => {
+const mapStateToProps = ({ state: { zoomedOut, trees, cans, planetEnd } }) => {
   return {
-    planet_end,
+    planetEnd,
     zoomedOut,
     trees: trees ? Object.values(trees) : null,
     cans: cans ? Object.values(cans) : null
   };
 };
 
-export default connect(
-  mapStateToProps,
-  { fetchPlanetEnd }
-)(Hud);
+export default connect(mapStateToProps, { fetchPlanetEnd })(Hud);
