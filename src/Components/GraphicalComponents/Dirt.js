@@ -1,4 +1,4 @@
-import React, { useEffect, Suspense } from "react";
+import React, { Suspense } from "react";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { TextureLoader } from "three/src/loaders/TextureLoader";
 import { useLoader } from "react-three-fiber";
@@ -6,7 +6,7 @@ import * as THREE from "three";
 const Dirt = () => {
   const gltf = useLoader(GLTFLoader, "/models/planet/new.glb");
   const [colorMap, bumpMap, normalMap] = useLoader(TextureLoader, [
-    "/assets/textures/Terrain/Vol_19_4_Base_Color.png",
+    "/assets/textures/Terrain/Vol_19_4_Base_Color_Light.png",
     "/assets/textures/Terrain/Vol_19_4_Height.png",
     "/assets/textures/Terrain/Vol_19_4_Normal.png"
   ]);

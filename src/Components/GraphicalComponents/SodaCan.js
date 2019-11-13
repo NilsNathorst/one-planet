@@ -76,7 +76,6 @@ const SodaCan = ({
       firebaseId={firebaseId}
       castShadow
       name="can"
-      ref={ref}
     >
       <bufferGeometry attach="geometry" {...gltf.__$[1].geometry} />
       <meshStandardMaterial attach="material" color={color} />
@@ -127,7 +126,9 @@ const mapStateToProps = ({ state: { name, cans } }) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  { flushCansDatabase, fetchCans, destroyCan, setShowInfo }
-)(SodaCans);
+export default connect(mapStateToProps, {
+  flushCansDatabase,
+  fetchCans,
+  destroyCan,
+  setShowInfo
+})(SodaCans);
