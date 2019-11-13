@@ -51,8 +51,8 @@ export const fetchTrees = () => async dispatch => {
             });
             planetRef.once("value", snapshot => {
               planetRef
-                .child(`/planet_end`)
-                .set(snapshot.val().planet_end - 1000 * 60 * 30);
+                .child(`/planetEnd`)
+                .set(snapshot.val().planetEnd - 1000 * 60 * 30);
             });
           }
         }
@@ -71,8 +71,8 @@ export const setTreeActive = id => async dispatch => {
   treesRef.child(`${id}/created_at`).set(Date.now());
   planetRef.once("value", snapshot => {
     planetRef
-      .child(`/planet_end`)
-      .set(snapshot.val().planet_end + 1000 * 60 * 60);
+      .child(`/planetEnd`)
+      .set(snapshot.val().planetEnd + 1000 * 60 * 60);
     planetRef.child(`/treesAdded`).set(snapshot.val().treesAdded + 1);
   });
 };
@@ -135,7 +135,7 @@ export const flushTreesDatabase = id => async dispatch => {
 
 export const setPlanetDead = () => async dispatch => {
   planetRef.once("value", snapshot => {
-    if (snapshot.val().planet_end < Date.now()) {
+    if (snapshot.val().planetEnd < Date.now()) {
       planetRef.child(`/isDead`).set(true);
     }
     dispatch({
@@ -149,7 +149,7 @@ export const fetchPlanetEnd = () => async dispatch => {
   planetRef.on("value", snapshot => {
     dispatch({
       type: FETCH_PLANET,
-      payload: snapshot.val().planet_end
+      payload: snapshot.val().planetEnd
     });
   });
 };
