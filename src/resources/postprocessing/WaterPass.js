@@ -1,11 +1,7 @@
 import {
-  DataTexture,
-  FloatType,
-  Math as _Math,
   Mesh,
   OrthographicCamera,
   PlaneBufferGeometry,
-  RGBFormat,
   Scene,
   ShaderMaterial,
   UniformsUtils,
