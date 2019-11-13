@@ -27,8 +27,8 @@ const Tree = ({
 
   const { color } = useSpring({
     color:
-      (age === "newborn" && "#9EFF00") ||
-      (age === "young" && "#82D100") ||
+      (age === "newborn" && "#BFDC6E") ||
+      (age === "young" && "#779F55") ||
       (age === "adult" && "#228b22") ||
       (age === "senior" && "#CB7500") ||
       (age === "dead" && "#CB7500"),
@@ -69,7 +69,7 @@ const Tree = ({
             attach="geometry"
             {...raindrop.__$[1].geometry}
           />
-          <a.meshStandardMaterial attach="material" color="blue" />
+          <a.meshStandardMaterial attach="material" color="#2191FB" />
         </a.mesh>
       )}
       {!isDead && age !== "dead" && (
@@ -90,7 +90,7 @@ const Tree = ({
         />
         <meshStandardMaterial
           attach="material"
-          color={age === "dead" ? "#402009" : "saddlebrown"}
+          color={age === "dead" ? "#402009" : "#52403C"}
         />
       </mesh>
     </a.group>
