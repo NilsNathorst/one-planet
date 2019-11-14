@@ -6,16 +6,7 @@ import { connect } from "react-redux";
 import { fetchTrees, flushTreesDatabase } from "../../actions";
 import { setTreeActive } from "../../actions";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
-const Tree = ({
-  isDead,
-  variant,
-  pos,
-  age,
-  id,
-  setTreeActive,
-  fetchTrees,
-  needsWater
-}) => {
+const Tree = ({ isDead, variant, pos, age, id, setTreeActive, needsWater }) => {
   const gltf = useLoader(GLTFLoader, "/models/trees/trees.gltf", loader => {
     const dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath("/draco-gltf/");
@@ -109,7 +100,7 @@ const Trees = ({
     fetchTrees();
   }, [fetchTrees, flushTreesDatabase]);
 
-  return trees.map((tree, i) => {
+  return trees.map(tree => {
     return (
       <Suspense fallback={null}>
         {tree.id && tree.pos && (
@@ -117,11 +108,9 @@ const Trees = ({
             isDead={isDead}
             pos={[tree.pos.x, tree.pos.y, tree.pos.z]}
             variant={2}
-            key={i}
             age={tree.age}
             id={tree.id}
             setTreeActive={setTreeActive}
-            fetchTrees={fetchTrees}
             needsWater={tree.needsWater}
           />
         )}
