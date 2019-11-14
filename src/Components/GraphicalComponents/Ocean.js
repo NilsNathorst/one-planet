@@ -6,9 +6,9 @@ import { connect } from "react-redux";
 import { useSpring, a } from "react-spring/three";
 
 const Ocean = ({ cans, isDead }) => {
-  const gltf = useLoader(GLTFLoader, "/models/planet/new.glb");
+  const gltf = useLoader(GLTFLoader, "/models/planet/final/water.glb");
   const ref = useRef();
-  const [currentColor, setColor] = useState("blue");
+  const [currentColor, setColor] = useState("#2191FB");
 
   useEffect(() => {
     if (cans.length >= 12) setColor("#56A3A6");
