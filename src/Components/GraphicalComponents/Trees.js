@@ -42,7 +42,6 @@ const Tree = ({ isDead, variant, pos, age, id, setTreeActive, needsWater }) => {
   });
 
   useEffect(() => {
-    console.log(normie);
     ref.current.lookAt(0, 0, 0);
   }, []);
 
