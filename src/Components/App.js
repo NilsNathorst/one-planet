@@ -74,7 +74,8 @@ const App = () => {
                       <Sun />
                       <Dirt />
                       <Surface
-                        name="sand"
+                        type="sand"
+                        treeUrl="/models/trees/palm/palm.glb"
                         modelUrl="/models/planet/final/sand.glb"
                         textureUrls={[
                           "/assets/textures/Sand/Vol_16_2_Base_Color.png",
@@ -84,7 +85,8 @@ const App = () => {
                         ]}
                       />
                       <Surface
-                        name="snow"
+                        type="snow"
+                        treeUrl="/models/trees/pine/pine.glb"
                         modelUrl="/models/planet/final/snow.glb"
                         textureUrls={[
                           "/assets/textures/Snow/Vol_22_4_Base_Color.png",
@@ -94,7 +96,8 @@ const App = () => {
                         ]}
                       />
                       <Surface
-                        name="grass"
+                        type="grass"
+                        treeUrl="/models/trees/tree/tree.glb"
                         modelUrl="/models/planet/final/grass.glb"
                         textureUrls={[
                           "/assets/textures/Grass/Vol_42_1_Base_Color.png",

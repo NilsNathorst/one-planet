@@ -6,20 +6,15 @@ import { connect } from "react-redux";
 import { fetchTrees, flushTreesDatabase } from "../../actions";
 import { setTreeActive } from "../../actions";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
-const Tree = ({ isDead, variant, pos, age, id, setTreeActive, needsWater }) => {
-  const normie = useLoader(
-    GLTFLoader,
-    "/models/trees/tree/tree.glb",
-    loader => {
-      const dracoLoader = new DRACOLoader();
-      dracoLoader.setDecoderPath("/draco-gltf/");
-      loader.setDRACOLoader(dracoLoader);
-    }
-  );
+const Tree = ({ isDead, pos, age, id, setTreeActive, needsWater, treeUrl }) => {
   const raindrop = useLoader(GLTFLoader, "/models/raindrop/raindrop2.gltf");
   const ref = useRef();
   const raindropRef = useRef();
-
+  const gltf = useLoader(GLTFLoader, treeUrl, loader => {
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath("/draco-gltf/");
+    loader.setDRACOLoader(dracoLoader);
+  });
   const { color } = useSpring({
     color:
       (age === "newborn" && "#BFDC6E") ||
@@ -72,7 +67,7 @@ const Tree = ({ isDead, variant, pos, age, id, setTreeActive, needsWater }) => {
           <a.bufferGeometry
             name="leaves"
             attach="geometry"
-            {...normie.__$[1].geometry}
+            {...gltf.__$[1].geometry}
           />
           <a.meshStandardMaterial attach="material" color={color} />
         </a.mesh>
@@ -81,7 +76,7 @@ const Tree = ({ isDead, variant, pos, age, id, setTreeActive, needsWater }) => {
         <bufferGeometry
           name="trunk"
           attach="geometry"
-          {...normie.__$[2].geometry}
+          {...gltf.__$[2].geometry}
         />
         <meshStandardMaterial
           attach="material"
@@ -114,6 +109,7 @@ const Trees = ({
             variant={2}
             age={tree.age}
             id={tree.id}
+            treeUrl={tree.treeUrl}
             setTreeActive={setTreeActive}
             needsWater={tree.needsWater}
           />
