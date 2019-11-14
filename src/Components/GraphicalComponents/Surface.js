@@ -4,6 +4,7 @@ import { TextureLoader } from "three/src/loaders/TextureLoader";
 import { useLoader } from "react-three-fiber";
 import { connect } from "react-redux";
 import * as THREE from "three";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 
 import {
   addTree,
@@ -20,15 +21,19 @@ const Surface = ({
   addTree,
   setShowInfo,
   name,
+  treeUrl,
   setPlantable,
   isDead,
   fetchLastPlanted,
-  lastPlanted
+  lastPlanted,
+  type
 }) => {
   const ref = useRef();
-
-  const gltf = useLoader(GLTFLoader, modelUrl);
-
+  const gltf = useLoader(GLTFLoader, modelUrl, loader => {
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath("/draco-gltf/");
+    loader.setDRACOLoader(dracoLoader);
+  });
   const [colorMap, bumpMap, normalMap, aoMap] = useLoader(
     TextureLoader,
     textureUrls
@@ -61,7 +66,8 @@ const Surface = ({
           created_at: Date.now(),
           age: "newborn",
           id: "",
-          needsWater: "false"
+          needsWater: "false",
+          treeUrl: e.eventObject.treeUrl
         });
         setTool("NONE");
       }
@@ -75,8 +81,10 @@ const Surface = ({
       onPointerDown={e => handleClick(e)}
       ref={ref}
       receiveShadow
-      scale={[12.14, 12.14, 12.14]}
+      scale={[12, 12, 12]}
       position={[0, 0, 0]}
+      name={type}
+      treeUrl={treeUrl}
     >
       <bufferGeometry attach="geometry" {...gltf.__$[1].geometry} />
       <meshStandardMaterial attach="material" roughness={1}>
