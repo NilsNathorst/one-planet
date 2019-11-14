@@ -4,9 +4,9 @@ import { TextureLoader } from "three/src/loaders/TextureLoader";
 import { useLoader } from "react-three-fiber";
 import * as THREE from "three";
 const Dirt = () => {
-  const gltf = useLoader(GLTFLoader, "/models/planet/new.glb");
+  const gltf = useLoader(GLTFLoader, "/models/planet/final/surface.glb");
   const [colorMap, bumpMap, normalMap] = useLoader(TextureLoader, [
-    "/assets/textures/Terrain/Vol_19_4_Base_Color_Light.png",
+    "/assets/textures/Terrain/Vol_19_4_Base_Color.png",
     "/assets/textures/Terrain/Vol_19_4_Height.png",
     "/assets/textures/Terrain/Vol_19_4_Normal.png"
   ]);
@@ -20,7 +20,7 @@ const Dirt = () => {
           position={[0, 0, 0]}
           onPointerOver={e => e.stopPropagation()}
         >
-          <bufferGeometry attach="geometry" {...gltf.__$[5].geometry} />
+          <bufferGeometry attach="geometry" {...gltf.__$[2].geometry} />
           <meshStandardMaterial attach="material" roughness={1}>
             <primitive
               attach="map"
@@ -51,7 +51,7 @@ const Dirt = () => {
           position={[0, 0, 0]}
           onPointerOver={e => e.stopPropagation()}
         >
-          <bufferGeometry attach="geometry" {...gltf.__$[6].geometry} />
+          <bufferGeometry attach="geometry" {...gltf.__$[3].geometry} />
           <meshStandardMaterial attach="material" roughness={1}>
             <primitive
               attach="map"
@@ -82,7 +82,7 @@ const Dirt = () => {
           position={[0, 0, 0]}
           onPointerOver={e => e.stopPropagation()}
         >
-          <bufferGeometry attach="geometry" {...gltf.__$[7].geometry} />
+          <bufferGeometry attach="geometry" {...gltf.__$[4].geometry} />
           <meshStandardMaterial attach="material" roughness={1}>
             <primitive
               attach="map"
