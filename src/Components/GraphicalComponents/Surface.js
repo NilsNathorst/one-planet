@@ -14,6 +14,8 @@ import {
 import { useDispatch } from "react-redux";
 
 const Surface = ({
+  modelUrl,
+  textureUrls,
   plantable,
   addTree,
   setShowInfo,
@@ -24,13 +26,13 @@ const Surface = ({
   lastPlanted
 }) => {
   const ref = useRef();
-  const gltf = useLoader(GLTFLoader, "/models/planet/new.glb");
-  const [colorMap, bumpMap, normalMap, aoMap] = useLoader(TextureLoader, [
-    "/assets/textures/Grass/Vol_42_1_Base_Color.png",
-    "/assets/textures/Grass/Vol_42_1_Height.png",
-    "/assets/textures/Grass/Vol_42_1_Normal.png",
-    "/assets/textures/Grass/Vol_42_1_Ambient_Occlusion.png"
-  ]);
+
+  const gltf = useLoader(GLTFLoader, modelUrl);
+
+  const [colorMap, bumpMap, normalMap, aoMap] = useLoader(
+    TextureLoader,
+    textureUrls
+  );
   const dispatch = useDispatch();
   const setTool = useCallback(
     value => dispatch({ type: "SET_TOOL", payload: value }),
@@ -76,7 +78,7 @@ const Surface = ({
       scale={[12.14, 12.14, 12.14]}
       position={[0, 0, 0]}
     >
-      <bufferGeometry attach="geometry" {...gltf.__$[8].geometry} />
+      <bufferGeometry attach="geometry" {...gltf.__$[1].geometry} />
       <meshStandardMaterial attach="material" roughness={1}>
         <primitive
           attach="map"

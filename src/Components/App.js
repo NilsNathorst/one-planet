@@ -21,14 +21,15 @@ import Hud from "./Interface/Hud";
 import Clouds from "./GraphicalComponents/Clouds";
 import Fx from "./PostProcessing/Fx";
 import Surface from "./GraphicalComponents/Surface";
+import InfoBubble from "./Interface/InfoBubble";
+import ThoughtBubble from "./Interface/ThoughtBubble";
+import CanvasWrapper from "./Interface/CanvasWrapper";
+
 // Redux
 import { Provider, ReactReduxContext } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
 import reduxThunk from "redux-thunk";
 import reducers from "../reducers";
-import InfoBubble from "./Interface/InfoBubble";
-import ThoughtBubble from "./Interface/ThoughtBubble";
-import CanvasWrapper from "./Interface/CanvasWrapper";
 import { setPlanetDead, fetchLastPlanted } from "../actions/index";
 
 const App = () => {
@@ -57,9 +58,10 @@ const App = () => {
               {({ store }) => (
                 <Canvas
                   camera={{ position: [0, 0, 200] }}
-                  onCreated={({ gl }) => {
+                  onCreated={({ gl, scene, camera }) => {
                     gl.shadowMap.enabled = true;
                     gl.shadowMap.type = THREE.PCFSoftShadowMap;
+                    gl.compile(scene, camera);
                   }}
                 >
                   <Suspense fallback={null}>
@@ -71,7 +73,36 @@ const App = () => {
                       <Background />
                       <Sun />
                       <Dirt />
-                      <Surface />
+                      <Surface
+                        name="sand"
+                        modelUrl="/models/planet/final/sand.glb"
+                        textureUrls={[
+                          "/assets/textures/Sand/Vol_16_2_Base_Color.png",
+                          "/assets/textures/Sand/Vol_16_2_Height.png",
+                          "/assets/textures/Sand/Vol_16_2_Normal.png",
+                          "/assets/textures/Sand/Vol_16_2_Ambient_Occlusion.png"
+                        ]}
+                      />
+                      <Surface
+                        name="snow"
+                        modelUrl="/models/planet/final/snow.glb"
+                        textureUrls={[
+                          "/assets/textures/Snow/Vol_22_4_Base_Color.png",
+                          "/assets/textures/Snow/Vol_22_4_Height.png",
+                          "/assets/textures/Snow/Vol_22_4_Normal.png",
+                          "/assets/textures/Snow/Vol_22_4_Ambient_Occlusion.png"
+                        ]}
+                      />
+                      <Surface
+                        name="grass"
+                        modelUrl="/models/planet/final/grass.glb"
+                        textureUrls={[
+                          "/assets/textures/Grass/Vol_42_1_Base_Color.png",
+                          "/assets/textures/Grass/Vol_42_1_Height.png",
+                          "/assets/textures/Grass/Vol_42_1_Normal.png",
+                          "/assets/textures/Grass/Vol_42_1_Ambient_Occlusion.png"
+                        ]}
+                      />
                       <Trees />
                       <Ocean />
                       <SodaCans />
