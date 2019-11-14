@@ -79,7 +79,7 @@ const IconDiv = styled.div`
   flex-direction: row;
   align-items: center;
   margin: 10px;
-  .toolTip {
+  .tooltip {
     visibility: ${props => (props.visible ? "visible" : "hidden")};
     width: 140px;
     background-color: white;
@@ -190,7 +190,7 @@ const Hud = ({ zoomedOut, trees, cans, planetEnd, fetchPlanetEnd }) => {
                 }}
               />
               {returnTreeSvg()}
-              <span className="toolTip">
+              <span className="tooltip">
                 There are currently {trees ? trees.length : "no"}{" "}
                 {trees.length === 1 ? "tree" : "trees"} on the planet.{" "}
                 {trees.length < 15 &&
@@ -209,8 +209,8 @@ const Hud = ({ zoomedOut, trees, cans, planetEnd, fetchPlanetEnd }) => {
                 }}
               />
               {returnTrashSvg()}
-              <span className="toolTip">
-                There are currently {cans ? cans.length : "no"} cans in the
+              <span className="tooltip">
+                There are currently {cans ? cansLength : "no"} cans in the
                 ocean.
               </span>
             </IconDiv>
@@ -229,8 +229,8 @@ const Hud = ({ zoomedOut, trees, cans, planetEnd, fetchPlanetEnd }) => {
                 setPlanetToolTip(!planetToolTip);
               }}
             />
-            <span className="toolTip planet-tooltip">
-              The planet ends on {new Date(planetEnd).toDateString()}
+            <span className="tooltip planet-tooltip">
+              The planet ends on {new Date(planetEnd).toLocaleDateString()}
             </span>
           </IconDiv>
         </div>
