@@ -7,11 +7,15 @@ import { fetchTrees, flushTreesDatabase } from "../../actions";
 import { setTreeActive } from "../../actions";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 const Tree = ({ isDead, variant, pos, age, id, setTreeActive, needsWater }) => {
-  const gltf = useLoader(GLTFLoader, "/models/trees/trees.gltf", loader => {
-    const dracoLoader = new DRACOLoader();
-    dracoLoader.setDecoderPath("/draco-gltf/");
-    loader.setDRACOLoader(dracoLoader);
-  });
+  const normie = useLoader(
+    GLTFLoader,
+    "/models/trees/tree/tree.glb",
+    loader => {
+      const dracoLoader = new DRACOLoader();
+      dracoLoader.setDecoderPath("/draco-gltf/");
+      loader.setDRACOLoader(dracoLoader);
+    }
+  );
   const raindrop = useLoader(GLTFLoader, "/models/raindrop/raindrop2.gltf");
   const ref = useRef();
   const raindropRef = useRef();
@@ -38,6 +42,7 @@ const Tree = ({ isDead, variant, pos, age, id, setTreeActive, needsWater }) => {
   });
 
   useEffect(() => {
+    console.log(normie);
     ref.current.lookAt(0, 0, 0);
   }, []);
 
@@ -68,7 +73,7 @@ const Tree = ({ isDead, variant, pos, age, id, setTreeActive, needsWater }) => {
           <a.bufferGeometry
             name="leaves"
             attach="geometry"
-            {...gltf.__$[variant].geometry}
+            {...normie.__$[1].geometry}
           />
           <a.meshStandardMaterial attach="material" color={color} />
         </a.mesh>
@@ -77,7 +82,7 @@ const Tree = ({ isDead, variant, pos, age, id, setTreeActive, needsWater }) => {
         <bufferGeometry
           name="trunk"
           attach="geometry"
-          {...gltf.__$[variant + 4].geometry}
+          {...normie.__$[2].geometry}
         />
         <meshStandardMaterial
           attach="material"
