@@ -9,11 +9,11 @@ Todo:
 		☐ Dead trees
 
 	UI:
-		☐ Planet expresses needs in a thought bubble
+		✔ Planet expresses needs in a thought bubble @done(19-11-14 09:32)
 		☐ Each object has associated msg
 		☐ Tools have description
-		☐ Planet health in thermometer
-		☐ Add limit to planting trees
+		✔ Planet health in thermometer @done(19-11-14 09:33)
+		✔ Add limit to planting trees @done(19-11-14 09:33)
 		✔ Status of no. trees as a smiley or smthng @done(19-11-11 11:16)
 		✔ Status of no. trash as a smiley or smthng @done(19-11-11 11:16)
 		
