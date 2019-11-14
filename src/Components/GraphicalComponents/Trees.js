@@ -15,6 +15,7 @@ const Tree = ({ isDead, pos, age, id, setTreeActive, needsWater, treeUrl }) => {
     dracoLoader.setDecoderPath("/draco-gltf/");
     loader.setDRACOLoader(dracoLoader);
   });
+
   const { color } = useSpring({
     color:
       (age === "newborn" && "#BFDC6E") ||
@@ -40,6 +41,12 @@ const Tree = ({ isDead, pos, age, id, setTreeActive, needsWater, treeUrl }) => {
     ref.current.lookAt(0, 0, 0);
   }, []);
 
+  let leavesGeo = 1;
+  let trunkGeo = 2;
+  if (treeUrl === "/models/trees/palm/palm.glb") {
+    leavesGeo = 2;
+    trunkGeo = 1;
+  }
   return (
     <a.group
       name="tree"
@@ -67,7 +74,7 @@ const Tree = ({ isDead, pos, age, id, setTreeActive, needsWater, treeUrl }) => {
           <a.bufferGeometry
             name="leaves"
             attach="geometry"
-            {...gltf.__$[1].geometry}
+            {...gltf.__$[leavesGeo].geometry}
           />
           <a.meshStandardMaterial attach="material" color={color} />
         </a.mesh>
@@ -76,7 +83,7 @@ const Tree = ({ isDead, pos, age, id, setTreeActive, needsWater, treeUrl }) => {
         <bufferGeometry
           name="trunk"
           attach="geometry"
-          {...gltf.__$[2].geometry}
+          {...gltf.__$[trunkGeo].geometry}
         />
         <meshStandardMaterial
           attach="material"
