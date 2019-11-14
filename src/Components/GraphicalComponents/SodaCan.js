@@ -27,8 +27,8 @@ const SodaCan = ({
     loader.setDRACOLoader(dracoLoader);
   });
   useFrame(() => {
-    if (ref.current.position.length() >= 77) {
-      ref.current.position.setLength(77);
+    if (ref.current.position.length() >= 80) {
+      ref.current.position.setLength(80);
     }
     ref.current.lookAt(0, 0, 0);
   });
