@@ -2,15 +2,7 @@
 	"can": {
 		"message": "In the ocean it will take up to 200 years for an aluminum can to decompose. \n\nSelect the Trash-magnet to clean up the ocean!"
 	},
-	"sand": {
-		"message": "Sand Palm trees are nice"
-	},
-	"snow": {
-		"message": "Snow The pine tree is majestic"
-	},
-	"grass": {
-		"message": "Grass A planet with lots of trees is healthy!"
-	},
+
 	"/models/trees/palm/palm.glb": {
 		"message": "palm tree"
 	},
