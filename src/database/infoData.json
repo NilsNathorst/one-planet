@@ -1,15 +1,14 @@
 {
-	"can": {
-		"message": "In the ocean it will take up to 200 years for an aluminum can to decompose. \n\nSelect the Trash-magnet to clean up the ocean!"
-	},
-
-	"/models/trees/palm/palm.glb": {
-		"message": "palm tree"
-	},
-	"/models/trees/pine/pine.glb": {
-		"message": "pine tree"
-	},
-	"/models/trees/tree/tree.glb": {
-		"message": "oak tree"
-	}
+  "can": {
+    "message": "In the ocean it will take up to 200 years for an aluminum can to decompose. \n\nSelect the Trash-magnet to clean up the ocean!"
+  },
+  "/models/trees/palm/palmleaves.glb": {
+    "message": "palm tree"
+  },
+  "/models/trees/pine/pineleaves.glb": {
+    "message": "pine tree"
+  },
+  "/models/trees/oak/oakleaves.glb": {
+    "message": "oak tree"
+  }
 }
