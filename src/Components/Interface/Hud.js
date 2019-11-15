@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import treeImage from "../../assets/icons/treeScore.png";
-import trashImage from "../../assets/icons/trashScore.png";
 import { connect } from "react-redux";
 import { fetchPlanetEnd } from "../../actions";
+import treeImage from "../../assets/icons/treeScore.png";
+import trashImage from "../../assets/icons/trashScore.png";
+import Tooltip from "./Tooltip";
 import { ReactComponent as HappyIcon } from "../../assets/icons/happy.svg";
 import { ReactComponent as HappierIcon } from "../../assets/icons/happier.svg";
 import { ReactComponent as AngryIcon } from "../../assets/icons/angry.svg";
@@ -21,7 +22,7 @@ const ThermometerSvg = styled(ThermometerIcon)`
   height: 100px;
   padding-left: 10px;
   .fillPath {
-    fill: ${props => props.color};
+    fill: ${props => props.fillcolor};
   }
 `;
 const HappierSvg = styled(HappierIcon)`
@@ -79,45 +80,6 @@ const IconDiv = styled.div`
   flex-direction: row;
   align-items: center;
   margin: 10px;
-  .tooltip {
-    visibility: ${props => (props.visible ? "visible" : "hidden")};
-    width: 140px;
-    background-color: white;
-    text-align: center;
-    padding: 10px;
-    border-radius: 6px;
-    position: absolute;
-    color: black;
-    z-index: 1;
-    top: 100%;
-    left: ${props => props.left};
-    margin-left: -60px;
-    ::before {
-      content: "";
-      display: block;
-      width: 0;
-      height: 0;
-      position: absolute;
-      border-left: 8px solid transparent;
-      border-right: 8px solid transparent;
-      border-bottom: 8px solid white;
-      left: 15px;
-      top: -7px;
-    }
-  }
-  .planet-tooltip {
-    top: 0;
-    left: -45px;
-    ::before {
-      border-top: 8px solid transparent;
-      border-bottom: 8px solid transparent;
-      border-left: 8px solid white;
-      border-right: none;
-      left: 139px;
-      top: 8px;
-    }
-  }
-
   img {
     height: 60px;
     width: 60px;
@@ -133,9 +95,9 @@ const IconDiv = styled.div`
 `;
 
 const Hud = ({ zoomedOut, trees, cans, planetEnd, fetchPlanetEnd }) => {
-  const [treeToolTip, setTreeToolTip] = useState(false);
-  const [trashToolTip, setTrashToolTip] = useState(false);
-  const [planetToolTip, setPlanetToolTip] = useState(false);
+  const [showTreeTooltip, setShowTreeTooltip] = useState(false);
+  const [showTrashTooltip, setShowTrashTooltip] = useState(false);
+  const [showPlanetTooltip, setShowPlanetTooltip] = useState(false);
   const cansLength = cans
     ? cans.filter(can => can !== "was removed").length
     : 0;
@@ -178,60 +140,72 @@ const Hud = ({ zoomedOut, trees, cans, planetEnd, fetchPlanetEnd }) => {
       <StyledDiv inview={zoomedOut ? "inView" : null}>
         <div className="flexbox">
           <div className="icon-container">
-            <IconDiv visible={treeToolTip} left={"60%"}>
+            <IconDiv>
               <img
                 src={treeImage}
                 alt=""
                 onMouseOver={() => {
-                  setTreeToolTip(!treeToolTip);
+                  setShowTreeTooltip(!showTreeTooltip);
                 }}
                 onMouseOut={() => {
-                  setTreeToolTip(!treeToolTip);
+                  setShowTreeTooltip(!showTreeTooltip);
                 }}
               />
               {returnTreeSvg()}
-              <span className="tooltip">
-                There are currently {trees ? trees.length : "no"}{" "}
-                {trees.length === 1 ? "tree" : "trees"} on the planet.{" "}
-                {trees.length < 15 &&
-                  `Plant  ${15 - trees.length} more trees to make me happy`}
-              </span>
+              <Tooltip visible={showTreeTooltip} left={"60%"} top={"100%"}>
+                <p>
+                  There are currently {trees ? trees.length : "no"}{" "}
+                  {trees.length === 1 ? "tree" : "trees"} on the planet.{" "}
+                  {trees.length < 15 &&
+                    `Plant  ${15 - trees.length} more trees to make me happy`}
+                </p>
+              </Tooltip>
             </IconDiv>
-            <IconDiv visible={trashToolTip} left={"65%"}>
+            <IconDiv>
               <img
                 src={trashImage}
                 alt=""
                 onMouseOver={() => {
-                  setTrashToolTip(!trashToolTip);
+                  setShowTrashTooltip(!showTrashTooltip);
                 }}
                 onMouseOut={() => {
-                  setTrashToolTip(!trashToolTip);
+                  setShowTrashTooltip(!showTrashTooltip);
                 }}
               />
               {returnTrashSvg()}
-              <span className="tooltip">
-                There are currently {cans ? cansLength : "no"} cans in the
-                ocean.
-              </span>
+              <Tooltip visible={showTrashTooltip} left={"65%"} top={"100%"}>
+                <p>
+                  There are currently {cans ? cansLength : "no"} cans in the
+                  ocean.
+                </p>
+              </Tooltip>
             </IconDiv>
           </div>
-          <IconDiv visible={planetToolTip} left={"100%"}>
+          <IconDiv>
             <ThermometerSvg
-              color={
+              fillcolor={
                 (cans && cansLength > 10) ||
                 (trees && trees.length < 10 ? "red" : "green")
               }
               className="thermometer"
               onMouseOver={() => {
-                setPlanetToolTip(!planetToolTip);
+                setShowPlanetTooltip(!showPlanetTooltip);
               }}
               onMouseOut={() => {
-                setPlanetToolTip(!planetToolTip);
+                setShowPlanetTooltip(!showPlanetTooltip);
               }}
             />
-            <span className="tooltip planet-tooltip">
-              The planet ends on {new Date(planetEnd).toLocaleDateString()}
-            </span>
+            <Tooltip
+              className="planet-tooltip"
+              visible={showPlanetTooltip}
+              left={"-45px"}
+              top={"0"}
+              arrowRight
+            >
+              <p>
+                The planet ends on {new Date(planetEnd).toLocaleDateString()}
+              </p>
+            </Tooltip>
           </IconDiv>
         </div>
       </StyledDiv>
