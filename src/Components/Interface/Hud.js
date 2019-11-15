@@ -98,13 +98,20 @@ const Hud = ({ zoomedOut, trees, cans, planetEnd, fetchPlanet }) => {
   const [showTreeTooltip, setShowTreeTooltip] = useState(false);
   const [showTrashTooltip, setShowTrashTooltip] = useState(false);
   const [showPlanetTooltip, setShowPlanetTooltip] = useState(false);
+  const [tempColor, setTempColor] = useState("");
   const cansLength = cans
     ? cans.filter(can => can !== "was removed").length
     : 0;
   useEffect(() => {
     fetchPlanet();
   }, [fetchPlanet]);
-
+  useEffect(() => {
+    if (cansLength > 10 || (trees && trees.length < 10)) {
+      setTempColor("red");
+    } else {
+      setTempColor("green");
+    }
+  }, []);
   const returnTreeSvg = () => {
     switch (true) {
       case trees === null:
@@ -183,10 +190,7 @@ const Hud = ({ zoomedOut, trees, cans, planetEnd, fetchPlanet }) => {
           </div>
           <IconDiv>
             <ThermometerSvg
-              fillcolor={
-                (cans && cansLength > 10) ||
-                (trees && trees.length < 10 ? "red" : "green")
-              }
+              fillcolor={tempColor}
               className="thermometer"
               onMouseOver={() => {
                 setShowPlanetTooltip(!showPlanetTooltip);
