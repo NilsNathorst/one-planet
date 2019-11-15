@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { animated, config, useSpring } from "react-spring";
 import infoData from "../../database/infoData.json";
 import { ReactComponent as PlaceholderIcon } from "../../assets/icons/help.svg";
+import { ReactComponent as TrashIcon } from "../../assets/icons/info/drinks.svg";
+import { ReactComponent as TreeIcon } from "../../assets/icons/info/forest.svg";
+import { ReactComponent as ContinentIcon } from "../../assets/icons/info/ancient.svg";
 import styled from "styled-components";
 import { connect } from "react-redux";
 const Container = styled(animated.div)`
@@ -30,7 +33,15 @@ const Container = styled(animated.div)`
     max-width: 40px;
   }
 `;
-const Icon = styled(PlaceholderIcon)`
+const StyledContinentIcon = styled(ContinentIcon)`
+  width: 100%;
+  height: 100%;
+`;
+const StyledTrashIcon = styled(TrashIcon)`
+  width: 100%;
+  height: 100%;
+`;
+const StyledTreeIcon = styled(TreeIcon)`
   width: 100%;
   height: 100%;
 `;
@@ -49,11 +60,17 @@ const InfoBubble = ({ object, infoActive }) => {
   return (
     <Container style={props} className="info">
       <div className="div">
-        <Icon />
+        {prevObj.objType === "trash" && <StyledTrashIcon />}
+        {prevObj.objType === "continent" && <StyledContinentIcon />}
+        {prevObj.objType === "tree" && <StyledTreeIcon />}
       </div>
-
       <animated.p>
-        {infoData[prevObj.name] ? infoData[prevObj.name].message : null}
+        {prevObj.objType !== "tree" &&
+          (infoData[prevObj.name] ? infoData[prevObj.name].message : null)}
+        {prevObj.objType === "tree" &&
+          (infoData[prevObj.name]
+            ? `I'm a ${prevObj.age} ${infoData[prevObj.name].message}`
+            : null)}
       </animated.p>
     </Container>
   );
