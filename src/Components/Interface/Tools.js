@@ -1,10 +1,11 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import styled from "styled-components";
 import magnet from "../../assets/icons/magnetIcon.png";
 import forest from "../../assets/icons/forestIcon.png";
 import query from "../../assets/icons/queryIcon.png";
 import { connect, useDispatch } from "react-redux";
 import { fetchLastPlanted } from "../../actions/index";
+import Tooltip from "./Tooltip";
 
 const StyledDiv = styled.div`
   transition: 0.55s;
@@ -49,6 +50,9 @@ const ToolIcon = styled.div`
 `;
 
 const Tools = ({ name, zoomedOut, lastPlanted }) => {
+  const [showTreeTooltip, setShowTreeTooltip] = useState(false);
+  const [showMagnetTooltip, setShowMagnetTooltip] = useState(false);
+  const [showQueryTooltip, setShowQueryTooltip] = useState(false);
   const dispatch = useDispatch();
   const setTool = useCallback(
     value => dispatch({ type: "SET_TOOL", payload: value }),
@@ -71,8 +75,16 @@ const Tools = ({ name, zoomedOut, lastPlanted }) => {
             setTool("NONE");
           }
         }}
+        onMouseOver={() => {
+          setShowTreeTooltip(!showTreeTooltip);
+        }}
+        onMouseOut={() => {
+          setShowTreeTooltip(!showTreeTooltip);
+        }}
       />
-
+      <Tooltip visible={showTreeTooltip} left={"160%"} top={"36%"} arrowLeft>
+        <p>Use the tree tool to plant new trees</p>
+      </Tooltip>
       <ToolIcon
         icon={magnet}
         active={name === "MAGNET" ? true : false}
@@ -83,7 +95,16 @@ const Tools = ({ name, zoomedOut, lastPlanted }) => {
             setTool("NONE");
           }
         }}
+        onMouseOver={() => {
+          setShowMagnetTooltip(!showMagnetTooltip);
+        }}
+        onMouseOut={() => {
+          setShowMagnetTooltip(!showMagnetTooltip);
+        }}
       />
+      <Tooltip visible={showMagnetTooltip} left={"160%"} top={"48%"} arrowLeft>
+        <p>Use the trash magnet to remove cans</p>
+      </Tooltip>
       <ToolIcon
         icon={query}
         active={name === "QUERY" ? true : false}
@@ -94,7 +115,19 @@ const Tools = ({ name, zoomedOut, lastPlanted }) => {
             setTool("NONE");
           }
         }}
+        onMouseOver={() => {
+          setShowQueryTooltip(!showQueryTooltip);
+        }}
+        onMouseOut={() => {
+          setShowQueryTooltip(!showQueryTooltip);
+        }}
       />
+      <Tooltip visible={showQueryTooltip} left={"160%"} top={"59%"} arrowLeft>
+        <p>
+          The query tool gives you information when you hover different elements
+          on the planet
+        </p>
+      </Tooltip>
     </StyledDiv>
   );
 };

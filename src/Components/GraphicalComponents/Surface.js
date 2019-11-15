@@ -14,13 +14,9 @@ const Surface = ({
   textureUrls,
   plantable,
   addTree,
-
   name,
   treeUrl,
   setPlantable,
-  isDead,
-  fetchLastPlanted,
-  lastPlanted,
   type
 }) => {
   const ref = useRef();
@@ -49,18 +45,15 @@ const Surface = ({
   };
   const handleClick = e => {
     if (plantable && name === "TREE") {
-      fetchLastPlanted();
-      if (Date.now() - lastPlanted > 1000 * 2 || lastPlanted === null) {
-        addTree({
-          pos: e.point,
-          created_at: Date.now(),
-          age: "newborn",
-          id: "",
-          needsWater: "false",
-          treeUrl: e.eventObject.treeUrl
-        });
-        setTool("NONE");
-      }
+      addTree({
+        pos: e.point,
+        created_at: Date.now(),
+        age: "newborn",
+        id: "",
+        needsWater: "false",
+        treeUrl: e.eventObject.treeUrl
+      });
+      setTool("NONE");
     }
   };
 
@@ -118,14 +111,12 @@ const mapStateToProps = ({
   return {
     name,
     plantable,
-    isDead,
-    lastPlanted
+    isDead
   };
 };
 
 export default connect(mapStateToProps, {
   addTree,
-
   setPlantable,
   fetchLastPlanted
 })(Surface);

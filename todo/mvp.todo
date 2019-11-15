@@ -11,7 +11,7 @@ Todo:
 	UI:
 		✔ Planet expresses needs in a thought bubble @done(19-11-14 09:32)
 		☐ Each object has associated msg
-		☐ Tools have description
+		✔ Tools have description @done(19-11-15 11:03)
 		✔ Planet health in thermometer @done(19-11-14 09:33)
 		✔ Add limit to planting trees @done(19-11-14 09:33)
 		✔ Status of no. trees as a smiley or smthng @done(19-11-11 11:16)
@@ -20,9 +20,6 @@ Todo:
 		
 	GFX:
 		☐ add models for trash, bag and bottle
-	
-	GENERAL:
-		☐ Add colors to theme
 
 	PROGRAMMING: 
-		☐ continents should have different trees
+		✔ continents should have different trees @done(19-11-14 17:08)
