@@ -65,7 +65,10 @@ const App = ({ store, isDead }) => {
                     <Trees />
                     <Surface
                       type="sand"
-                      treeUrl="/models/trees/palm/palm.glb"
+                      treeModelUrls={[
+                        "/models/trees/palm/palmleaves.glb",
+                        "/models/trees/palm/palmtrunk.glb"
+                      ]}
                       modelUrl="/models/planet/final/sand.glb"
                       textureUrls={[
                         "/assets/textures/Sand/Vol_16_2_Base_Color.png",
@@ -76,7 +79,10 @@ const App = ({ store, isDead }) => {
                     />
                     <Surface
                       type="snow"
-                      treeUrl="/models/trees/pine/pine.glb"
+                      treeModelUrls={[
+                        "/models/trees/pine/pineleaves.glb",
+                        "/models/trees/pine/pinetrunk.glb"
+                      ]}
                       modelUrl="/models/planet/final/snow.glb"
                       textureUrls={[
                         "/assets/textures/Snow/Vol_22_4_Base_Color.png",
@@ -87,7 +93,10 @@ const App = ({ store, isDead }) => {
                     />
                     <Surface
                       type="grass"
-                      treeUrl="/models/trees/tree/tree.glb"
+                      treeModelUrls={[
+                        "/models/trees/oak/oakleaves.glb",
+                        "/models/trees/oak/oaktrunk.glb"
+                      ]}
                       modelUrl="/models/planet/final/grass.glb"
                       textureUrls={[
                         "/assets/textures/Grass/Vol_42_1_Base_Color.png",

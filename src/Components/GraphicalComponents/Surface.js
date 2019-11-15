@@ -15,7 +15,7 @@ const Surface = ({
   plantable,
   addTree,
   name,
-  treeUrl,
+  treeModelUrls,
   setPlantable,
   type
 }) => {
@@ -51,7 +51,7 @@ const Surface = ({
         age: "newborn",
         id: "",
         needsWater: "false",
-        treeUrl: e.eventObject.treeUrl
+        treeModelUrls: e.eventObject.treeModelUrls
       });
       setTool("NONE");
     }
@@ -67,7 +67,7 @@ const Surface = ({
       scale={[12, 12, 12]}
       position={[0, 0, 0]}
       name={type}
-      treeUrl={treeUrl}
+      treeModelUrls={treeModelUrls}
       objType="continent"
     >
       <bufferGeometry attach="geometry" {...gltf.__$[1].geometry} />
@@ -105,9 +105,7 @@ const Surface = ({
   );
 };
 
-const mapStateToProps = ({
-  state: { name, plantable, isDead, lastPlanted }
-}) => {
+const mapStateToProps = ({ state: { name, plantable, isDead } }) => {
   return {
     name,
     plantable,
