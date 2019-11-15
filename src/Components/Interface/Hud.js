@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { fetchPlanetEnd } from "../../actions";
+import { fetchPlanet } from "../../actions";
 import treeImage from "../../assets/icons/treeScore.png";
 import trashImage from "../../assets/icons/trashScore.png";
 import Tooltip from "./Tooltip";
@@ -94,7 +94,7 @@ const IconDiv = styled.div`
   }
 `;
 
-const Hud = ({ zoomedOut, trees, cans, planetEnd, fetchPlanetEnd }) => {
+const Hud = ({ zoomedOut, trees, cans, planetEnd, fetchPlanet }) => {
   const [showTreeTooltip, setShowTreeTooltip] = useState(false);
   const [showTrashTooltip, setShowTrashTooltip] = useState(false);
   const [showPlanetTooltip, setShowPlanetTooltip] = useState(false);
@@ -102,8 +102,8 @@ const Hud = ({ zoomedOut, trees, cans, planetEnd, fetchPlanetEnd }) => {
     ? cans.filter(can => can !== "was removed").length
     : 0;
   useEffect(() => {
-    fetchPlanetEnd();
-  }, [fetchPlanetEnd]);
+    fetchPlanet();
+  }, [fetchPlanet]);
 
   const returnTreeSvg = () => {
     switch (true) {
@@ -213,13 +213,13 @@ const Hud = ({ zoomedOut, trees, cans, planetEnd, fetchPlanetEnd }) => {
   );
 };
 
-const mapStateToProps = ({ state: { zoomedOut, trees, cans, planetEnd } }) => {
+const mapStateToProps = ({ state: { zoomedOut, trees, cans, planet } }) => {
   return {
-    planetEnd,
+    planetEnd: planet.planetEnd,
     zoomedOut,
     trees: trees ? Object.values(trees) : null,
     cans: cans ? Object.values(cans) : null
   };
 };
 
-export default connect(mapStateToProps, { fetchPlanetEnd })(Hud);
+export default connect(mapStateToProps, { fetchPlanet })(Hud);
