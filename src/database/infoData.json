@@ -2,16 +2,22 @@
 	"can": {
 		"message": "In the ocean it will take up to 200 years for an aluminum can to decompose. \n\nSelect the Trash-magnet to clean up the ocean!"
 	},
-	"africa": {
-		"message": "Did you know that Africa is the birthplace of famed lion \"Mufasa\""
+	"sand": {
+		"message": "Sand Palm trees are nice"
 	},
-	"scandinavia": {
-		"message": "In Scandinavia people are cold during the winter, and warm during the summer!"
+	"snow": {
+		"message": "Snow The pine tree is majestic"
 	},
-	"oceania": {
-		"message": "In Oceania, time moves backwards. \n and so do you!"
+	"grass": {
+		"message": "Grass A planet with lots of trees is healthy!"
 	},
-	"america": {
-		"message": "Did you know that America is an awful place to live"
+	"/models/trees/palm/palm.glb": {
+		"message": "palm tree"
+	},
+	"/models/trees/pine/pine.glb": {
+		"message": "pine tree"
+	},
+	"/models/trees/tree/tree.glb": {
+		"message": "oak tree"
 	}
 }
