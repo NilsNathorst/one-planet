@@ -83,10 +83,7 @@ const Tools = ({ name, zoomedOut, lastPlanted }) => {
         }}
       />
       <Tooltip visible={showTreeTooltip} left={"160%"} top={"36%"} arrowLeft>
-        <p>
-          Use the tree tool in order to plant some trees on the surface of the
-          planet
-        </p>
+        <p>Use the tree tool to plant new trees</p>
       </Tooltip>
       <ToolIcon
         icon={magnet}
@@ -106,10 +103,7 @@ const Tools = ({ name, zoomedOut, lastPlanted }) => {
         }}
       />
       <Tooltip visible={showMagnetTooltip} left={"160%"} top={"48%"} arrowLeft>
-        <p>
-          Use the trash magnet in order to clean up the ocean. Hover the
-          selected trash and click to remove it
-        </p>
+        <p>Use the trash magnet to remove cans</p>
       </Tooltip>
       <ToolIcon
         icon={query}
