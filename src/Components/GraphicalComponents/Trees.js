@@ -61,7 +61,7 @@ const Tree = ({
 
   return (
     <a.group
-      name={treeModelUrls}
+      name={treeModelUrls[0]}
       position={pos}
       ref={ref}
       scale={scale}
