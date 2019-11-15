@@ -19,7 +19,7 @@ const initState = {
   zoomedOut: false,
   cans: [],
   trees: [],
-  planetEnd: null,
+  planet: {},
   isDead: false,
   lastPlanted: null
 };
@@ -64,7 +64,7 @@ const stateReducer = (state = initState, action) => {
     case FETCH_PLANET:
       return {
         ...state,
-        planetEnd: action.payload
+        planet: action.payload
       };
     case FETCH_LAST_PLANTED:
       return {

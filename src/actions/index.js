@@ -145,11 +145,11 @@ export const setPlanetDead = () => async dispatch => {
   });
 };
 
-export const fetchPlanetEnd = () => async dispatch => {
+export const fetchPlanet = () => async dispatch => {
   planetRef.on("value", snapshot => {
     dispatch({
       type: FETCH_PLANET,
-      payload: snapshot.val().planetEnd
+      payload: snapshot.val()
     });
   });
 };
