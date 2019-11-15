@@ -24,13 +24,13 @@ import Surface from "./GraphicalComponents/Surface";
 import InfoBubble from "./Interface/InfoBubble";
 import ThoughtBubble from "./Interface/ThoughtBubble";
 import CanvasWrapper from "./Interface/CanvasWrapper";
-
 // Redux
-import { Provider } from "react-redux";
+import { Provider, connect } from "react-redux";
 
 import { setPlanetDead, fetchLastPlanted } from "../actions/index";
+import Deathscreen from "./Interface/Deathscreen";
 
-const App = ({ store }) => {
+const App = ({ store, isDead }) => {
   store.dispatch(setPlanetDead());
   store.dispatch(fetchLastPlanted());
 
@@ -39,10 +39,16 @@ const App = ({ store }) => {
       <GlobalStyles />
       <CanvasWrapper>
         <InterfaceWrapper>
-          <Hud />
-          <Tools />
-          <InfoBubble />
-          <ThoughtBubble />
+          {!isDead ? (
+            <>
+              <Tools />
+              <Hud />
+              <InfoBubble />
+              <ThoughtBubble />
+            </>
+          ) : (
+            <Deathscreen />
+          )}
           <Canvas
             camera={{ position: [0, 0, 200] }}
             onCreated={({ gl, scene, camera }) => {
@@ -53,49 +59,53 @@ const App = ({ store }) => {
           >
             <Suspense fallback={null}>
               <Provider store={store}>
-                <Clouds />
+                {!isDead && (
+                  <>
+                    <Clouds />
+                    <Trees />
+                    <Surface
+                      type="sand"
+                      treeUrl="/models/trees/palm/palm.glb"
+                      modelUrl="/models/planet/final/sand.glb"
+                      textureUrls={[
+                        "/assets/textures/Sand/Vol_16_2_Base_Color.png",
+                        "/assets/textures/Sand/Vol_16_2_Height.png",
+                        "/assets/textures/Sand/Vol_16_2_Normal.png",
+                        "/assets/textures/Sand/Vol_16_2_Ambient_Occlusion.png"
+                      ]}
+                    />
+                    <Surface
+                      type="snow"
+                      treeUrl="/models/trees/pine/pine.glb"
+                      modelUrl="/models/planet/final/snow.glb"
+                      textureUrls={[
+                        "/assets/textures/Snow/Vol_22_4_Base_Color.png",
+                        "/assets/textures/Snow/Vol_22_4_Height.png",
+                        "/assets/textures/Snow/Vol_22_4_Normal.png",
+                        "/assets/textures/Snow/Vol_22_4_Ambient_Occlusion.png"
+                      ]}
+                    />
+                    <Surface
+                      type="grass"
+                      treeUrl="/models/trees/tree/tree.glb"
+                      modelUrl="/models/planet/final/grass.glb"
+                      textureUrls={[
+                        "/assets/textures/Grass/Vol_42_1_Base_Color.png",
+                        "/assets/textures/Grass/Vol_42_1_Height.png",
+                        "/assets/textures/Grass/Vol_42_1_Normal.png",
+                        "/assets/textures/Grass/Vol_42_1_Ambient_Occlusion.png"
+                      ]}
+                    />
+                    <BirdScene />
+                    <SodaCans />
+                  </>
+                )}
                 <Controls />
                 <ambientLight intensity={0.5} />
-                <BirdScene />
                 <Background />
                 <Sun />
                 <Dirt />
-                <Surface
-                  type="sand"
-                  treeUrl="/models/trees/palm/palm.glb"
-                  modelUrl="/models/planet/final/sand.glb"
-                  textureUrls={[
-                    "/assets/textures/Sand/Vol_16_2_Base_Color.png",
-                    "/assets/textures/Sand/Vol_16_2_Height.png",
-                    "/assets/textures/Sand/Vol_16_2_Normal.png",
-                    "/assets/textures/Sand/Vol_16_2_Ambient_Occlusion.png"
-                  ]}
-                />
-                <Surface
-                  type="snow"
-                  treeUrl="/models/trees/pine/pine.glb"
-                  modelUrl="/models/planet/final/snow.glb"
-                  textureUrls={[
-                    "/assets/textures/Snow/Vol_22_4_Base_Color.png",
-                    "/assets/textures/Snow/Vol_22_4_Height.png",
-                    "/assets/textures/Snow/Vol_22_4_Normal.png",
-                    "/assets/textures/Snow/Vol_22_4_Ambient_Occlusion.png"
-                  ]}
-                />
-                <Surface
-                  type="grass"
-                  treeUrl="/models/trees/tree/tree.glb"
-                  modelUrl="/models/planet/final/grass.glb"
-                  textureUrls={[
-                    "/assets/textures/Grass/Vol_42_1_Base_Color.png",
-                    "/assets/textures/Grass/Vol_42_1_Height.png",
-                    "/assets/textures/Grass/Vol_42_1_Normal.png",
-                    "/assets/textures/Grass/Vol_42_1_Ambient_Occlusion.png"
-                  ]}
-                />
-                <Trees />
                 <Ocean />
-                <SodaCans />
                 <Fx />
               </Provider>
             </Suspense>
@@ -106,4 +116,10 @@ const App = ({ store }) => {
   );
 };
 
-export default App;
+const mapStateToProps = ({ state: { isDead } }) => {
+  return {
+    isDead
+  };
+};
+
+export default connect(mapStateToProps)(App);
