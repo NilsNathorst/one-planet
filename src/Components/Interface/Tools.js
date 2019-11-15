@@ -84,7 +84,8 @@ const Tools = ({ name, zoomedOut, lastPlanted }) => {
       />
       <Tooltip visible={showTreeTooltip} left={"160%"} top={"36%"} arrowLeft>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis, odio?
+          Use the tree tool in order to plant some trees on the surface of the
+          planet
         </p>
       </Tooltip>
       <ToolIcon
@@ -106,8 +107,8 @@ const Tools = ({ name, zoomedOut, lastPlanted }) => {
       />
       <Tooltip visible={showMagnetTooltip} left={"160%"} top={"48%"} arrowLeft>
         <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Adipisci,
-          incidunt.
+          Use the trash magnet in order to clean up the ocean. Hover the
+          selected trash and click to remove it
         </p>
       </Tooltip>
       <ToolIcon
@@ -129,8 +130,8 @@ const Tools = ({ name, zoomedOut, lastPlanted }) => {
       />
       <Tooltip visible={showQueryTooltip} left={"160%"} top={"59%"} arrowLeft>
         <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Adipisci,
-          incidunt.
+          The query tool gives you information when you hover different elements
+          on the planet.
         </p>
       </Tooltip>
     </StyledDiv>
