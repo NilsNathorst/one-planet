@@ -13,7 +13,7 @@ import {
 
 const initState = {
   name: "",
-  showInfo: { active: false, object: {}, pos: { x: 0, y: 0 } },
+  showInfo: { active: false, object: {} },
   hoverActive: false,
   plantable: false,
   zoomedOut: false,

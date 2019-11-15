@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import * as THREE from "three";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 
-import { addTree, setShowInfo, setPlantable } from "../../actions";
+import { addTree, setPlantable, fetchLastPlanted } from "../../actions";
 import { useDispatch } from "react-redux";
 
 const Surface = ({
@@ -14,11 +14,9 @@ const Surface = ({
   textureUrls,
   plantable,
   addTree,
-  setShowInfo,
   name,
   treeUrl,
   setPlantable,
-  isDead,
   type
 }) => {
   const ref = useRef();
@@ -39,15 +37,10 @@ const Surface = ({
 
   const hover = e => {
     e.stopPropagation();
-    name === "QUERY" &&
-      setShowInfo({
-        active: true,
-        object: e.eventObject
-      });
+
     name === "TREE" && setPlantable(true);
   };
   const unhover = e => {
-    name === "QUERY" && setShowInfo({ active: false, object: null });
     name === "TREE" && setPlantable(false);
   };
   const handleClick = e => {
@@ -75,6 +68,7 @@ const Surface = ({
       position={[0, 0, 0]}
       name={type}
       treeUrl={treeUrl}
+      objType="continent"
     >
       <bufferGeometry attach="geometry" {...gltf.__$[1].geometry} />
       <meshStandardMaterial attach="material" roughness={1}>
@@ -123,6 +117,6 @@ const mapStateToProps = ({
 
 export default connect(mapStateToProps, {
   addTree,
-  setShowInfo,
-  setPlantable
+  setPlantable,
+  fetchLastPlanted
 })(Surface);

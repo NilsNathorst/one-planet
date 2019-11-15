@@ -76,6 +76,7 @@ const SodaCan = ({
       firebaseId={firebaseId}
       castShadow
       name="can"
+      objType="trash"
     >
       <bufferGeometry attach="geometry" {...gltf.__$[1].geometry} />
       <meshStandardMaterial attach="material" color={color} />

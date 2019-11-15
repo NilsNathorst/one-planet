@@ -3,10 +3,20 @@ import { useLoader } from "react-three-fiber";
 import React, { useEffect, useRef, Suspense } from "react";
 import { useSpring, a, config } from "react-spring/three";
 import { connect } from "react-redux";
-import { fetchTrees, flushTreesDatabase } from "../../actions";
+import { fetchTrees, flushTreesDatabase, setShowInfo } from "../../actions";
 import { setTreeActive } from "../../actions";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
-const Tree = ({ isDead, pos, age, id, setTreeActive, needsWater, treeUrl }) => {
+const Tree = ({
+  isDead,
+  pos,
+  age,
+  id,
+  setTreeActive,
+  needsWater,
+  treeUrl,
+  setShowInfo,
+  infoActive
+}) => {
   const raindrop = useLoader(GLTFLoader, "/models/raindrop/raindrop2.gltf");
   const ref = useRef();
   const raindropRef = useRef();
@@ -36,7 +46,16 @@ const Tree = ({ isDead, pos, age, id, setTreeActive, needsWater, treeUrl }) => {
     from: { scale: [0.01, 0.01, 0.01] },
     config: config.wobbly
   });
-
+  const hover = e => {
+    infoActive &&
+      setShowInfo({
+        active: true,
+        object: e.eventObject
+      });
+  };
+  const unhover = e => {
+    infoActive && setShowInfo({ active: false, object: null });
+  };
   useEffect(() => {
     ref.current.lookAt(0, 0, 0);
   }, []);
@@ -49,10 +68,14 @@ const Tree = ({ isDead, pos, age, id, setTreeActive, needsWater, treeUrl }) => {
   }
   return (
     <a.group
-      name="tree"
+      name={treeUrl}
       position={pos}
       ref={ref}
       scale={scale}
+      age={age}
+      objType="tree"
+      onPointerOver={e => hover(e)}
+      onPointerOut={e => unhover(e)}
       onPointerDown={() => {
         if (age === "newborn" && needsWater === "true") {
           setTreeActive(id);
@@ -95,11 +118,13 @@ const Tree = ({ isDead, pos, age, id, setTreeActive, needsWater, treeUrl }) => {
 };
 
 const Trees = ({
+  name,
   isDead,
   trees,
   fetchTrees,
   setTreeActive,
-  flushTreesDatabase
+  flushTreesDatabase,
+  setShowInfo
 }) => {
   useEffect(() => {
     flushTreesDatabase();
@@ -119,6 +144,8 @@ const Trees = ({
             treeUrl={tree.treeUrl}
             setTreeActive={setTreeActive}
             needsWater={tree.needsWater}
+            setShowInfo={setShowInfo}
+            infoActive={name === "QUERY" ? true : false}
           />
         )}
       </Suspense>
@@ -126,15 +153,17 @@ const Trees = ({
   });
 };
 
-const mapStateToProps = ({ state: { trees, isDead } }) => {
+const mapStateToProps = ({ state: { trees, isDead, name } }) => {
   return {
     trees: trees ? Object.values(trees) : [],
-    isDead
+    isDead,
+    name
   };
 };
 
 export default connect(mapStateToProps, {
   fetchTrees,
   setTreeActive,
-  flushTreesDatabase
+  flushTreesDatabase,
+  setShowInfo
 })(Trees);
