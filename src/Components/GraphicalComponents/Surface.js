@@ -85,6 +85,7 @@ const Surface = ({
       position={[0, 0, 0]}
       name={type}
       treeUrl={treeUrl}
+      objType="continent"
     >
       <bufferGeometry attach="geometry" {...gltf.__$[1].geometry} />
       <meshStandardMaterial attach="material" roughness={1}>
