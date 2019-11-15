@@ -26,99 +26,83 @@ import ThoughtBubble from "./Interface/ThoughtBubble";
 import CanvasWrapper from "./Interface/CanvasWrapper";
 
 // Redux
-import { Provider, ReactReduxContext } from "react-redux";
-import { createStore, applyMiddleware, compose } from "redux";
-import reduxThunk from "redux-thunk";
-import reducers from "../reducers";
+import { Provider } from "react-redux";
+
 import { setPlanetDead, fetchLastPlanted } from "../actions/index";
 
-const App = () => {
-  const composeEnhancers =
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-  const store = createStore(
-    reducers,
-    {},
-    composeEnhancers(applyMiddleware(reduxThunk))
-  );
-
+const App = ({ store }) => {
   store.dispatch(setPlanetDead());
   store.dispatch(fetchLastPlanted());
 
   return (
-    <Provider store={store}>
-      <ThemeProvider theme={Theme}>
-        <GlobalStyles />
-        <CanvasWrapper>
-          <InterfaceWrapper>
-            <Hud />
-            <Tools />
-            <InfoBubble />
-            <ThoughtBubble />
-            <ReactReduxContext.Consumer>
-              {({ store }) => (
-                <Canvas
-                  camera={{ position: [0, 0, 200] }}
-                  onCreated={({ gl, scene, camera }) => {
-                    gl.shadowMap.enabled = true;
-                    gl.shadowMap.type = THREE.PCFSoftShadowMap;
-                    gl.compile(scene, camera);
-                  }}
-                >
-                  <Suspense fallback={null}>
-                    <Provider store={store}>
-                      <Clouds />
-                      <Controls />
-                      <ambientLight intensity={0.5} />
-                      <BirdScene />
-                      <Background />
-                      <Sun />
-                      <Dirt />
-                      <Surface
-                        type="sand"
-                        treeUrl="/models/trees/palm/palm.glb"
-                        modelUrl="/models/planet/final/sand.glb"
-                        textureUrls={[
-                          "/assets/textures/Sand/Vol_16_2_Base_Color.png",
-                          "/assets/textures/Sand/Vol_16_2_Height.png",
-                          "/assets/textures/Sand/Vol_16_2_Normal.png",
-                          "/assets/textures/Sand/Vol_16_2_Ambient_Occlusion.png"
-                        ]}
-                      />
-                      <Surface
-                        type="snow"
-                        treeUrl="/models/trees/pine/pine.glb"
-                        modelUrl="/models/planet/final/snow.glb"
-                        textureUrls={[
-                          "/assets/textures/Snow/Vol_22_4_Base_Color.png",
-                          "/assets/textures/Snow/Vol_22_4_Height.png",
-                          "/assets/textures/Snow/Vol_22_4_Normal.png",
-                          "/assets/textures/Snow/Vol_22_4_Ambient_Occlusion.png"
-                        ]}
-                      />
-                      <Surface
-                        type="grass"
-                        treeUrl="/models/trees/tree/tree.glb"
-                        modelUrl="/models/planet/final/grass.glb"
-                        textureUrls={[
-                          "/assets/textures/Grass/Vol_42_1_Base_Color.png",
-                          "/assets/textures/Grass/Vol_42_1_Height.png",
-                          "/assets/textures/Grass/Vol_42_1_Normal.png",
-                          "/assets/textures/Grass/Vol_42_1_Ambient_Occlusion.png"
-                        ]}
-                      />
-                      <Trees />
-                      <Ocean />
-                      <SodaCans />
-                      <Fx />
-                    </Provider>
-                  </Suspense>
-                </Canvas>
-              )}
-            </ReactReduxContext.Consumer>
-          </InterfaceWrapper>
-        </CanvasWrapper>
-      </ThemeProvider>
-    </Provider>
+    <ThemeProvider theme={Theme}>
+      <GlobalStyles />
+      <CanvasWrapper>
+        <InterfaceWrapper>
+          <Hud />
+          <Tools />
+          <InfoBubble />
+          <ThoughtBubble />
+          <Canvas
+            camera={{ position: [0, 0, 200] }}
+            onCreated={({ gl, scene, camera }) => {
+              gl.shadowMap.enabled = true;
+              gl.shadowMap.type = THREE.PCFSoftShadowMap;
+              gl.compile(scene, camera);
+            }}
+          >
+            <Suspense fallback={null}>
+              <Provider store={store}>
+                <Clouds />
+                <Controls />
+                <ambientLight intensity={0.5} />
+                <BirdScene />
+                <Background />
+                <Sun />
+                <Dirt />
+                <Surface
+                  type="sand"
+                  treeUrl="/models/trees/palm/palm.glb"
+                  modelUrl="/models/planet/final/sand.glb"
+                  textureUrls={[
+                    "/assets/textures/Sand/Vol_16_2_Base_Color.png",
+                    "/assets/textures/Sand/Vol_16_2_Height.png",
+                    "/assets/textures/Sand/Vol_16_2_Normal.png",
+                    "/assets/textures/Sand/Vol_16_2_Ambient_Occlusion.png"
+                  ]}
+                />
+                <Surface
+                  type="snow"
+                  treeUrl="/models/trees/pine/pine.glb"
+                  modelUrl="/models/planet/final/snow.glb"
+                  textureUrls={[
+                    "/assets/textures/Snow/Vol_22_4_Base_Color.png",
+                    "/assets/textures/Snow/Vol_22_4_Height.png",
+                    "/assets/textures/Snow/Vol_22_4_Normal.png",
+                    "/assets/textures/Snow/Vol_22_4_Ambient_Occlusion.png"
+                  ]}
+                />
+                <Surface
+                  type="grass"
+                  treeUrl="/models/trees/tree/tree.glb"
+                  modelUrl="/models/planet/final/grass.glb"
+                  textureUrls={[
+                    "/assets/textures/Grass/Vol_42_1_Base_Color.png",
+                    "/assets/textures/Grass/Vol_42_1_Height.png",
+                    "/assets/textures/Grass/Vol_42_1_Normal.png",
+                    "/assets/textures/Grass/Vol_42_1_Ambient_Occlusion.png"
+                  ]}
+                />
+                <Trees />
+                <Ocean />
+                <SodaCans />
+                <Fx />
+              </Provider>
+            </Suspense>
+          </Canvas>
+        </InterfaceWrapper>
+      </CanvasWrapper>
+    </ThemeProvider>
   );
 };
 
