@@ -131,7 +131,7 @@ const Tools = ({ name, zoomedOut, lastPlanted }) => {
       <Tooltip visible={showQueryTooltip} left={"160%"} top={"59%"} arrowLeft>
         <p>
           The query tool gives you information when you hover different elements
-          on the planet.
+          on the planet
         </p>
       </Tooltip>
     </StyledDiv>
