@@ -78,8 +78,8 @@ const StyledDiv = styled.div`
         width: 40px;
       }
       .thermometer {
-        height: 80px;
-        width: 80px;
+        height: 60px;
+        width: 60px;
       }
     }
   }
