@@ -18,6 +18,9 @@ const StyledSpan = styled.span`
   margin-left: -60px;
   font-size: 1rem;
 
+  @media screen and (max-width: 700px) {
+    display: none;
+  }
   @media screen and (min-width: 2500px) {
     font-size: 2rem;
   }
