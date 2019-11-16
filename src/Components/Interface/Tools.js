@@ -14,18 +14,10 @@ const StyledDiv = styled.div`
   bottom: 0;
   justify-content: center;
   transform: ${props =>
-    props.inView === "inView" ? "translate(-100px,0)" : "translate(0,0)"};
+    props.inView === "inView" ? "translate(-200px,0)" : "translate(0,0)"};
   flex-direction: column;
   position: absolute;
   z-index: 100;
-  font-size: 1rem;
-
-  @media screen and (min-width: 2500px) {
-    font-size: 2rem;
-  }
-  @media screen and (min-width: 1940px) {
-    font-size: 1.5rem;
-  }
   @media screen and (max-width: 700px) {
     width: 100%;
     flex-direction: row;

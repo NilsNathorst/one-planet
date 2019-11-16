@@ -61,6 +61,17 @@ const StyledDiv = styled.div`
     .icon-container {
       display: flex;
     }
+    @media screen and (min-width: 1940px) {
+      svg {
+        height: 120px;
+        width: 120px;
+      }
+      .thermometer {
+        height: 120px;
+        width: 120px;
+      }
+    }
+
     @media screen and (max-width: 700px) {
       svg {
         height: 40px;
@@ -83,13 +94,20 @@ const IconDiv = styled.div`
   img {
     height: 60px;
     width: 60px;
-    background-color: hotpink;
     border-radius: 50px;
   }
   @media screen and (max-width: 700px) {
     img {
       height: 40px;
       width: 40px;
+    }
+  }
+
+  @media screen and (min-width: 1940px) {
+    width: 240px;
+    img {
+      height: 120px;
+      width: 120px;
     }
   }
 `;
@@ -159,7 +177,7 @@ const Hud = ({ zoomedOut, trees, cans, planetEnd, fetchPlanet }) => {
                 }}
               />
               {returnTreeSvg()}
-              <Tooltip visible={showTreeTooltip} left={"60%"} top={"100%"}>
+              <Tooltip visible={showTreeTooltip} left={"60%"} top={"100%"} hud>
                 <p>
                   There are currently {trees ? trees.length : "no"}{" "}
                   {trees.length === 1 ? "tree" : "trees"} on the planet.{" "}
@@ -180,7 +198,7 @@ const Hud = ({ zoomedOut, trees, cans, planetEnd, fetchPlanet }) => {
                 }}
               />
               {returnTrashSvg()}
-              <Tooltip visible={showTrashTooltip} left={"65%"} top={"100%"}>
+              <Tooltip visible={showTrashTooltip} left={"65%"} top={"100%"} hud>
                 <p>
                   There are currently {cans ? cansLength : "no"} cans in the
                   ocean.
