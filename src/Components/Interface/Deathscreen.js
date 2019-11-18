@@ -28,7 +28,7 @@ const Deathscreen = ({ planet, fetchPlanet }) => {
       {planet.planetEnd && (
         <div>
           <h1>
-            The survived for{" "}
+            The planet survived for{" "}
             {Math.floor(
               (planet.planetEnd - planet.planetStart) / 1000 / 60 / 60 / 24
             )}{" "}
