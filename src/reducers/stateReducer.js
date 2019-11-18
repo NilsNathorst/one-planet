@@ -21,7 +21,7 @@ const initState = {
   trees: [],
   planet: {},
   treeCooldown: false,
-  isDead: false
+  isDead: undefined
 };
 
 const stateReducer = (state = initState, action) => {

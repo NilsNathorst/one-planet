@@ -14,7 +14,10 @@ const StyledDeathscreen = styled.div`
   text-shadow: 0px 2px 4px black;
   z-index: 10;
   pointer-events: none;
-  div {
+  div h1,
+  div h2 {
+    color: white !important;
+    font-size: 1.5rem;
     text-align: center;
   }
 `;

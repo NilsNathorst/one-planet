@@ -39,7 +39,7 @@ const App = ({ store, isDead }) => {
       <GlobalStyles />
       <CanvasWrapper>
         <InterfaceWrapper>
-          {!isDead ? (
+          {isDead === false && (
             <>
               <IntroModal />
               <Tools />
@@ -47,9 +47,8 @@ const App = ({ store, isDead }) => {
               <InfoBubble />
               <ThoughtBubble />
             </>
-          ) : (
-            <Deathscreen />
-          )}
+          )}{" "}
+          {isDead === true && <Deathscreen />}
           <Canvas
             camera={{ position: [0, 0, 200] }}
             onCreated={({ gl, scene, camera }) => {
@@ -60,7 +59,7 @@ const App = ({ store, isDead }) => {
           >
             <Suspense fallback={null}>
               <Provider store={store}>
-                {!isDead && (
+                {isDead === false && (
                   <>
                     <Clouds />
                     <Trees />
