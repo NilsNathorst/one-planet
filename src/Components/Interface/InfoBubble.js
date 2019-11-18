@@ -18,19 +18,18 @@ const Container = styled(animated.div)`
   background: white;
   border-radius: 8px;
   color: black;
-  width: 300px;
-  color: #888888;
+  min-width: 300px;
+  width: 20%;
+
   fill: #888888;
-  padding: 10px;
+  padding: 1em;
   p {
-    margin: auto;
     white-space: pre-line;
-    padding-left: 10px;
+    padding-left: 1em;
   }
   div {
-    margin: auto;
-    min-width: 40px;
-    max-width: 40px;
+    min-width: 20%;
+    max-width: 20%;
   }
 `;
 
@@ -44,7 +43,7 @@ const StyledTreeIcon = styled(TreeIcon)`
 `;
 const InfoBubble = ({ object, infoActive }) => {
   const props = useSpring({
-    marginBottom: infoActive ? 50 : -50,
+    marginBottom: infoActive ? 60 : -60,
     opacity: infoActive ? 1 : 0,
     config: config.stiff
   });
@@ -65,7 +64,9 @@ const InfoBubble = ({ object, infoActive }) => {
           (infoData[prevObj.name] ? infoData[prevObj.name].message : null)}
         {prevObj.objType === "tree" &&
           (infoData[prevObj.name]
-            ? `I'm a ${prevObj.age} ${infoData[prevObj.name].message}`
+            ? `I'm a ${prevObj.age} ${
+                infoData[prevObj.name].message
+              }. Without trees, the planet cannot survive. \n\nSelect the tree tool to plant more trees!`
             : null)}
       </animated.p>
     </Container>

@@ -29,6 +29,7 @@ import { Provider, connect } from "react-redux";
 
 import { setPlanetDead } from "../actions/index";
 import Deathscreen from "./Interface/Deathscreen";
+import IntroModal from "./Interface/IntroModal";
 
 const App = ({ store, isDead }) => {
   store.dispatch(setPlanetDead());
@@ -38,6 +39,7 @@ const App = ({ store, isDead }) => {
       <GlobalStyles />
       <CanvasWrapper>
         <InterfaceWrapper>
+          <IntroModal />
           {!isDead ? (
             <>
               <Tools />

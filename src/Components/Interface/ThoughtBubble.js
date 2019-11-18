@@ -33,10 +33,10 @@ const ToolIcon = styled.div`
   background-repeat: no-repeat;
   background-size: contain;
   background-position: 50% 50%;
-  margin-left: 5%;
-  margin-top: -5%;
-  width: 100%;
-  height: 80px;
+  margin-left: 8%;
+  margin-top: -8%;
+  width: 40%;
+  height: 40%;
   position: absolute;
   align-self: center;
   opacity: ${props => (props.inview === "inView" ? 1 : 0)} !important;
