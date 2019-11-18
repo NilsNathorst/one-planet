@@ -3,6 +3,8 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { TextureLoader } from "three/src/loaders/TextureLoader";
 import { useLoader } from "react-three-fiber";
 import { connect, useDispatch } from "react-redux";
+import { isMobile } from "react-device-detect";
+
 import * as THREE from "three";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 
@@ -42,6 +44,9 @@ const Surface = ({
 
   const hover = e => {
     name === "TREE" && setPlantable(true);
+    if (isMobile) {
+      handleClick(e);
+    }
   };
   const unhover = e => {
     name === "TREE" && setPlantable(false);
