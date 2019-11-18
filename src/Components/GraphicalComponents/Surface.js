@@ -2,12 +2,11 @@ import React, { useRef, useCallback } from "react";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { TextureLoader } from "three/src/loaders/TextureLoader";
 import { useLoader } from "react-three-fiber";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import * as THREE from "three";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 
-import { addTree, setPlantable, fetchLastPlanted } from "../../actions";
-import { useDispatch } from "react-redux";
+import { addTree, setPlantable } from "../../actions";
 
 const Surface = ({
   modelUrl,
@@ -18,8 +17,14 @@ const Surface = ({
   treeModelUrls,
   setPlantable,
   type,
-  trees
+  trees,
+  treeCooldown
 }) => {
+  const dispatch = useDispatch();
+  const setCooldown = useCallback(
+    (type, value) => dispatch({ type: type, payload: value }),
+    [dispatch]
+  );
   const ref = useRef();
   const gltf = useLoader(GLTFLoader, modelUrl, loader => {
     const dracoLoader = new DRACOLoader();
@@ -30,11 +35,7 @@ const Surface = ({
     TextureLoader,
     textureUrls
   );
-  const dispatch = useDispatch();
-  const setTool = useCallback(
-    value => dispatch({ type: "SET_TOOL", payload: value }),
-    [dispatch]
-  );
+
   const treesLength = trees
     ? trees.filter(tree => tree !== "was removed").length
     : 0;
@@ -46,7 +47,12 @@ const Surface = ({
     name === "TREE" && setPlantable(false);
   };
   const handleClick = e => {
-    if (plantable && name === "TREE" && treesLength < 100) {
+    if (
+      plantable &&
+      name === "TREE" &&
+      treesLength < 100 &&
+      treeCooldown === false
+    ) {
       addTree({
         pos: e.point,
         created_at: Date.now(),
@@ -55,7 +61,10 @@ const Surface = ({
         needsWater: "false",
         treeModelUrls: e.eventObject.treeModelUrls
       });
-      setTool("NONE");
+      setCooldown("SET_TREE_COOLDOWN", true);
+      setTimeout(() => {
+        setCooldown("SET_TREE_COOLDOWN", false);
+      }, 10000);
     }
   };
 
@@ -107,17 +116,19 @@ const Surface = ({
   );
 };
 
-const mapStateToProps = ({ state: { name, plantable, isDead, trees } }) => {
+const mapStateToProps = ({
+  state: { name, plantable, isDead, trees, treeCooldown }
+}) => {
   return {
     name,
     plantable,
     isDead,
-    trees: trees ? Object.values(trees) : null
+    trees: trees ? Object.values(trees) : null,
+    treeCooldown
   };
 };
 
 export default connect(mapStateToProps, {
   addTree,
-  setPlantable,
-  fetchLastPlanted
+  setPlantable
 })(Surface);
