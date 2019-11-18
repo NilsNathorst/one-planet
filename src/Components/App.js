@@ -27,12 +27,11 @@ import CanvasWrapper from "./Interface/CanvasWrapper";
 // Redux
 import { Provider, connect } from "react-redux";
 
-import { setPlanetDead, fetchLastPlanted } from "../actions/index";
+import { setPlanetDead } from "../actions/index";
 import Deathscreen from "./Interface/Deathscreen";
 
 const App = ({ store, isDead }) => {
   store.dispatch(setPlanetDead());
-  store.dispatch(fetchLastPlanted());
 
   return (
     <ThemeProvider theme={Theme}>
