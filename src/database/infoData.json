@@ -10,5 +10,19 @@
   },
   "/models/trees/oak/oakleaves.glb": {
     "message": "oak tree"
-  }
+  },
+  "treeFacts": [
+    "One large tree can supply a day's supply of oxygen for four people.",
+    "Over the course its life, a single tree can absorb one ton of carbon dioxide.",
+    "Trees properly placed around buildings can reduce air conditioning needs by 30%",
+    "Trees are the longest living organisms on Earth, and never die of old age.",
+    "Trees lower air temperature by evaporating water in their leaves."
+  ],
+  "trashFacts": [
+    "Plastic is the most common element that is found in the ocean.",
+    "Over one million seabirds are killed by ocean pollution each year",
+    "There is an island of garbage twice the size of Texas inside the Pacific Ocean",
+    "In the ocean, there is more plastic than fish.",
+    "Approximately one truckload of plastic enters the ocean every single minute."
+  ]
 }

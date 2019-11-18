@@ -61,12 +61,20 @@ const InfoBubble = ({ object, infoActive }) => {
       </div>
       <animated.p>
         {prevObj.objType === "trash" &&
-          (infoData[prevObj.name] ? infoData[prevObj.name].message : null)}
+          (infoData[prevObj.name]
+            ? `${
+                infoData.trashFacts[
+                  Math.floor(Math.random() * infoData.treeFacts.length)
+                ]
+              }`
+            : null)}
         {prevObj.objType === "tree" &&
           (infoData[prevObj.name]
-            ? `I'm a ${prevObj.age} ${
-                infoData[prevObj.name].message
-              }. Without trees, the planet cannot survive. \n\nSelect the tree tool to plant more trees!`
+            ? `${
+                infoData.treeFacts[
+                  Math.floor(Math.random() * infoData.treeFacts.length)
+                ]
+              }`
             : null)}
       </animated.p>
     </Container>
