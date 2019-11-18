@@ -46,7 +46,6 @@ const Surface = ({
     name === "TREE" && setPlantable(false);
   };
   const handleClick = e => {
-    console.log(treesLength);
     if (plantable && name === "TREE" && treesLength < 100) {
       addTree({
         pos: e.point,
