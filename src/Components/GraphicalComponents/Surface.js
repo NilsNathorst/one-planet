@@ -13,7 +13,6 @@ import { addTree, setPlantable } from "../../actions";
 const Surface = ({
   modelUrl,
   textureUrls,
-  plantable,
   addTree,
   name,
   treeModelUrls,
@@ -116,12 +115,10 @@ const Surface = ({
   );
 };
 
-const mapStateToProps = ({
-  state: { name, plantable, isDead, trees, treeCooldown }
-}) => {
+const mapStateToProps = ({ state: { name, isDead, trees, treeCooldown } }) => {
   return {
     name,
-    plantable,
+
     isDead,
     trees: trees ? Object.values(trees) : null,
     treeCooldown
