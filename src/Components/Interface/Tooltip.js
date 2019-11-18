@@ -2,8 +2,10 @@ import React from "react";
 import styled, { css } from "styled-components";
 
 const StyledSpan = styled.span`
-  visibility: ${props => (props.visible ? "visible" : "hidden")};
-  width: 140px;
+  opacity: ${props => (props.visible ? "1" : "0")};
+  transition: 0.3s;
+  min-width: 140px;
+  width: 10%;
   background-color: white;
   text-align: center;
   padding: 10px;
@@ -14,6 +16,32 @@ const StyledSpan = styled.span`
   top: ${props => props.top};
   left: ${props => props.left};
   margin-left: -60px;
+  font-size: 1rem;
+
+  @media screen and (max-width: 700px) {
+    display: none;
+  }
+  @media screen and (min-width: 2500px) {
+    font-size: 2rem;
+  }
+  @media screen and (min-width: 1940px) {
+    font-size: 1.5rem;
+  }
+  ${props =>
+    props.tool &&
+    css`
+      @media screen and (min-width: 1940px) {
+        left: 140%;
+      }
+    `}
+  ${props =>
+    props.hud &&
+    css`
+      @media screen and (min-width: 1940px) {
+        top: 145%;
+        left: 42%;
+      }
+    `}
   ::before {
     content: "";
     display: block;
@@ -48,11 +76,22 @@ const StyledSpan = styled.span`
   }
 `;
 
-const Tooltip = ({ visible, left, top, children, arrowRight, arrowLeft }) => {
+const Tooltip = ({
+  visible,
+  left,
+  top,
+  children,
+  arrowRight,
+  arrowLeft,
+  tool,
+  hud
+}) => {
   return (
     <StyledSpan
       left={left}
       visible={visible}
+      tool={tool}
+      hud={hud}
       top={top}
       arrowRight={arrowRight}
       arrowLeft={arrowLeft}
