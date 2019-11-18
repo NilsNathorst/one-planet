@@ -40,9 +40,9 @@ const App = ({ store, isDead }) => {
       <GlobalStyles />
       <CanvasWrapper>
         <InterfaceWrapper>
-          <IntroModal />
           {!isDead ? (
             <>
+              <IntroModal />
               <Tools />
               <Hud />
               <InfoBubble />
