@@ -1,12 +1,19 @@
 import React, { useCallback, useState } from "react";
-import styled from "styled-components";
+import styled, { keyframes, css } from "styled-components";
 import magnet from "../../assets/icons/magnetIcon.png";
 import forest from "../../assets/icons/forestIcon.png";
 import query from "../../assets/icons/queryIcon.png";
 import { connect, useDispatch } from "react-redux";
-import { fetchLastPlanted } from "../../actions/index";
 import Tooltip from "./Tooltip";
 
+const countdown = keyframes`
+from {
+    stroke-dashoffset: 0px;
+  }
+  to {
+    stroke-dashoffset: 180px;
+  }
+`;
 const StyledDiv = styled.div`
   transition: 0.55s;
   display: flex;
@@ -36,6 +43,26 @@ const ToolContainer = styled.div`
   }
 `;
 const ToolIcon = styled.div`
+  svg {
+    width: 100%;
+    height: 100%;
+    transform: rotateY(-180deg) rotateZ(-90deg);
+  }
+
+  circle {
+    stroke-dasharray: 180px;
+    stroke-dashoffset: 0px;
+    stroke-linecap: round;
+    stroke-width: ${props => (props.runAnim ? "4px" : "0px")};
+    stroke: white;
+    fill: none;
+    animation: ${props =>
+      props.runAnim &&
+      css`
+        ${countdown} 10s linear forwards
+      `};
+  }
+
   transition: 0.25s;
   background-image: url(${props => props.icon});
   background-repeat: no-repeat;
@@ -60,7 +87,7 @@ const ToolIcon = styled.div`
   opacity: ${props => (props.active ? 1 : 0.7)};
 `;
 
-const Tools = ({ name, zoomedOut, lastPlanted }) => {
+const Tools = ({ name, zoomedOut, treeCooldown }) => {
   const [showTreeTooltip, setShowTreeTooltip] = useState(false);
   const [showMagnetTooltip, setShowMagnetTooltip] = useState(false);
   const [showQueryTooltip, setShowQueryTooltip] = useState(false);
@@ -75,14 +102,11 @@ const Tools = ({ name, zoomedOut, lastPlanted }) => {
       <ToolContainer>
         <div>
           <ToolIcon
+            runAnim={treeCooldown}
             icon={forest}
             active={name === "TREE" ? true : false}
             onClick={() => {
-              fetchLastPlanted();
-              if (
-                (name !== "TREE" && Date.now() - lastPlanted > 1000 * 2) ||
-                (name !== "TREE" && lastPlanted === null)
-              ) {
+              if (name !== "TREE") {
                 setTool("TREE");
               } else if (name === "TREE") {
                 setTool("NONE");
@@ -94,7 +118,11 @@ const Tools = ({ name, zoomedOut, lastPlanted }) => {
             onMouseOut={() => {
               setShowTreeTooltip(!showTreeTooltip);
             }}
-          />
+          >
+            <svg>
+              <circle cx="50%" cy="50%" r="47%"></circle>
+            </svg>
+          </ToolIcon>
           <Tooltip
             visible={showTreeTooltip}
             left={"160%"}
@@ -169,11 +197,11 @@ const Tools = ({ name, zoomedOut, lastPlanted }) => {
   );
 };
 
-const mapStateToProps = ({ state: { name, zoomedOut, lastPlanted } }) => {
+const mapStateToProps = ({ state: { name, zoomedOut, treeCooldown } }) => {
   return {
     name,
     zoomedOut,
-    lastPlanted
+    treeCooldown
   };
 };
-export default connect(mapStateToProps, { fetchLastPlanted })(Tools);
+export default connect(mapStateToProps)(Tools);
