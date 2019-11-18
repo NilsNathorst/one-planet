@@ -52,12 +52,7 @@ const Surface = ({
     name === "TREE" && setPlantable(false);
   };
   const handleClick = e => {
-    if (
-      plantable &&
-      name === "TREE" &&
-      treesLength < 100 &&
-      treeCooldown === false
-    ) {
+    if (name === "TREE" && treesLength < 100 && treeCooldown === false) {
       addTree({
         pos: e.point,
         created_at: Date.now(),
