@@ -20,8 +20,16 @@ const GlobalStyles = createGlobalStyle`
     margin:0;
     box-sizing: border-box;
     position: relative;
-		font-family: Google Sans;
-		font-weight: normal;
+    font-family: Google Sans;
+    font-weight: normal;
+    @media screen and (min-width: 2500px) {
+    font-size: 2rem;
+    }
+    @media screen and (min-width: 1940px) {
+    font-size: 1.5rem;
+    }
+    font-size: 1rem;
+    color: #202020;
 }
 canvas {
     background: black;
