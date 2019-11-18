@@ -17,7 +17,8 @@ const Surface = ({
   name,
   treeModelUrls,
   setPlantable,
-  type
+  type,
+  trees
 }) => {
   const ref = useRef();
   const gltf = useLoader(GLTFLoader, modelUrl, loader => {
@@ -34,17 +35,18 @@ const Surface = ({
     value => dispatch({ type: "SET_TOOL", payload: value }),
     [dispatch]
   );
+  const treesLength = trees
+    ? trees.filter(tree => tree !== "was removed").length
+    : 0;
 
   const hover = e => {
-    e.stopPropagation();
-
     name === "TREE" && setPlantable(true);
   };
   const unhover = e => {
     name === "TREE" && setPlantable(false);
   };
   const handleClick = e => {
-    if (plantable && name === "TREE") {
+    if (plantable && name === "TREE" && treesLength < 100) {
       addTree({
         pos: e.point,
         created_at: Date.now(),
@@ -105,11 +107,12 @@ const Surface = ({
   );
 };
 
-const mapStateToProps = ({ state: { name, plantable, isDead } }) => {
+const mapStateToProps = ({ state: { name, plantable, isDead, trees } }) => {
   return {
     name,
     plantable,
-    isDead
+    isDead,
+    trees: trees ? Object.values(trees) : null
   };
 };
 

@@ -32,6 +32,16 @@ export const fetchTrees = () => async dispatch => {
         if (TreeAge > 1000 * 60 && snapshot.val()[tree].age === "newborn") {
           treesRef.child(`${tree}/needsWater`).set("true");
         }
+
+        if (
+          snapshot.val()[tree].needsWater === "true" &&
+          TreeAge > 1000 * 60 * 30
+        ) {
+          treesRef.child(`${tree}`).on("value", snapshot => {
+            treesRef.child(`${tree}`).set("was removed");
+          });
+        }
+
         if (
           snapshot.val()[tree].age !== "newborn" &&
           snapshot.val()[tree].needsWater === "false"
@@ -42,10 +52,10 @@ export const fetchTrees = () => async dispatch => {
           if (TreeAge > 1000 * 60 * 60 * 12 && TreeAge < 1000 * 60 * 60 * 18) {
             treesRef.child(`${tree}/age`).set("senior");
           }
-          if (TreeAge > 1000 * 60 * 60 * 18 && TreeAge < 1000 * 60 * 60 * 24) {
+          if (TreeAge > 1000 * 60 * 60 * 18 && TreeAge < 1000 * 60 * 60 * 19) {
             treesRef.child(`${tree}/age`).set("dead");
           }
-          if (TreeAge > 1000 * 60 * 60 * 24) {
+          if (TreeAge > 1000 * 60 * 60 * 19) {
             treesRef.child(`${tree}`).once("value", snapshot => {
               treesRef.child(`${tree}`).set("was removed");
             });

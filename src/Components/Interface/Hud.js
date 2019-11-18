@@ -102,11 +102,14 @@ const Hud = ({ zoomedOut, trees, cans, planetEnd, fetchPlanet }) => {
   const cansLength = cans
     ? cans.filter(can => can !== "was removed").length
     : 0;
+  const treesLength = trees
+    ? trees.filter(tree => tree !== "was removed").length
+    : 0;
   useEffect(() => {
     fetchPlanet();
   }, [fetchPlanet]);
   useEffect(() => {
-    if (cansLength > 10 || (trees && trees.length < 10)) {
+    if (cansLength > 10 || (trees && treesLength < 10)) {
       setTempColor("red");
     } else {
       setTempColor("green");
@@ -116,11 +119,11 @@ const Hud = ({ zoomedOut, trees, cans, planetEnd, fetchPlanet }) => {
     switch (true) {
       case trees === null:
         return <AngrySvg />;
-      case trees.length < 5:
+      case treesLength < 5:
         return <IndifferentSvg />;
-      case trees.length < 15:
+      case treesLength < 15:
         return <HappySvg />;
-      case trees.length < 1000:
+      case treesLength < 1000:
         return <HappierSvg />;
       default:
         return null;
@@ -161,10 +164,10 @@ const Hud = ({ zoomedOut, trees, cans, planetEnd, fetchPlanet }) => {
               {returnTreeSvg()}
               <Tooltip visible={showTreeTooltip} left={"60%"} top={"100%"}>
                 <p>
-                  There are currently {trees ? trees.length : "no"}{" "}
-                  {trees.length === 1 ? "tree" : "trees"} on the planet.{" "}
-                  {trees.length < 15 &&
-                    `Plant  ${15 - trees.length} more trees to make me happy`}
+                  There are currently {trees ? treesLength : "no"}{" "}
+                  {treesLength === 1 ? "tree" : "trees"} on the planet.{" "}
+                  {treesLength < 15 &&
+                    `Plant  ${15 - treesLength} more trees to make me happy`}
                 </p>
               </Tooltip>
             </IconDiv>
