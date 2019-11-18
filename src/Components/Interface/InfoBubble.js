@@ -8,14 +8,6 @@ import { ReactComponent as TreeIcon } from "../../assets/icons/info/forest.svg";
 import styled from "styled-components";
 import { connect } from "react-redux";
 const Container = styled(animated.div)`
-  @media screen and (min-width: 2500px) {
-    font-size: 2rem;
-  }
-  @media screen and (min-width: 1940px) {
-    font-size: 1.5rem;
-  }
-  font-size: 1rem;
-
   display: flex;
   transform: translateX(-50%);
   left: 50%;
@@ -28,7 +20,7 @@ const Container = styled(animated.div)`
   color: black;
   min-width: 300px;
   width: 20%;
-  color: #888888;
+
   fill: #888888;
   padding: 1em;
   p {
