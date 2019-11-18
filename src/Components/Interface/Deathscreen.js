@@ -28,7 +28,11 @@ const Deathscreen = ({ planet, fetchPlanet }) => {
       {planet.planetEnd && (
         <div>
           <h1>
-            The planet died on {new Date(planet.planetEnd).toLocaleDateString()}
+            The planet survived for{" "}
+            {Math.floor(
+              (planet.planetEnd - planet.planetStart) / 1000 / 60 / 60 / 24
+            )}{" "}
+            days
           </h1>
           <h2>{planet.treesAdded} trees were planted</h2>
           <h2>
