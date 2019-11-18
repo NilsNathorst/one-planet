@@ -53,7 +53,7 @@ const ThoughtBubble = ({ cans, trees, zoomedOut }) => {
     if (trees < 10) {
       setCurrentNeed(forest);
     }
-    if (trees < 10 && cans > 10) {
+    if (trees < 15 && cans > 10) {
       setCurrentNeed(forestAndMagnet);
     }
   }, [cans, trees]);
