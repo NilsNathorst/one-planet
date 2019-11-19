@@ -127,7 +127,6 @@ const Hud = ({ zoomedOut, trees, cans, planetEnd, fetchPlanet }) => {
     fetchPlanet();
   }, [fetchPlanet]);
   useEffect(() => {
-    console.log("fetched");
     if (cansLength > 10 || (trees && treesLength < 10)) {
       setTempColor("red");
     } else {

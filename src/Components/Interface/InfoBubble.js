@@ -70,14 +70,13 @@ const InfoBubble = ({ object, infoActive }) => {
                 ]
               }`
             : null)}
-        {prevObj.objType === "tree" &&
-          (infoData[prevObj.name]
-            ? `${
-                infoData.treeFacts[
-                  Math.floor(Math.random() * infoData.treeFacts.length)
-                ]
-              }`
-            : null)}
+        {prevObj.objType === "tree"
+          ? `${
+              infoData.treeFacts[
+                Math.floor(Math.random() * infoData.treeFacts.length)
+              ]
+            }`
+          : null}
       </animated.p>
     </Container>
   );

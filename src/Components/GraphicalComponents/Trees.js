@@ -61,14 +61,11 @@ const Tree = ({
 
   return (
     <a.group
-      name={treeModelUrls[0]}
       position={pos}
       ref={ref}
       scale={scale}
+      name={treeModelUrls[0]}
       age={age}
-      objType="tree"
-      onPointerOver={e => hover(e)}
-      onPointerOut={e => unhover(e)}
       onPointerDown={() => {
         if (age === "newborn" && needsWater === "true") {
           setTreeActive(id);
@@ -86,7 +83,11 @@ const Tree = ({
         </a.mesh>
       )}
       {!isDead && age !== "dead" && (
-        <a.mesh>
+        <a.mesh
+          objType="tree"
+          onPointerOver={e => hover(e)}
+          onPointerOut={e => unhover(e)}
+        >
           <a.bufferGeometry
             name="leaves"
             attach="geometry"
