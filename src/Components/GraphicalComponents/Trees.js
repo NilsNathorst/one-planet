@@ -61,7 +61,6 @@ const Tree = ({
 
   return (
     <a.group
-      name={treeModelUrls[0]}
       position={pos}
       ref={ref}
       scale={scale}
@@ -83,7 +82,12 @@ const Tree = ({
         </a.mesh>
       )}
       {!isDead && age !== "dead" && (
-        <a.mesh onPointerOver={e => hover(e)} age={age} objType="tree">
+        <a.mesh
+          name={treeModelUrls[0]}
+          onPointerOver={e => hover(e)}
+          age={age}
+          objType="tree"
+        >
           <a.bufferGeometry
             name="leaves"
             attach="geometry"
