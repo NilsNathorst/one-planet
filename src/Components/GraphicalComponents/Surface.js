@@ -41,6 +41,7 @@ const Surface = ({
     : 0;
 
   const hover = e => {
+    e.stopPropagation();
     name === "TREE" && setPlantable(true);
   };
   const unhover = e => {
