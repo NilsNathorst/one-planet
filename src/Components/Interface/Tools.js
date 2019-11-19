@@ -6,14 +6,15 @@ import query from "../../assets/icons/queryIcon.png";
 import { connect, useDispatch } from "react-redux";
 import Tooltip from "./Tooltip";
 
-const countdown = keyframes`
-from {
-    stroke-dashoffset: 0px;
+const countdownAnim = (start, end) => keyframes`
+ from {
+    stroke-dashoffset: ${start}
   }
   to {
-    stroke-dashoffset: 180px;
-  }
+   stroke-dashoffset: ${end}
+ }
 `;
+
 const StyledDiv = styled.div`
   transition: 0.55s;
   display: flex;
@@ -62,8 +63,15 @@ const ToolIcon = styled.div`
     animation: ${props =>
       props.runAnim &&
       css`
-        ${countdown} 10s linear forwards
+        ${countdownAnim("0px", "180px")} 10s linear forwards
       `};
+    @media screen and (max-width: 700px) {
+      animation: ${props =>
+        props.runAnim &&
+        css`
+          ${countdownAnim("0px", "120px")} 10s linear forwards
+        `};
+    }
   }
 
   transition: 0.25s;
