@@ -65,9 +65,6 @@ const Tree = ({
       position={pos}
       ref={ref}
       scale={scale}
-      age={age}
-      objType="tree"
-      onPointerOver={e => hover(e)}
       onPointerOut={e => unhover(e)}
       onPointerDown={() => {
         if (age === "newborn" && needsWater === "true") {
@@ -86,7 +83,7 @@ const Tree = ({
         </a.mesh>
       )}
       {!isDead && age !== "dead" && (
-        <a.mesh>
+        <a.mesh onPointerOver={e => hover(e)} age={age} objType="tree">
           <a.bufferGeometry
             name="leaves"
             attach="geometry"
