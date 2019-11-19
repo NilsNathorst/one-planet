@@ -46,6 +46,7 @@ const Tree = ({
     config: config.wobbly
   });
   const hover = e => {
+    e.stopPropagation();
     infoActive &&
       setShowInfo({
         active: true,
@@ -61,11 +62,14 @@ const Tree = ({
 
   return (
     <a.group
+      name={treeModelUrls[0]}
       position={pos}
       ref={ref}
       scale={scale}
-      name={treeModelUrls[0]}
       age={age}
+      objType="tree"
+      onPointerOver={e => hover(e)}
+      onPointerOut={e => unhover(e)}
       onPointerDown={() => {
         if (age === "newborn" && needsWater === "true") {
           setTreeActive(id);
@@ -83,11 +87,7 @@ const Tree = ({
         </a.mesh>
       )}
       {!isDead && age !== "dead" && (
-        <a.mesh
-          objType="tree"
-          onPointerOver={e => hover(e)}
-          onPointerOut={e => unhover(e)}
-        >
+        <a.mesh>
           <a.bufferGeometry
             name="leaves"
             attach="geometry"
