@@ -6,6 +6,7 @@ import {
   FETCH_PLANET,
   SET_SHOWINFO,
   SET_PLANTABLE,
+  FETCH_LAST_PLANTED,
   SET_PLANET_DEAD
 } from "./types";
 
@@ -19,15 +20,14 @@ export const fetchTrees = () => async dispatch => {
     if (snapshot.val()) {
       trees = snapshot.val();
       Object.keys(trees).map(treeId => {
-        if (trees[treeId] !== "was removed") {
+        if (trees[treeId].age === "newborn" && trees[treeId].id === "") {
           treesRef.child(`${treeId}/id`).set(treeId);
         }
       });
     }
     if (Object.values(trees).length >= 1) {
       Object.keys(trees).map(tree => {
-        console.log(snapshot.val()[tree]);
-        if (snapshot.val()[tree] !== "was removed") {
+        if (trees[tree] !== "was removed") {
           const TreeAge = Date.now() - snapshot.val()[tree].created_at;
 
           if (TreeAge > 1000 * 60 && snapshot.val()[tree].age === "newborn") {
@@ -36,7 +36,7 @@ export const fetchTrees = () => async dispatch => {
 
           if (
             snapshot.val()[tree].needsWater === "true" &&
-            TreeAge > 1000 * 60 * 30
+            TreeAge > 1000 * 60 * 3
           ) {
             treesRef.child(`${tree}`).on("value", snapshot => {
               treesRef.child(`${tree}`).set("was removed");
@@ -64,6 +64,11 @@ export const fetchTrees = () => async dispatch => {
             if (TreeAge > 1000 * 60 * 60 * 19) {
               treesRef.child(`${tree}`).once("value", snapshot => {
                 treesRef.child(`${tree}`).set("was removed");
+              });
+              planetRef.once("value", snapshot => {
+                planetRef
+                  .child(`/planetEnd`)
+                  .set(snapshot.val().planetEnd - 1000 * 60 * 30);
               });
             }
           }
@@ -108,11 +113,6 @@ export const fetchCans = () => async dispatch => {
             oceanVectors[Math.floor(Math.random() * oceanVectors.length)];
 
           cansRef.child(`${canId}`).set({ id: canId, pos: pos, color: color });
-          planetRef.once("value", snapshot => {
-            planetRef
-              .child(`/planetEnd`)
-              .set(snapshot.val().planetEnd - 1000 * 60 * 15);
-          });
         }
         return null;
       });
