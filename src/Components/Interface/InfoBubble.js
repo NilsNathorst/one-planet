@@ -24,6 +24,8 @@ const Container = styled(animated.div)`
   fill: #888888;
   padding: 1em;
   p {
+    margin-top: auto;
+    margin-bottom: auto;
     white-space: pre-line;
     padding-left: 1em;
   }

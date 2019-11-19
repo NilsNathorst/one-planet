@@ -51,6 +51,9 @@ const ToolIcon = styled.div`
 
   circle {
     stroke-dasharray: 180px;
+    @media screen and (max-width: 700px) {
+      stroke-dasharray: 120px;
+    }
     stroke-dashoffset: 0px;
     stroke-linecap: round;
     stroke-width: ${props => (props.runAnim ? "4px" : "0px")};
