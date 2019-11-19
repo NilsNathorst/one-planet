@@ -36,7 +36,7 @@ export const fetchTrees = () => async dispatch => {
 
           if (
             snapshot.val()[tree].needsWater === "true" &&
-            TreeAge > 1000 * 60 * 3
+            TreeAge > 1000 * 60 * 30
           ) {
             treesRef.child(`${tree}`).on("value", snapshot => {
               treesRef.child(`${tree}`).set("was removed");

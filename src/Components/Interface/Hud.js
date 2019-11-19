@@ -127,6 +127,8 @@ const Hud = ({ zoomedOut, trees, cans, planetEnd, fetchPlanet }) => {
     fetchPlanet();
   }, [fetchPlanet]);
   useEffect(() => {
+    console.log(treesLength);
+    console.log(cansLength);
     if (cansLength > 10 || (trees && treesLength < 10)) {
       setTempColor("red");
     } else {
@@ -135,14 +137,14 @@ const Hud = ({ zoomedOut, trees, cans, planetEnd, fetchPlanet }) => {
   }, [cansLength, treesLength]);
   const returnTreeSvg = () => {
     switch (true) {
-      case trees === null:
-        return <AngrySvg />;
-      case treesLength < 5:
-        return <IndifferentSvg />;
-      case treesLength < 15:
-        return <HappySvg />;
-      case treesLength < 1000:
+      case treesLength > 30:
         return <HappierSvg />;
+      case treesLength > 20:
+        return <HappySvg />;
+      case treesLength > 10:
+        return <IndifferentSvg />;
+      case treesLength < 5:
+        return <AngrySvg />;
       default:
         return null;
     }
@@ -154,9 +156,9 @@ const Hud = ({ zoomedOut, trees, cans, planetEnd, fetchPlanet }) => {
         return <HappierSvg />;
       case cansLength < 10:
         return <HappySvg />;
-      case cansLength < 15:
+      case cansLength < 20:
         return <IndifferentSvg />;
-      case cansLength < 1000:
+      case cansLength > 30:
         return <AngrySvg />;
       default:
         return null;

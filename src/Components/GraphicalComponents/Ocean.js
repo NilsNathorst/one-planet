@@ -18,10 +18,10 @@ const Ocean = ({ cans, isDead }) => {
     }
   );
   useEffect(() => {
-    if (cans.length >= 12) setColor("#56A3A6");
-    if (cans.length >= 13) setColor("#879F98");
-    if (cans.length >= 14) setColor("#8E877D");
-    if (cans.length >= 15) setColor("#6B5552");
+    if (cans.length >= 15) setColor("#56A3A6");
+    if (cans.length >= 20) setColor("#879F98");
+    if (cans.length >= 25) setColor("#8E877D");
+    if (cans.length >= 30) setColor("#6B5552");
     else if (cans.length < 10) {
       setColor("#2191FB");
     }
