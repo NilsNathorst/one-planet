@@ -132,7 +132,7 @@ const Hud = ({ zoomedOut, trees, cans, planetEnd, fetchPlanet }) => {
     } else {
       setTempColor("green");
     }
-  }, []);
+  }, [cansLength, treesLength]);
   const returnTreeSvg = () => {
     switch (true) {
       case trees === null:

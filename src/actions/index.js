@@ -6,7 +6,6 @@ import {
   FETCH_PLANET,
   SET_SHOWINFO,
   SET_PLANTABLE,
-  FETCH_LAST_PLANTED,
   SET_PLANET_DEAD
 } from "./types";
 
@@ -46,29 +45,24 @@ export const fetchTrees = () => async dispatch => {
             snapshot.val()[tree].age !== "newborn" &&
             snapshot.val()[tree].needsWater === "false"
           ) {
-            if (TreeAge > 1000 * 60 * 60 * 6 && TreeAge < 1000 * 60 * 60 * 12) {
+            if (TreeAge > 1000 * 60 * 60 * 6 && TreeAge < 1000 * 60 * 60 * 14) {
               treesRef.child(`${tree}/age`).set("adult");
             }
             if (
-              TreeAge > 1000 * 60 * 60 * 12 &&
-              TreeAge < 1000 * 60 * 60 * 18
+              TreeAge > 1000 * 60 * 60 * 14 &&
+              TreeAge < 1000 * 60 * 60 * 20
             ) {
               treesRef.child(`${tree}/age`).set("senior");
             }
             if (
-              TreeAge > 1000 * 60 * 60 * 18 &&
-              TreeAge < 1000 * 60 * 60 * 19
+              TreeAge > 1000 * 60 * 60 * 20 &&
+              TreeAge < 1000 * 60 * 60 * 21
             ) {
               treesRef.child(`${tree}/age`).set("dead");
             }
             if (TreeAge > 1000 * 60 * 60 * 19) {
               treesRef.child(`${tree}`).once("value", snapshot => {
                 treesRef.child(`${tree}`).set("was removed");
-              });
-              planetRef.once("value", snapshot => {
-                planetRef
-                  .child(`/planetEnd`)
-                  .set(snapshot.val().planetEnd - 1000 * 60 * 30);
               });
             }
           }
@@ -113,6 +107,11 @@ export const fetchCans = () => async dispatch => {
             oceanVectors[Math.floor(Math.random() * oceanVectors.length)];
 
           cansRef.child(`${canId}`).set({ id: canId, pos: pos, color: color });
+          planetRef.once("value", snapshot => {
+            planetRef
+              .child(`/planetEnd`)
+              .set(snapshot.val().planetEnd - 1000 * 60 * 15);
+          });
         }
         return null;
       });
