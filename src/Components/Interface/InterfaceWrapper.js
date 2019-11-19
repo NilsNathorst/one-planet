@@ -20,6 +20,7 @@ const Wrapper = styled.div`
 `;
 
 const InterfaceWrapper = ({ name, plantable, children }) => {
+  console.log(plantable);
   return (
     <Wrapper className="wrapper" activeTool={name} plantable={plantable}>
       {children}
