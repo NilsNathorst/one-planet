@@ -42,7 +42,7 @@ const Controls = ({ zoomedOut }) => {
     <trackballControls
       enableDamping
       maxDistance={540}
-      minDistance={10}
+      minDistance={100}
       noPan
       args={[camera, gl.domElement]}
       ref={orbitRef}
