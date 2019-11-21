@@ -6,7 +6,6 @@ import {
   FETCH_PLANET,
   SET_SHOWINFO,
   SET_PLANTABLE,
-  FETCH_LAST_PLANTED,
   SET_PLANET_DEAD
 } from "./types";
 
@@ -64,11 +63,6 @@ export const fetchTrees = () => async dispatch => {
             if (TreeAge > 1000 * 60 * 60 * 19) {
               treesRef.child(`${tree}`).once("value", snapshot => {
                 treesRef.child(`${tree}`).set("was removed");
-              });
-              planetRef.once("value", snapshot => {
-                planetRef
-                  .child(`/planetEnd`)
-                  .set(snapshot.val().planetEnd - 1000 * 60 * 30);
               });
             }
           }
