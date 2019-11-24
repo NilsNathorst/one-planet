@@ -12,7 +12,6 @@ import {
 export const addTree = newTree => async dispatch => {
   treesRef.push().set(newTree);
 };
-
 export const fetchTrees = () => async dispatch => {
   let trees = [];
   treesRef.on("value", snapshot => {
@@ -22,48 +21,35 @@ export const fetchTrees = () => async dispatch => {
         if (trees[treeId].age === "newborn" && trees[treeId].id === "") {
           treesRef.child(`${treeId}/id`).set(treeId);
         }
-      });
-    }
-    if (Object.values(trees).length >= 1) {
-      Object.keys(trees).map(tree => {
-        if (trees[tree] !== "was removed") {
-          const TreeAge = Date.now() - snapshot.val()[tree].created_at;
-
-          if (TreeAge > 1000 * 60 && snapshot.val()[tree].age === "newborn") {
-            treesRef.child(`${tree}/needsWater`).set("true");
+        if (trees[treeId] !== "was removed") {
+          const TreeAge = Date.now() - snapshot.val()[treeId].created_at;
+          if (TreeAge > 1000 * 60 && snapshot.val()[treeId].age === "newborn") {
+            treesRef.child(`${treeId}/needsWater`).set("true");
           }
-
-          if (
-            snapshot.val()[tree].needsWater === "true" &&
-            TreeAge > 1000 * 60 * 30
-          ) {
-            treesRef.child(`${tree}`).on("value", snapshot => {
-              treesRef.child(`${tree}`).set("was removed");
-            });
+          if (trees[treeId].needsWater === "true" && TreeAge > 1000 * 60 * 30) {
+            treesRef.child(`${treeId}`).set("was removed");
           }
           if (
-            snapshot.val()[tree].age !== "newborn" &&
-            snapshot.val()[tree].needsWater === "false"
+            trees[treeId].age !== "newborn" &&
+            trees[treeId].needsWater === "false"
           ) {
             if (TreeAge > 1000 * 60 * 60 * 6 && TreeAge < 1000 * 60 * 60 * 12) {
-              treesRef.child(`${tree}/age`).set("adult");
+              treesRef.child(`${treeId}/age`).set("adult");
             }
             if (
               TreeAge > 1000 * 60 * 60 * 12 &&
               TreeAge < 1000 * 60 * 60 * 18
             ) {
-              treesRef.child(`${tree}/age`).set("senior");
+              treesRef.child(`${treeId}/age`).set("senior");
             }
             if (
               TreeAge > 1000 * 60 * 60 * 18 &&
               TreeAge < 1000 * 60 * 60 * 19
             ) {
-              treesRef.child(`${tree}/age`).set("dead");
+              treesRef.child(`${treeId}/age`).set("dead");
             }
             if (TreeAge > 1000 * 60 * 60 * 19) {
-              treesRef.child(`${tree}`).once("value", snapshot => {
-                treesRef.child(`${tree}`).set("was removed");
-              });
+              treesRef.child(`${treeId}`).set("was removed");
             }
           }
         }
@@ -77,14 +63,17 @@ export const fetchTrees = () => async dispatch => {
 };
 
 export const setTreeActive = id => async dispatch => {
-  treesRef.child(`${id}/age`).set("young");
-  treesRef.child(`${id}/needsWater`).set("false");
-  treesRef.child(`${id}/created_at`).set(Date.now());
-  planetRef.once("value", snapshot => {
-    planetRef
-      .child(`/planetEnd`)
-      .set(snapshot.val().planetEnd + 1000 * 60 * 60);
-    planetRef.child(`/treesAdded`).set(snapshot.val().treesAdded + 1);
+  treesRef.once("value", snapshot => {
+    if (Date.now() - snapshot.val()[id].created_at < 1000 * 60 * 30);
+    treesRef.child(`${id}/age`).set("young");
+    treesRef.child(`${id}/needsWater`).set("false");
+    treesRef.child(`${id}/created_at`).set(Date.now());
+    planetRef.once("value", snapshot => {
+      planetRef
+        .child(`/planetEnd`)
+        .set(snapshot.val().planetEnd + 1000 * 60 * 60);
+      planetRef.child(`/treesAdded`).set(snapshot.val().treesAdded + 1);
+    });
   });
 };
 
