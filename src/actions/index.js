@@ -125,7 +125,10 @@ export const flushTreesDatabase = id => async dispatch => {
   treesRef.once("value", snapshot => {
     snapshot.val() &&
       Object.keys(snapshot.val()).map(treeId => {
-        if (snapshot.val()[treeId] === "was removed") {
+        if (
+          snapshot.val()[treeId] === "was removed" ||
+          snapshot.val()[treeId].pos === undefined
+        ) {
           treesRef.child(`${treeId}`).remove();
         }
         return null;
