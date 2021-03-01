@@ -15,7 +15,7 @@
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
     "styled-components": "^4.4.0",
-    "three": "^0.109.0",
+    "three": "^0.125.0",
     "three-orbitcontrols": "^2.108.1"
   },
   "scripts": {
