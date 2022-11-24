@@ -31,8 +31,8 @@ import { setPlanetDead } from "../actions/index";
 import Deathscreen from "./Interface/Deathscreen";
 import IntroModal from "./Interface/IntroModal";
 
-const App = ({ store, isDead }) => {
-  store.dispatch(setPlanetDead());
+const App = ({ store }) => {
+  const isDead = false;
 
   return (
     <ThemeProvider theme={Theme}>
@@ -48,7 +48,7 @@ const App = ({ store, isDead }) => {
               <ThoughtBubble />
             </>
           )}{" "}
-          {isDead === true && <Deathscreen />}
+          {/* {isDead === true && <Deathscreen />} */}
           <Canvas
             camera={{ position: [0, 0, 200] }}
             onCreated={({ gl, scene, camera }) => {
@@ -67,42 +67,42 @@ const App = ({ store, isDead }) => {
                       type="sand"
                       treeModelUrls={[
                         "/models/trees/palm/palmleaves.glb",
-                        "/models/trees/palm/palmtrunk.glb"
+                        "/models/trees/palm/palmtrunk.glb",
                       ]}
                       modelUrl="/models/planet/final/sand.glb"
                       textureUrls={[
                         "/assets/textures/Sand/Vol_16_2_Base_Color.png",
                         "/assets/textures/Sand/Vol_16_2_Height.png",
                         "/assets/textures/Sand/Vol_16_2_Normal.png",
-                        "/assets/textures/Sand/Vol_16_2_Ambient_Occlusion.png"
+                        "/assets/textures/Sand/Vol_16_2_Ambient_Occlusion.png",
                       ]}
                     />
                     <Surface
                       type="snow"
                       treeModelUrls={[
                         "/models/trees/pine/pineleaves.glb",
-                        "/models/trees/pine/pinetrunk.glb"
+                        "/models/trees/pine/pinetrunk.glb",
                       ]}
                       modelUrl="/models/planet/final/snow.glb"
                       textureUrls={[
                         "/assets/textures/Snow/Vol_22_4_Base_Color.png",
                         "/assets/textures/Snow/Vol_22_4_Height.png",
                         "/assets/textures/Snow/Vol_22_4_Normal.png",
-                        "/assets/textures/Snow/Vol_22_4_Ambient_Occlusion.png"
+                        "/assets/textures/Snow/Vol_22_4_Ambient_Occlusion.png",
                       ]}
                     />
                     <Surface
                       type="grass"
                       treeModelUrls={[
                         "/models/trees/oak/oakleaves.glb",
-                        "/models/trees/oak/oaktrunk.glb"
+                        "/models/trees/oak/oaktrunk.glb",
                       ]}
                       modelUrl="/models/planet/final/grass.glb"
                       textureUrls={[
                         "/assets/textures/Grass/Vol_42_1_Base_Color.png",
                         "/assets/textures/Grass/Vol_42_1_Height.png",
                         "/assets/textures/Grass/Vol_42_1_Normal.png",
-                        "/assets/textures/Grass/Vol_42_1_Ambient_Occlusion.png"
+                        "/assets/textures/Grass/Vol_42_1_Ambient_Occlusion.png",
                       ]}
                     />
                     <BirdScene />
@@ -125,10 +125,4 @@ const App = ({ store, isDead }) => {
   );
 };
 
-const mapStateToProps = ({ state: { isDead } }) => {
-  return {
-    isDead
-  };
-};
-
-export default connect(mapStateToProps)(App);
+export default connect()(App);

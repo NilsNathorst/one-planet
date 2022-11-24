@@ -5,7 +5,7 @@ import {
   fetchCans,
   destroyCan,
   flushCansDatabase,
-  setShowInfo
+  setShowInfo,
 } from "../../actions";
 import { useSpring, a, config } from "react-spring/three";
 import { connect } from "react-redux";
@@ -18,10 +18,10 @@ const SodaCan = ({
   pos,
   url,
   color,
-  infoActive
+  infoActive,
 }) => {
   const ref = useRef();
-  const gltf = useLoader(GLTFLoader, url, loader => {
+  const gltf = useLoader(GLTFLoader, url, (loader) => {
     const dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath("/draco-gltf/");
     loader.setDRACOLoader(dracoLoader);
@@ -34,15 +34,15 @@ const SodaCan = ({
   });
 
   const [hovered, set] = useState(false);
-  const hover = e => {
+  const hover = (e) => {
     e.stopPropagation() && set(true);
     infoActive &&
       setShowInfo({
         active: true,
-        object: e.eventObject
+        object: e.eventObject,
       });
   };
-  const unhover = e => {
+  const unhover = (e) => {
     set(false);
     infoActive && setShowInfo({ active: false, object: null });
   };
@@ -53,7 +53,7 @@ const SodaCan = ({
   };
   const { scale } = useSpring({
     scale: hovered ? 0.25 : 0.2,
-    config: config.wobbly
+    config: config.wobbly,
   });
   const [animatedPos, setAnimatedPos] = useSpring(() => {
     return { position: pos };
@@ -62,17 +62,17 @@ const SodaCan = ({
     <a.mesh
       ref={ref}
       position={animatedPos.position}
-      onPointerOver={e => hover(e)}
-      onPointerOut={e => unhover(e)}
-      onPointerDown={e => {
+      onPointerOver={(e) => hover(e)}
+      onPointerOut={(e) => unhover(e)}
+      onPointerDown={(e) => {
         magnetActive && handleClick(e.eventObject.firebaseId, e);
       }}
-      onPointerMove={e =>
+      onPointerMove={(e) =>
         magnetActive &&
         hover &&
         setAnimatedPos({ position: [e.point.x, e.point.y, e.point.z] })
       }
-      scale={scale.interpolate(s => [s, s, 0.2])}
+      scale={scale.interpolate((s) => [s, s, 0.2])}
       firebaseId={firebaseId}
       castShadow
       name="can"
@@ -90,12 +90,16 @@ const SodaCans = ({
   destroyCan,
   name,
   cans,
-  fetchCans
+  fetchCans,
 }) => {
-  useEffect(() => {
-    flushCansDatabase();
-    fetchCans();
-  }, [fetchCans, flushCansDatabase]);
+  useEffect(
+    () => {
+      fetchCans();
+    },
+    [
+      /*fetchCans, flushCansDatabase*/
+    ]
+  );
 
   return (
     cans &&
@@ -123,7 +127,7 @@ const SodaCans = ({
 const mapStateToProps = ({ state: { name, cans } }) => {
   return {
     name,
-    cans
+    cans,
   };
 };
 
@@ -131,5 +135,5 @@ export default connect(mapStateToProps, {
   flushCansDatabase,
   fetchCans,
   destroyCan,
-  setShowInfo
+  setShowInfo,
 })(SodaCans);

@@ -15,12 +15,12 @@ const Tree = ({
   needsWater,
   treeModelUrls,
   setShowInfo,
-  infoActive
+  infoActive,
 }) => {
   const raindrop = useLoader(GLTFLoader, "/models/raindrop/raindrop2.gltf");
   const ref = useRef();
   const raindropRef = useRef();
-  const [leaves, trunk] = useLoader(GLTFLoader, treeModelUrls, loader => {
+  const [leaves, trunk] = useLoader(GLTFLoader, treeModelUrls, (loader) => {
     const dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath("/draco-gltf/");
     loader.setDRACOLoader(dracoLoader);
@@ -32,7 +32,7 @@ const Tree = ({
       (age === "adult" && "#228b22") ||
       (age === "senior" && "#CB7500") ||
       (age === "dead" && "#CB7500"),
-    config: { duration: 8000 }
+    config: { duration: 8000 },
   });
 
   const { scale } = useSpring({
@@ -43,17 +43,17 @@ const Tree = ({
       (age === "senior" && [0.6, 0.6, 0.6]) ||
       (age === "dead" && [0.6, 0.6, 0.6]),
     from: { scale: [0.01, 0.01, 0.01] },
-    config: config.wobbly
+    config: config.wobbly,
   });
-  const hover = e => {
+  const hover = (e) => {
     e.stopPropagation();
     infoActive &&
       setShowInfo({
         active: true,
-        object: e.eventObject
+        object: e.eventObject,
       });
   };
-  const unhover = e => {
+  const unhover = (e) => {
     infoActive && setShowInfo({ active: false, object: null });
   };
   useEffect(() => {
@@ -68,8 +68,8 @@ const Tree = ({
       scale={scale}
       age={age}
       objType="tree"
-      onPointerOver={e => hover(e)}
-      onPointerOut={e => unhover(e)}
+      onPointerOver={(e) => hover(e)}
+      onPointerOut={(e) => unhover(e)}
       onPointerDown={() => {
         if (age === "newborn" && needsWater === "true") {
           setTreeActive(id);
@@ -118,14 +118,14 @@ const Trees = ({
   fetchTrees,
   setTreeActive,
   flushTreesDatabase,
-  setShowInfo
+  setShowInfo,
 }) => {
   useEffect(() => {
     flushTreesDatabase();
     fetchTrees();
   }, [fetchTrees, flushTreesDatabase]);
 
-  return trees.map(tree => {
+  return trees.map((tree) => {
     return (
       <Suspense fallback={null}>
         {tree.id && tree.pos && (
@@ -151,7 +151,7 @@ const mapStateToProps = ({ state: { trees, isDead, name } }) => {
   return {
     trees: trees ? Object.values(trees) : [],
     isDead,
-    name
+    name,
   };
 };
 
@@ -159,5 +159,5 @@ export default connect(mapStateToProps, {
   fetchTrees,
   setTreeActive,
   flushTreesDatabase,
-  setShowInfo
+  setShowInfo,
 })(Trees);

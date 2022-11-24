@@ -6,18 +6,19 @@ import {
   FETCH_PLANET,
   SET_SHOWINFO,
   SET_PLANTABLE,
-  SET_PLANET_DEAD
+  SET_PLANET_DEAD,
 } from "./types";
 
-export const addTree = newTree => async dispatch => {
+export const addTree = (newTree) => async (dispatch) => {
   treesRef.push().set(newTree);
 };
-export const fetchTrees = () => async dispatch => {
+export const fetchTrees = () => async (dispatch) => {
   let trees = [];
-  treesRef.on("value", snapshot => {
+  treesRef.on("value", (snapshot) => {
     if (snapshot.val()) {
       trees = snapshot.val();
-      Object.keys(trees).map(treeId => {
+      console.log(trees);
+      Object.keys(trees).map((treeId) => {
         if (trees[treeId].age === "newborn" && trees[treeId].id === "") {
           treesRef.child(`${treeId}/id`).set(treeId);
         }
@@ -57,18 +58,18 @@ export const fetchTrees = () => async dispatch => {
     }
     dispatch({
       type: FETCH_TREES,
-      payload: trees
+      payload: trees,
     });
   });
 };
 
-export const setTreeActive = id => async dispatch => {
-  treesRef.once("value", snapshot => {
+export const setTreeActive = (id) => async (dispatch) => {
+  treesRef.once("value", (snapshot) => {
     if (Date.now() - snapshot.val()[id].created_at < 1000 * 60 * 30);
     treesRef.child(`${id}/age`).set("young");
     treesRef.child(`${id}/needsWater`).set("false");
     treesRef.child(`${id}/created_at`).set(Date.now());
-    planetRef.once("value", snapshot => {
+    planetRef.once("value", (snapshot) => {
       planetRef
         .child(`/planetEnd`)
         .set(snapshot.val().planetEnd + 1000 * 60 * 60);
@@ -77,14 +78,14 @@ export const setTreeActive = id => async dispatch => {
   });
 };
 
-export const destroyCan = id => async dispatch => {
+export const destroyCan = (id) => async (dispatch) => {
   cansRef.child(id).set("was removed");
 };
 
-export const fetchCans = () => async dispatch => {
-  cansRef.on("value", snapshot => {
+export const fetchCans = () => async (dispatch) => {
+  cansRef.on("value", (snapshot) => {
     snapshot.val() &&
-      Object.keys(snapshot.val()).map(canId => {
+      Object.keys(snapshot.val()).map((canId) => {
         if (
           !snapshot.val()[canId].id &&
           snapshot.val()[canId] !== "was removed"
@@ -101,18 +102,18 @@ export const fetchCans = () => async dispatch => {
       });
     dispatch({
       type: FETCH_CANS,
-      payload: snapshot.val()
+      payload: snapshot.val(),
     });
   });
 };
 
-export const flushCansDatabase = id => async dispatch => {
-  cansRef.once("value", snapshot => {
+export const flushCansDatabase = (id) => async (dispatch) => {
+  cansRef.once("value", (snapshot) => {
     snapshot.val() &&
-      Object.keys(snapshot.val()).map(canId => {
+      Object.keys(snapshot.val()).map((canId) => {
         if (snapshot.val()[canId] === "was removed") {
           cansRef.child(`${canId}`).remove();
-          planetRef.once("value", snapshot => {
+          planetRef.once("value", (snapshot) => {
             planetRef.child(`/cansRemoved`).set(snapshot.val().cansRemoved + 1);
           });
         }
@@ -121,10 +122,10 @@ export const flushCansDatabase = id => async dispatch => {
   });
 };
 
-export const flushTreesDatabase = id => async dispatch => {
-  treesRef.once("value", snapshot => {
+export const flushTreesDatabase = (id) => async (dispatch) => {
+  treesRef.once("value", (snapshot) => {
     snapshot.val() &&
-      Object.keys(snapshot.val()).map(treeId => {
+      Object.keys(snapshot.val()).map((treeId) => {
         if (
           snapshot.val()[treeId] === "was removed" ||
           snapshot.val()[treeId].pos === undefined
@@ -136,36 +137,36 @@ export const flushTreesDatabase = id => async dispatch => {
   });
 };
 
-export const setPlanetDead = () => async dispatch => {
-  planetRef.once("value", snapshot => {
+export const setPlanetDead = () => async (dispatch) => {
+  planetRef.once("value", (snapshot) => {
     if (snapshot.val().planetEnd < Date.now()) {
       planetRef.child(`/isDead`).set(true);
     }
     dispatch({
       type: SET_PLANET_DEAD,
-      payload: snapshot.val().isDead
+      payload: snapshot.val().isDead,
     });
   });
 };
 
-export const fetchPlanet = () => async dispatch => {
-  planetRef.on("value", snapshot => {
+export const fetchPlanet = () => async (dispatch) => {
+  planetRef.on("value", (snapshot) => {
     dispatch({
       type: FETCH_PLANET,
-      payload: snapshot.val()
+      payload: snapshot.val(),
     });
   });
 };
 
-export const setShowInfo = payload => async dispatch => {
+export const setShowInfo = (payload) => async (dispatch) => {
   dispatch({
     type: SET_SHOWINFO,
-    payload: payload
+    payload: payload,
   });
 };
-export const setPlantable = payload => async dispatch => {
+export const setPlantable = (payload) => async (dispatch) => {
   dispatch({
     type: SET_PLANTABLE,
-    payload: payload
+    payload: payload,
   });
 };

@@ -16,7 +16,7 @@ function Bird() {
   let factor = 1;
 
   useEffect(() => {
-    new GLTFLoader().load("/models/bird/flamingo.gltf", gltf => {
+    new GLTFLoader().load("/models/bird/flamingo.gltf", (gltf) => {
       setModel(gltf);
     });
   }, []);
@@ -83,7 +83,7 @@ function BirdScene({ isDead }) {
 }
 const mapStateToProps = ({ state: { isDead } }) => {
   return {
-    isDead
+    isDead,
   };
 };
 

@@ -18,7 +18,7 @@ const Surface = ({
   setPlantable,
   type,
   trees,
-  treeCooldown
+  treeCooldown,
 }) => {
   const dispatch = useDispatch();
   const setCooldown = useCallback(
@@ -26,7 +26,7 @@ const Surface = ({
     [dispatch]
   );
   const ref = useRef();
-  const gltf = useLoader(GLTFLoader, modelUrl, loader => {
+  const gltf = useLoader(GLTFLoader, modelUrl, (loader) => {
     const dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath("/draco-gltf/");
     loader.setDRACOLoader(dracoLoader);
@@ -37,38 +37,36 @@ const Surface = ({
   );
 
   const treesLength = trees
-    ? trees.filter(tree => tree !== "was removed").length
+    ? trees.filter((tree) => tree !== "was removed").length
     : 0;
 
-  const hover = e => {
+  const hover = (e) => {
     e.stopPropagation();
     name === "TREE" && setPlantable(true);
   };
-  const unhover = e => {
+  const unhover = (e) => {
     name === "TREE" && setPlantable(false);
   };
-  const handleClick = e => {
-    if (name === "TREE" && treesLength < 100 && treeCooldown === false) {
-      addTree({
-        pos: e.point,
-        created_at: Date.now(),
-        age: "newborn",
-        id: "",
-        needsWater: "false",
-        treeModelUrls: e.eventObject.treeModelUrls
-      });
-      setCooldown("SET_TREE_COOLDOWN", true);
-      setTimeout(() => {
-        setCooldown("SET_TREE_COOLDOWN", false);
-      }, 10000);
-    }
+  const handleClick = (e) => {
+    addTree({
+      pos: e.point,
+      created_at: Date.now(),
+      age: "newborn",
+      id: "",
+      needsWater: "false",
+      treeModelUrls: e.eventObject.treeModelUrls,
+    });
+    setCooldown("SET_TREE_COOLDOWN", true);
+    setTimeout(() => {
+      setCooldown("SET_TREE_COOLDOWN", false);
+    }, 100);
   };
 
   return (
     <mesh
-      onPointerOver={e => hover(e)}
-      onPointerOut={e => unhover(e)}
-      onPointerDown={e => handleClick(e)}
+      onPointerOver={(e) => hover(e)}
+      onPointerOut={(e) => unhover(e)}
+      onPointerDown={(e) => handleClick(e)}
       ref={ref}
       receiveShadow
       scale={[12, 12, 12]}
@@ -118,11 +116,11 @@ const mapStateToProps = ({ state: { name, isDead, trees, treeCooldown } }) => {
 
     isDead,
     trees: trees ? Object.values(trees) : null,
-    treeCooldown
+    treeCooldown,
   };
 };
 
 export default connect(mapStateToProps, {
   addTree,
-  setPlantable
+  setPlantable,
 })(Surface);
